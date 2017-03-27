@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<?xml-stylesheet type="text/xsl" href="ver1.xsl"?>
+<WINDEV_TABLE>
+  <Table_Liste_Contrat>
+    <NumContrat>C001</NumContrat>
+    <AutContractante>Dn Tech</AutContractante>
+    <Description>Computerizing</Description>
+    <Beneficiare>Mef</Beneficiare>
+    <Phase>Beginning</Phase>
+    <Montant>500000000</Montant>
+    <DateRecepDAO>10/03/2017</DateRecepDAO>
+    <DateOuvPlis>17/03/2017</DateOuvPlis>
+    <DateRappEval>25/03/2017</DateRappEval>
+    <DatePubAttr>03/04/2017</DatePubAttr>
+    <ProjCeContrat>12/04/2017</ProjCeContrat>
+    <ApprAttribuaire>20/04/2017</ApprAttribuaire>
+    <ApprobationAC>30/04/2017</ApprobationAC>
+    <ApprACGPMP>07/05/2017</ApprACGPMP>
+    <ApprMEF>15/05/2017</ApprMEF>
+    <Comment>A huge project for IT</Comment>
+  </Table_Liste_Contrat>
+  <Table_Liste_Contrat>
+    <NumContrat>C002</NumContrat>
+    <AutContractante>Areeba GN</AutContractante>
+    <Description>Cellphone</Description>
+    <Beneficiare>Governement</Beneficiare>
+    <Phase>Advanced</Phase>
+    <Montant>6000000000</Montant>
+    <DateRecepDAO>20/06/2002</DateRecepDAO>
+    <DateOuvPlis>20/06/2002</DateOuvPlis>
+    <DateRappEval>20/06/2002</DateRappEval>
+    <DatePubAttr>20/06/2002</DatePubAttr>
+    <ProjCeContrat>20/06/2002</ProjCeContrat>
+    <ApprAttribuaire>20/06/2002</ApprAttribuaire>
+    <ApprobationAC>20/06/2002</ApprobationAC>
+    <ApprACGPMP>20/06/2002</ApprACGPMP>
+    <ApprMEF>09/02/2017</ApprMEF>
+    <Comment>Super</Comment>
+  </Table_Liste_Contrat>
+  <Table_Liste_Contrat>
+    <NumContrat>C003</NumContrat>
+    <AutContractante>Dn Tech</AutContractante>
+    <Description>IT Company</Description>
+    <Beneficiare>Mef</Beneficiare>
+    <Phase>Final</Phase>
+    <Montant>200000000</Montant>
+    <DateRecepDAO>12/01/2017</DateRecepDAO>
+    <DateOuvPlis>12/01/2017</DateOuvPlis>
+    <DateRappEval>05/04/1837</DateRappEval>
+    <DatePubAttr>12/01/2017</DatePubAttr>
+    <ProjCeContrat>05/04/1996</ProjCeContrat>
+    <ApprAttribuaire>06/04/1938</ApprAttribuaire>
+    <ApprobationAC>31/03/1965</ApprobationAC>
+    <ApprACGPMP>07/03/1965</ApprACGPMP>
+    <ApprMEF>03/07/1932</ApprMEF>
+    <Comment>Great</Comment>
+  </Table_Liste_Contrat>
+</WINDEV_TABLE>

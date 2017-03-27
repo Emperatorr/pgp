@@ -1,4 +1,4 @@
-﻿<nav class="navbar navbar-default navbar-fixed">
+﻿<nav class="navbar navbar-default navbar-fixed navbar-top">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">
@@ -17,6 +17,11 @@
                          <li>
                             <a href="projet.php">
                                 Nouveau
+                            </a>
+                        </li>
+                        <li>
+                            <a href="import.php">
+                                Importer
                             </a>
                         </li>
 						 <li class="dropdown">
