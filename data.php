@@ -46,7 +46,7 @@
      <div class="content">
 		  <div class="container-fluid">
 			<table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-			<thead>
+			<thead style='background-color:#D6EAF8;'>
 				<tr>
 					<td>No. Contrat</td>
 					<td>Aut. Contractante</td>
@@ -58,7 +58,7 @@
 					<td>App ACGPMP</td>
 					<td>App MEF</td>
 					<td>Etat</td>
-					<td>Editer</td>
+					<td>Details</td>
 
 				</tr>
 			</thead>
@@ -67,6 +67,7 @@
 				require_once('bd/Projet.php');
 				require_once('bd/connection_bd.php');
 				require_once('bd/CRUD.php');
+				require_once('bd/fonctions.inc.php');
 				$obj_bdd = new CRUD ($bdd);
 				
 				$results = $obj_bdd -> selectProjetAll();
@@ -74,6 +75,18 @@
 				if($results != null){
 					foreach ($results AS $projet){
 						$id = $projet -> getIdProjet();
+						$res = etatProjet($id, $obj_bdd);
+						
+						 $bgColor = '#a2d246';
+						 $msg = 'OK' ;
+						if ($res['DEPASSE'] == true) {
+							$bgColor = 'pink';
+							$msg = 'DEPASSE' ;
+						} elseif ($res['ALERT'] == true) {
+							$bgColor = '#f19300';
+							$msg = 'A RISQUE' ;
+						}
+
 						echo "
 							<tr>
 								<td>".$projet -> getNumContrat()."</td>
@@ -85,7 +98,7 @@
 								<td>".$projet -> getApprobationAC()."</td>
 								<td>".$projet -> getApprobationACGPMP()."</td>
 								<td>".$projet -> getApprobationMEF()."</td>
-								<td>".$projet -> getApprobationMEF()."</td>
+								<td style ='background-color: $bgColor;'>".$msg."</td>
 								<td><a href='projet.php?id=$id'> Afficher </a></td>
 							</tr>
 						";
