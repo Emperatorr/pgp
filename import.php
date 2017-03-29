@@ -35,7 +35,7 @@
 
     <div class="main-panel">
       <?php
-        $page_title = "Importer des donn꦳";
+        $page_title = "Importer des données";
         $page_active = 2;
       ?>
 		  

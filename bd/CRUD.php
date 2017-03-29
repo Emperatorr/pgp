@@ -282,7 +282,8 @@ class CRUD{
 										prenomUser = :prenom, 
 										emailUser = :email, 
 										passUser = :pass, 
-										telephoneUser = :telephone
+										telephoneUser = :telephone,
+										recevoirEmail = :recevoirEmail
 									WHERE idUser =:id
 									');
 		$req->execute(array(
@@ -291,10 +292,24 @@ class CRUD{
 						'email' => $user -> getEmailUser(),
 						'pass' => $user -> getPassUser(),
 						'telephone' => $user -> getTelephoneUser(),
+						'recevoirEmail' => $user -> getRecevoirEmail(),
 						'id' => $user -> getIdUser()
 				)); 
 		return true; 
   }//fct
+	public function selectUsersForAlerte() {
+			$requete = $this -> bdd -> query ('SELECT * FROM user
+												WHERE recevoirEmail = 1
+										');
+			$users = array();		
+			if($requete ->rowCount() > 0){ 
+				while($tmp = $requete -> fetch()){
+						$users[] = new User($tmp);
+				}
+				return $users;
+			}else return null; 
+		}//fct
+
   
 /// autre methodes //
 	

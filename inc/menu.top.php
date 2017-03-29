@@ -14,14 +14,14 @@
                                 Liste
                             </a>
                         </li>
-                         <!--li>
-                            <a href="projet.php">
-                                Nouveau
-                            </a>
-                        </li-->
                         <li>
                             <a href="import.php">
                                 Importer
+                            </a>
+                        </li>
+						 <li>
+                            <a href="chart.php">
+                                graphes
                             </a>
                         </li>
 						 <li class="dropdown">

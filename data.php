@@ -50,13 +50,13 @@
 				<tr>
 					<td>No. Contrat</td>
 					<td>Aut. Contractante</td>
-					<td>Rap. Evaluation</td>
-					<td>Pub. Attribution</td>
+					<td>Reception DAO</td>
+					<td>Ouverture Plis</td>
+					<td>Evaluation</td>
+					<td>Attribution</td>
 					<td>Projet</td>
-					<td>App. Attribuaire</td>
+					<td>App Attr.</td>
 					<td>App AC</td>
-					<td>App ACGPMP</td>
-					<td>App MEF</td>
 					<td>Etat</td>
 					<td>Details</td>
 
@@ -79,26 +79,29 @@
 						
 						 $bgColor = '#a2d246';
 						 $msg = 'OK' ;
+						 $title = "Ce projet est dans les normes" ;
 						if ($res['DEPASSE'] == true) {
 							$bgColor = 'pink';
 							$msg = 'DEPASSE' ;
+							$title = $res['MESSAGE'] ;
 						} elseif ($res['ALERT'] == true) {
 							$bgColor = '#f19300';
 							$msg = 'A RISQUE' ;
+							$title = $res['MESSAGE'] ;
 						}
 
 						echo "
 							<tr>
 								<td>".$projet -> getNumContrat()."</td>
 								<td>".$projet -> getAutoriteContractante()."</td>
+								<td>".$projet -> getDateReceptionDAO()."</td>
+								<td>".$projet -> getDateOuverturePlis()."</td>
 								<td>".$projet -> getDateRapportEvaluation()."</td>
 								<td>".$projet -> getDatePublicationAttribution()."</td>
 								<td>".$projet -> getProjetCeContrat()."</td>
 								<td>".$projet -> getApprobationAttribuaire()."</td>
 								<td>".$projet -> getApprobationAC()."</td>
-								<td>".$projet -> getApprobationACGPMP()."</td>
-								<td>".$projet -> getApprobationMEF()."</td>
-								<td style ='background-color: $bgColor;'>".$msg."</td>
+								<td style ='background-color: $bgColor;' title ='$title'>".$msg."</td>
 								<td><a href='projet.php?id=$id'> Afficher </a></td>
 							</tr>
 						";

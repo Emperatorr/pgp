@@ -11,7 +11,6 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
     <!-- Bootstrap core CSS     -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -24,8 +23,6 @@
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="assets/css/demo.css" rel="stylesheet" />
-
-
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
@@ -59,16 +56,14 @@
 			$nomUser = ((isset($_POST['nomUser']) && !empty($_POST['nomUser'])) ? $_POST['nomUser'] : ((isset($user) && !empty($user)) ? $user -> getNomUser() : '' ));
 			$emailUser = ((isset($_POST['emailUser']) && !empty($_POST['emailUser'])) ? $_POST['emailUser'] : ((isset($user) && !empty($user)) ? $user -> getEmailUser() : '' ));
 			$telephoneUser = ((isset($_POST['telephoneUser']) && !empty($_POST['telephoneUser'])) ? $_POST['telephoneUser'] : ((isset($user) && !empty($user)) ? $user -> getTelephoneUser() : '' ));
+			$recevoirEmail = ((isset($_POST['recevoirEmail'])) ? $_POST['recevoirEmail'] : ((isset($user) && !empty($user)) ? $user -> getRecevoirEmail() : '0' ));
 			
-			
-
-
 			if(isset($_POST['action']) && $_POST['action'] =='Update'){
 				$user -> setPrenomUser($prenomUser);
 				$user -> setNomUser($nomUser);
 				$user -> setEmailUser($emailUser);
 				$user -> setTelephoneUser($telephoneUser);
-				
+				$user -> setRecevoirEmail($recevoirEmail);
 				$data_updated = $obj_bdd -> updateUser($user) ;
 				
 			if($data_updated == true){
@@ -118,6 +113,13 @@
                     <div class="input-group">
                         <input type="text" maxlength = '12' class="form-control" id="telephoneUser" name="telephoneUser" placeholder="Entrer votre telephone"  <?php echo"value='$telephoneUser'" ;?> >
                         <span class="input-group-addon"></span>
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label>Recevoir des alertes par email ?</label>
+                    <div class="input-group radio-button">	    
+                     <label><input type="radio" class="my_radio" name="recevoirEmail"  value ='1' id='alertOui' <?php if(isset($recevoirEmail) && $recevoirEmail == '1'){ echo "checked" ;}?> > Oui recevoir  </label>
+					 <label><input type="radio" class="my_radio" name="recevoirEmail"  value ='0' id='alertOui' <?php if(isset($recevoirEmail) && $recevoirEmail == '0'){ echo "checked" ;}?> > Non ne pas recevoir  </label>	
                     </div>
                 </div>
 				

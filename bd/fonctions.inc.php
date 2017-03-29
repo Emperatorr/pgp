@@ -83,7 +83,7 @@ function uploadFile($file, $nom_fichier, $chemin_stockage, $ext_autorisees, $max
 function processXML ($file_path, $obj_bdd) {
      $xml = simplexml_load_file ($file_path);
 
-    var_dump($xml);
+    // var_dump($xml);
      $nbr = 0 ;
      foreach($xml as $contrat) {
 
@@ -397,7 +397,80 @@ function etatProjet($id_projet,$obj_bdd) {
  
  $etat['TOTALJOUR'] = $totalJour ;
  return $etat;
-
 }
+
+function envoiEmail($email_destinateur,$objet_message,$contenu_message) { 
+	if(!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $email_destinateur)) {
+         $passage_ligne = "\r\n"; 
+         } else { 
+             $passage_ligne = "\n";
+        }
+		$boundary = "-----=".md5(rand());
+		
+        $header='From: "Notification"<gestion-projet@budget.gn>'.$passage_ligne;
+		$header.='Reply-To: lansanalsm@gmail.com'.$passage_ligne;
+		$header .= "MIME-Version: 1.0".$passage_ligne;
+		$header .='Content-Type: text/html; charset="UTF-8"'.$passage_ligne;
+		$header  ='Content-Transfer-Encoding: 8bit';
+		
+        $contenu_message = str_replace("\n.", "\n..", $contenu_message);
+       
+        $message = $passage_ligne."--".$boundary.$passage_ligne;
+		$message =$contenu_message;
+		$message.= $passage_ligne."--".$boundary."--".$passage_ligne;
+	  
+        return (mail($email_destinateur, $objet_message, $contenu_message, $header)) ;
+}//fin fonctin
+
+//chart
+
+function delaiTraitement() {
+	
+    require_once('Projet.php');
+    require('connection_bd.php');
+    require_once('CRUD.php');
+	$obj_bdd = new CRUD ($bdd); 
+    
+    $results = $obj_bdd -> selectProjetAll() ;
+	$nv_tab = array();
+	
+	$inf_60 = 100 ;
+	$inf_90 = 45 ;
+	$inf_120 = 50 ;
+	$sup_120 = 300 ;
+    
+	if($results != null) {
+			foreach ($results AS $projet) {
+				$id = $projet -> getIdProjet();
+				$res = etatProjet($id, $obj_bdd);
+
+				if (isset($res['TOTALJOUR']) &&  !empty($res['TOTALJOUR'])) {
+						if((int) $res['TOTALJOUR'] < 60 ) {
+								$inf_60 ++ ;
+						}
+						if((int) $res['TOTALJOUR'] < 90 ) {
+								$inf_90 ++ ;
+						}
+						if((int) $res['TOTALJOUR'] < 120 ) {
+							$inf_120 ++;
+						}
+						if( (int) $res['TOTALJOUR'] > 120 ) {
+							$sup_120 ++ ;
+						}
+					}
+	 
+				}
+
+			$nv_tab['inferieur60'] = $inf_60 ;
+			$nv_tab['inferieur90'] = $inf_90 ;
+			$nv_tab['inferieur120'] = $inf_120 ;
+			$nv_tab['superieur120'] = $sup_120 ;
+
+			return $nv_tab ;
+	  
+		} else {
+			return null;
+		}
+ }
 
 ?>
