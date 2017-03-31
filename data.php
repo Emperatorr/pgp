@@ -77,15 +77,15 @@
 						$id = $projet -> getIdProjet();
 						$res = etatProjet($id, $obj_bdd);
 						
-						 $bgColor = '#a2d246';
+						 $class = 'ok';
 						 $msg = 'OK' ;
 						 $title = "Ce projet est dans les normes" ;
 						if ($res['DEPASSE'] == true) {
-							$bgColor = 'pink';
+							$class = 'depasser';
 							$msg = 'DEPASSE' ;
 							$title = $res['MESSAGE'] ;
 						} elseif ($res['ALERT'] == true) {
-							$bgColor = '#f19300';
+							$class = 'alert';
 							$msg = 'A RISQUE' ;
 							$title = $res['MESSAGE'] ;
 						}
@@ -101,7 +101,7 @@
 								<td>".$projet -> getProjetCeContrat()."</td>
 								<td>".$projet -> getApprobationAttribuaire()."</td>
 								<td>".$projet -> getApprobationAC()."</td>
-								<td style ='background-color: $bgColor;' title ='$title'>".$msg."</td>
+								<td class ='$class' title ='$title'>".$msg."</td>
 								<td><a href='projet.php?id=$id'> Afficher </a></td>
 							</tr>
 						";

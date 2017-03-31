@@ -88,6 +88,7 @@ class CRUD{
 				);
 			return true;
 			}
+		
 		public function insertUser(User $user){
 			$req = $this -> bdd -> prepare(
 									'INSERT IGNORE INTO user (nomUser,prenomUser,emailUser,passUser,telephoneUser,dateInscription) 
@@ -297,6 +298,7 @@ class CRUD{
 				)); 
 		return true; 
   }//fct
+
 	public function selectUsersForAlerte() {
 			$requete = $this -> bdd -> query ('SELECT * FROM user
 												WHERE recevoirEmail = 1
@@ -310,17 +312,95 @@ class CRUD{
 			}else return null; 
 		}//fct
 
-  
-/// autre methodes //
-	
-/*incrementer le nombre de lecture d'une annonce
-  public function incrementeLectureAnnonce(Annonce $annonce){
-        $req = $this->bdd->prepare('UPDATE t_annonce SET nbVu=nbVu + 1 WHERE idAnnonce=:id');
-		$req->bindParam('id',$annonce ->getIdAnnonce(),PDO::PARAM_INT);
-		$req->execute(); 
+
+   /////
+  // fonction d'alerte'
+	////
+
+	public function insertAlert(Alert $alert){
+			$req = $this -> bdd -> prepare(
+									"INSERT IGNORE INTO alert (idAlert, dateAlert, typeAlert, idProjet, messageAlert) 
+											VALUES('', NOW(), :typeAlert, :idProjet, :messageAlert)
+								   ");
+					$req->execute(
+						array(
+							'typeAlert' => $alert -> getTypeAlert(),
+							'idProjet' => $alert -> getIdProjet(),
+							'messageAlert' => $alert -> getMessageAlert()
+						)
+					);
+			}
+
+	public function selectAlertAll() {
+			$requete = $this -> bdd ->query('SELECT * FROM alert
+											ORDER BY idProjet ASC
+										');	  
+			$results = array();		
+			if($requete ->rowCount() > 0){ //ya des resultat
+					while($tmp = $requete -> fetch()){
+						$results[] = new Alert($tmp);
+				}
+				return $results;
+			}else return null; 
+		}//fct
+
+	public function selectAlertById($id) {
+			$id = htmlspecialchars($id);
+			
+			$requete = $this -> bdd ->prepare('SELECT * FROM Alert
+												WHERE idAlert = :id
+												LIMIT 1
+												');
+			$requete->execute(array(
+							'id' => $id
+							));
+							
+			if($requete ->rowCount()>0){ 
+				$tmp = $requete -> fetch();
+				$Alert = new Alert($tmp);
+				return $Alert;
+			} else return null; 
+		}//fct
+
+		//selectionne les alertes d'un projet'
+		public function selectAlertByIdProjet($id) {
+			$id = htmlspecialchars($id);
+			
+			$requete = $this -> bdd ->prepare('SELECT * FROM Alert
+												WHERE idProjet = :id
+												');
+			$requete->execute(array(
+							'id' => $id
+							));
+			$results = array();				
+				if($requete ->rowCount() > 0){ //ya des resultat
+					while($tmp = $requete -> fetch()){
+						$results[] = new Alert($tmp);
+				}
+				return $results;
+			}else return null;
+		}//fct
+
+
+	//seule fonction de modification des infos et du password
+	  public function updateAlert(Alert $alert) {
+        $req = $this->bdd->prepare('UPDATE Alert
+									SET 
+										dateAlert = :dateAlert,	
+										typeAlert = :typeAlert, 
+										idProjet = :idProjet,
+										messageAlert = :messageAlert
+									WHERE idAlert =:id
+									');
+		$req->execute(array(
+						'dateAlert' => $alert -> getDateAlert(),
+						'typeAlert' => $alert -> getTypeAlert(),
+						'idProjet' => $alert -> getIdProjet(),
+						'messageAlert' => $alert -> getMessageAlert(),
+						'id' => $alert -> getIdAlert()
+				)); 
 		return true; 
   }//fct
-*/
 	
 }//class
 

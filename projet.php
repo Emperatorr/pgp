@@ -307,8 +307,10 @@
                 </div>
 				
 				<input type ='hidden' name = 'action' <?php echo"value='$action'" ;?> />
-
+                <a <?php echo "href='alertes.php?projet=$_SESSION[id]'"; ?> class="btn btn-info pull-right" style ="margin-left:10px;">Voir l'historique des alertes</a>
                 <input type="submit" name="submit" id="submit" value="Retour à la liste " class="btn btn-info pull-right">
+               
+           
             </div>
         </form>
 			

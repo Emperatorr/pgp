@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Mer 29 Mars 2017 à 12:07
+-- Généré le : Ven 31 Mars 2017 à 10:05
 -- Version du serveur: 5.5.16
 -- Version de PHP: 5.3.8
 
@@ -19,6 +19,35 @@ SET time_zone = "+00:00";
 --
 -- Base de données: `pgp`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `alert`
+--
+
+CREATE TABLE IF NOT EXISTS `alert` (
+  `idAlert` int(11) NOT NULL AUTO_INCREMENT,
+  `dateAlert` date NOT NULL,
+  `typeAlert` int(2) NOT NULL,
+  `idProjet` int(11) NOT NULL,
+  `messageAlert` varchar(250) NOT NULL,
+  PRIMARY KEY (`idAlert`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Contenu de la table `alert`
+--
+
+INSERT INTO `alert` (`idAlert`, `dateAlert`, `typeAlert`, `idProjet`, `messageAlert`) VALUES
+(1, '2017-03-30', 2, 2, 'le delai permis pour la date d''approbation AC de contrat est depassÃ©'),
+(2, '2017-03-30', 2, 3, 'le delai permis pour la date d''approbation ACGPMP de contrat est depassÃ©'),
+(3, '2017-03-30', 2, 4, 'le delai permis pour la date d''approbation MEF de contrat est depassÃ©'),
+(4, '2017-03-30', 1, 1, 'la date d''ouverture de ce projet n''a pas encore Ã©tÃ© fournie alors que le delai approche '),
+(5, '2017-03-30', 2, 2, 'le delai permis pour la date d''approbation AC de contrat est depassÃ©'),
+(6, '2017-03-30', 2, 3, 'le delai permis pour la date d''approbation ACGPMP de contrat est depassÃ©'),
+(7, '2017-03-30', 2, 4, 'le delai permis pour la date d''approbation MEF de contrat est depassÃ©'),
+(8, '2017-03-30', 1, 1, 'la date d''ouverture de ce projet n''a pas encore Ã©tÃ© fournie alors que le delai approche ');
 
 -- --------------------------------------------------------
 
@@ -51,14 +80,17 @@ CREATE TABLE IF NOT EXISTS `projet` (
   `commentaire` tinytext NOT NULL,
   `dateInsertion` datetime NOT NULL,
   PRIMARY KEY (`idProjet`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Contenu de la table `projet`
 --
 
 INSERT INTO `projet` (`idProjet`, `numContrat`, `autoriteContractante`, `description`, `beneficiaire`, `phase`, `montant`, `dateReceptionDAO`, `dateOuverturePlis`, `dateRapportEvaluation`, `datePublicationAttribution`, `projetCeContrat`, `approbationAttribuaire`, `approbationAC`, `approbationACGPMP`, `approbationMEF`, `totalJour`, `inferieur60`, `inferieur90`, `inferieur120`, `superieur120`, `commentaire`, `dateInsertion`) VALUES
-(1, 'C001', 'Dn Tech', 'Computerizing', 'Mef', 'Beginning', '500000000', '10/03/2017', '22/03/2017', '', '', '', '', '', '', '', NULL, '', '', '', '', 'A huge project for IT', '2017-03-28 23:31:24');
+(1, 'C001', 'Dn Tech', 'Computerizing', 'Mef', 'Beginning', '500000000', '24/03/2017', '', '', '', '', '', '', '', '', NULL, '', '', '', '', 'A huge project for IT', '2017-03-28 23:31:24'),
+(2, 'C001', 'Dn Tech', 'Computerizing', 'Mef', 'Beginning', '500000000', '10/03/2017', '17/03/2017', '25/03/2017', '03/04/2017', '12/04/2017', '20/04/2017', '', '', '', NULL, '', '', '', '', 'A huge project for IT', '2017-03-30 20:06:26'),
+(3, 'C002', 'Areeba GN', 'Cellphone', 'Governement', 'Advanced', '6000000000', '20/06/2002', '20/06/2002', '20/06/2002', '20/06/2002', '20/06/2002', '20/06/2002', '20/06/2002', '', '', NULL, '', '', '', '', 'Super', '2017-03-30 20:06:26'),
+(4, 'C003', 'Dn Tech', 'IT Company', 'Mef', 'Final', '200000000', '12/01/2017', '12/01/2017', '05/04/1837', '12/01/2017', '05/04/1996', '06/04/1938', '31/03/1965', '07/03/1965', '', NULL, '', '', '', '', 'Great', '2017-03-30 20:06:26');
 
 -- --------------------------------------------------------
 
