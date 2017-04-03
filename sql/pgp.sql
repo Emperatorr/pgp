@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Lun 03 Avril 2017 à 18:37
+-- Généré le : Lun 03 Avril 2017 à 22:37
 -- Version du serveur: 5.5.16
 -- Version de PHP: 5.3.8
 
@@ -33,21 +33,18 @@ CREATE TABLE IF NOT EXISTS `alert` (
   `idProjet` int(11) NOT NULL,
   `messageAlert` varchar(250) NOT NULL,
   PRIMARY KEY (`idAlert`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 
 --
 -- Contenu de la table `alert`
 --
 
 INSERT INTO `alert` (`idAlert`, `dateAlert`, `typeAlert`, `idProjet`, `messageAlert`) VALUES
-(1, '2017-03-30', 2, 2, 'le delai permis pour la date d''approbation AC de contrat est depassÃ©'),
-(2, '2017-03-30', 2, 3, 'le delai permis pour la date d''approbation ACGPMP de contrat est depassÃ©'),
-(3, '2017-03-30', 2, 4, 'le delai permis pour la date d''approbation MEF de contrat est depassÃ©'),
-(4, '2017-03-30', 1, 1, 'la date d''ouverture de ce projet n''a pas encore Ã©tÃ© fournie alors que le delai approche '),
-(5, '2017-03-30', 2, 2, 'le delai permis pour la date d''approbation AC de contrat est depassÃ©'),
-(6, '2017-03-30', 2, 3, 'le delai permis pour la date d''approbation ACGPMP de contrat est depassÃ©'),
-(7, '2017-03-30', 2, 4, 'le delai permis pour la date d''approbation MEF de contrat est depassÃ©'),
-(8, '2017-03-30', 1, 1, 'la date d''ouverture de ce projet n''a pas encore Ã©tÃ© fournie alors que le delai approche ');
+(9, '2017-04-03', 1, 1, 'la date d''ouverture de ce projet n''a pas encore Ã©tÃ© fournie alors que le delai approche '),
+(10, '2017-04-03', 2, 1, 'le delai permis pour la date d''ouverture est depassÃ©'),
+(11, '2017-04-03', 2, 1, 'le delai permis pour la date d''ouverture est depassÃ©'),
+(12, '2017-04-03', 1, 1, 'la date d''evaluation de ce projet n''a pas encore Ã©tÃ© fournie alors que le delai approche '),
+(13, '2017-04-03', 2, 1, 'le delai permis pour la date d''approbation AC de contrat est depassÃ©');
 
 -- --------------------------------------------------------
 
@@ -83,7 +80,14 @@ CREATE TABLE IF NOT EXISTS `projet` (
   `commentaire` tinytext NOT NULL,
   `dateInsertion` datetime NOT NULL,
   PRIMARY KEY (`idProjet`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+
+--
+-- Contenu de la table `projet`
+--
+
+INSERT INTO `projet` (`idProjet`, `autoriteContractante`, `description`, `sourceFinancement`, `typeProcedure`, `dateReceptionDAO`, `dateAnoSurDAO`, `datePublicationDAO`, `dateOuverturePlis`, `dateRapportEvaluation`, `dateAnoSurRapEval`, `dateNotifProvisoir`, `projetNegoContrat`, `dateAnoProjetContrat`, `attribuaire`, `montant`, `approbationAC`, `approbationACGPMP`, `approbationMEF`, `totalJour`, `inferieur60`, `inferieur90`, `inferieur120`, `superieur120`, `commentaire`, `dateInsertion`) VALUES
+(1, 'MEF', 'ACHAT', 'BND', 'AOI', '20/03/2017', '25/03/2017', '30/03/2017', '30/03/2017', '31/03/2017', '01/04/2017', '01/04/2017', '31/03/2017', '30/03/2017', '', '5000000000', '', '', '', NULL, '', '', '', '', 'HUGE', '2017-04-03 21:57:21');
 
 -- --------------------------------------------------------
 
