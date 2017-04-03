@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Ven 31 Mars 2017 à 10:05
+-- Généré le : Lun 03 Avril 2017 à 18:37
 -- Version du serveur: 5.5.16
 -- Version de PHP: 5.3.8
 
@@ -57,18 +57,21 @@ INSERT INTO `alert` (`idAlert`, `dateAlert`, `typeAlert`, `idProjet`, `messageAl
 
 CREATE TABLE IF NOT EXISTS `projet` (
   `idProjet` int(11) NOT NULL AUTO_INCREMENT,
-  `numContrat` varchar(20) NOT NULL,
   `autoriteContractante` varchar(20) NOT NULL,
   `description` tinytext NOT NULL,
-  `beneficiaire` varchar(20) NOT NULL,
-  `phase` varchar(20) NOT NULL,
-  `montant` varchar(25) NOT NULL,
+  `sourceFinancement` varchar(60) NOT NULL,
+  `typeProcedure` varchar(20) NOT NULL,
   `dateReceptionDAO` varchar(20) NOT NULL,
+  `dateAnoSurDAO` varchar(20) NOT NULL,
+  `datePublicationDAO` varchar(20) NOT NULL,
   `dateOuverturePlis` varchar(20) NOT NULL,
   `dateRapportEvaluation` varchar(20) NOT NULL,
-  `datePublicationAttribution` varchar(20) NOT NULL,
-  `projetCeContrat` varchar(20) NOT NULL,
-  `approbationAttribuaire` varchar(20) NOT NULL,
+  `dateAnoSurRapEval` varchar(20) NOT NULL,
+  `dateNotifProvisoir` varchar(20) NOT NULL,
+  `projetNegoContrat` varchar(20) NOT NULL,
+  `dateAnoProjetContrat` varchar(20) NOT NULL,
+  `attribuaire` varchar(20) NOT NULL,
+  `montant` varchar(25) NOT NULL,
   `approbationAC` varchar(20) NOT NULL,
   `approbationACGPMP` varchar(20) NOT NULL,
   `approbationMEF` varchar(20) NOT NULL,
@@ -80,17 +83,7 @@ CREATE TABLE IF NOT EXISTS `projet` (
   `commentaire` tinytext NOT NULL,
   `dateInsertion` datetime NOT NULL,
   PRIMARY KEY (`idProjet`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
-
---
--- Contenu de la table `projet`
---
-
-INSERT INTO `projet` (`idProjet`, `numContrat`, `autoriteContractante`, `description`, `beneficiaire`, `phase`, `montant`, `dateReceptionDAO`, `dateOuverturePlis`, `dateRapportEvaluation`, `datePublicationAttribution`, `projetCeContrat`, `approbationAttribuaire`, `approbationAC`, `approbationACGPMP`, `approbationMEF`, `totalJour`, `inferieur60`, `inferieur90`, `inferieur120`, `superieur120`, `commentaire`, `dateInsertion`) VALUES
-(1, 'C001', 'Dn Tech', 'Computerizing', 'Mef', 'Beginning', '500000000', '24/03/2017', '', '', '', '', '', '', '', '', NULL, '', '', '', '', 'A huge project for IT', '2017-03-28 23:31:24'),
-(2, 'C001', 'Dn Tech', 'Computerizing', 'Mef', 'Beginning', '500000000', '10/03/2017', '17/03/2017', '25/03/2017', '03/04/2017', '12/04/2017', '20/04/2017', '', '', '', NULL, '', '', '', '', 'A huge project for IT', '2017-03-30 20:06:26'),
-(3, 'C002', 'Areeba GN', 'Cellphone', 'Governement', 'Advanced', '6000000000', '20/06/2002', '20/06/2002', '20/06/2002', '20/06/2002', '20/06/2002', '20/06/2002', '20/06/2002', '', '', NULL, '', '', '', '', 'Super', '2017-03-30 20:06:26'),
-(4, 'C003', 'Dn Tech', 'IT Company', 'Mef', 'Final', '200000000', '12/01/2017', '12/01/2017', '05/04/1837', '12/01/2017', '05/04/1996', '06/04/1938', '31/03/1965', '07/03/1965', '', NULL, '', '', '', '', 'Great', '2017-03-30 20:06:26');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 

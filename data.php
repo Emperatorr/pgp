@@ -48,15 +48,17 @@
 			<table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
 			<thead style='background-color:#D6EAF8;'>
 				<tr>
-					<td>No. Contrat</td>
+				  <td>ID</td>
 					<td>Aut. Contractante</td>
+					<td>S. Financement</td>
+					<td>Type</td>
 					<td>Reception DAO</td>
+					<td>ANO sur DAO</td>
+					<td>Publication DAO</td>
 					<td>Ouverture Plis</td>
-					<td>Evaluation</td>
-					<td>Attribution</td>
-					<td>Projet</td>
-					<td>App Attr.</td>
-					<td>App AC</td>
+					<td>Rap. Eval.</td>
+					<td>ANO sur Rap. Eval.</td>
+					<td>Notif Prov.</td>
 					<td>Etat</td>
 					<td>Details</td>
 
@@ -92,15 +94,17 @@
 
 						echo "
 							<tr>
-								<td>".$projet -> getNumContrat()."</td>
+								<td>".$projet -> getIdProjet()."</td>
 								<td>".$projet -> getAutoriteContractante()."</td>
+								<td>".$projet -> getSourceFinancement()."</td>
+								<td>".$projet -> getTypeProcedure()."</td>
 								<td>".$projet -> getDateReceptionDAO()."</td>
+								<td>".$projet -> getDateAnoSurDAO()."</td>
+								<td>".$projet -> getDatePublicationDAO()."</td>
 								<td>".$projet -> getDateOuverturePlis()."</td>
 								<td>".$projet -> getDateRapportEvaluation()."</td>
-								<td>".$projet -> getDatePublicationAttribution()."</td>
-								<td>".$projet -> getProjetCeContrat()."</td>
-								<td>".$projet -> getApprobationAttribuaire()."</td>
-								<td>".$projet -> getApprobationAC()."</td>
+								<td>".$projet -> getDateAnoSurRapEval()."</td>
+								<td>".$projet -> getDateNotifProvisoir()."</td>
 								<td class ='$class' title ='$title'>".$msg."</td>
 								<td><a href='projet.php?id=$id'> Afficher </a></td>
 							</tr>

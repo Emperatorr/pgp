@@ -2,18 +2,21 @@
 class Projet {
 
 	private $idProjet ;
-	private $numContrat ; 
 	private $autoriteContractante ; 
 	private $description ; 
-	private $beneficiaire ; 
-	private $phase ; 
-	private $montant ;
-	private $dateReceptionDAO; 
+	private $sourceFinancement ; 
+	private $typeProcedure ; 
+	private $dateReceptionDAO ; 
+	private $dateAnoSurDAO ;
+	private $datePublicationDAO; 
 	private $dateOuverturePlis ; 
 	private $dateRapportEvaluation ; 
-	private $datePublicationAttribution ;
-	private $projetCeContrat ;
-	private $approbationAttribuaire ;
+	private $dateAnoSurRapEval ;
+	private $dateNotifProvisoir ;
+	private $projetNegoContrat ;
+	private $dateAnoProjetContrat ;
+	private $attribuaire ;
+	private $montant ;
 	private $approbationAC ;
 	private $approbationACGPMP ;
 	private $approbationMEF ;
@@ -27,19 +30,22 @@ class Projet {
 	
 	
 	// les getteurs
-	public function  getIdProjet  () { return $this ->  idProjet; }
-	public function  getNumContrat  () { return $this ->  numContrat; }
-	public function  getAutoriteContractante  () { return $this ->  autoriteContractante; }
-	public function  getDescription  () { return $this ->  description; }
-	public function  getBeneficiaire  () { return $this ->  beneficiaire; }
-	public function  getPhase  () { return $this ->  phase; }
-	public function  getMontant  () { return $this ->  montant; }
-	public function  getDateReceptionDAO  () { return $this ->  dateReceptionDAO; }
-	public function  getDateOuverturePlis  () { return $this ->  dateOuverturePlis; }
-	public function  getDateRapportEvaluation  () { return $this ->  dateRapportEvaluation; }
-	public function  getDatePublicationAttribution  () { return $this ->  datePublicationAttribution; }
-	public function getProjetCeContrat() { return $this ->  projetCeContrat ; }
-	public function getApprobationAttribuaire() { return $this -> approbationAttribuaire ; }
+	public function getIdProjet () { return $this -> idProjet; }
+	public function getSourceFinancement () { return $this -> sourceFinancement; }
+	public function getAutoriteContractante () { return $this -> autoriteContractante; }
+	public function getDescription () { return $this -> description; }
+	public function getTypeProcedure () { return $this -> typeProcedure; }
+	public function getDateReceptionDAO () { return $this -> dateReceptionDAO; }
+	public function getDateAnoSurDAO () { return $this -> dateAnoSurDAO; }
+	public function getDatePublicationDAO () { return $this -> datePublicationDAO; }
+	public function getDateOuverturePlis () { return $this -> dateOuverturePlis; }
+	public function getDateRapportEvaluation () { return $this -> dateRapportEvaluation; }
+	public function getDateAnoSurRapEval () { return $this -> dateAnoSurRapEval; }
+	public function getDateNotifProvisoir () { return $this -> dateNotifProvisoir; }
+	public function getprojetNegoContrat() { return $this -> projetNegoContrat ; }
+	public function getDateAnoProjetContrat() { return $this -> dateAnoProjetContrat ; }
+	public function getAttribuaire() { return $this -> attribuaire ; }
+	public function getMontant() { return $this -> montant ; }
 	public function getApprobationAC() { return $this -> approbationAC ; }
 	public function getApprobationACGPMP() { return $this -> approbationACGPMP ; }
 	public function getApprobationMEF() { return $this -> approbationMEF ; }
@@ -49,40 +55,44 @@ class Projet {
 	public function getInferieur120() { return $this -> inferieur120 ; }
 	public function getSuperieur120() { return $this -> superieur120 ; }
 	public function getCommentaire() { return $this -> commentaire ; }
-	public function getDateInsertion() { return $this ->  dateInsertion ; }
+	public function getDateInsertion() { return $this -> dateInsertion ; }
 	
 	//les setters
 	public function setIdProjet($p) { $this -> idProjet = $p ; }
-	public function setNumContrat($p) { $this -> numContrat = $p ; }
+	public function setSourceFinancement($p) { $this -> sourceFinancement = $p ; }
 	public function setAutoriteContractante($p) { $this -> autoriteContractante = $p ; }
 	public function setDescription($p) { $this -> description = $p ; }
-	public function setBeneficiaire($p) { $this -> beneficiaire = $p ; }
-	public function setPhase($p) { $this -> phase = $p ; }
-	public function setMontant($p) { $this -> montant = $p ; }
+	public function setTypeProcedure($p) { $this -> typeProcedure = $p ; }
 	public function setDateReceptionDAO($p) { $this -> dateReceptionDAO = $p ; }
+	public function setDateAnoSurDAO($p) { $this -> dateAnoSurDAO = $p ; }
+	public function setDatePublicationDAO($p) { $this -> datePublicationDAO = $p ; }
 	public function setDateOuverturePlis($p) { $this -> dateOuverturePlis = $p ; }
 	public function setDateRapportEvaluation($p) { $this -> dateRapportEvaluation = $p ; }
-	public function setDatePublicationAttribution($p) { $this -> datePublicationAttribution = $p ; }
-	public function setProjetCeContrat($p) { $this -> projetCeContrat = $p ; }
-	public function setApprobationAttribuaire($p)  { $this -> approbationAttribuaire  = $p ; }
-	public function setApprobationAC($p) {  $this -> approbationAC = $p ; }
-	public function setapprobationACGPMP($p) {  $this -> approbationACGPMP  = $p ; }
-	public function setApprobationMEF($p) { $this -> approbationMEF  = $p ; }
-	public function setTotalJour($p) { $this -> totalJour  = $p ; }
-	public function setInferieur60($p) { $this -> inferieur60  = $p ; }
-	public function setInferieur90($p) { $this -> inferieur90  = $p ; }
-  public function setInferieur120($p) { $this -> inferieur120  = $p ; }
-	public function setSuperieur120($p) { $this -> superieur120  = $p ; }
-	public function setCommentaire($p) { $this -> commentaire  = $p ; }
+	public function setDateAnoSurRapEval($p) { $this -> dateAnoSurRapEval = $p ; }
+	public function setDateNotifProvisoir($p) { $this -> dateNotifProvisoir = $p ; }
+	
+	public function setprojetNegoContrat($p) { $this -> projetNegoContrat = $p ; }
+	public function setDateAnoProjetContrat($p) { $this -> setDateAnoProjetContrat = $p ;}
+	public function setAttribuaire($p) { $this -> attribuaire = $p ; }
+	public function setMontant($p) { $this -> montant = $p ; }
+	public function setApprobationAC($p) { $this -> approbationAC = $p ; }
+	public function setapprobationACGPMP($p) { $this -> approbationACGPMP = $p ; }
+	public function setApprobationMEF($p) { $this -> approbationMEF = $p ; }
+	public function setTotalJour($p) { $this -> totalJour = $p ; }
+	public function setInferieur60($p) { $this -> inferieur60 = $p ; }
+	public function setInferieur90($p) { $this -> inferieur90 = $p ; }
+ public function setInferieur120($p) { $this -> inferieur120 = $p ; }
+	public function setSuperieur120($p) { $this -> superieur120 = $p ; }
+	public function setCommentaire($p) { $this -> commentaire = $p ; }
 	public function setDateInsertion($p) { $this -> dateInsertion = $p ; }
 
 	public function __construct(){
-	   if(func_num_args() >0)
-		  $this -> initialiseProjet(func_get_arg(0));
+	  if(func_num_args() >0)
+		 $this -> initialiseProjet(func_get_arg(0));
 	}
 	
 	private function initialiseProjet(array $donnee){
-		$this -> hydrate($donnee);   
+		$this -> hydrate($donnee);  
 	}
 	
 	//approbationACGPMP d'arrosage
@@ -90,7 +100,7 @@ class Projet {
 		foreach ($tab as $cle => $valeur){
 				$methode = 'set'.ucfirst($cle);
 				if (method_exists($this, $methode)){
-				   	$this -> $methode($valeur);
+				  	$this -> $methode($valeur);
 				}
 			}
 	}

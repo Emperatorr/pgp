@@ -11,79 +11,87 @@ class CRUD{
 
 	public function insertProjet(Projet $projet) {
 				$req = $this -> bdd -> prepare("INSERT IGNORE INTO projet (
-																					idProjet,
-																					numContrat,
-																					autoriteContractante,
-																					description,
-																					beneficiaire,
-																					phase,
-																					montant,
-																					dateReceptionDAO,
-																					dateOuverturePlis,
-																					dateRapportEvaluation,
-																					datePublicationAttribution,
-																					projetCeContrat,
-																					approbationAttribuaire,
-																					approbationAC,
-																					approbationACGPMP,
-																					approbationMEF,
-																					totalJour,
-																					inferieur60,
-																					inferieur90,
-																					inferieur120,
-																					superieur120,
-																					commentaire,
-																					dateInsertion
+																				 idProjet,
+																				 autoriteContractante,
+																				 description,
+																				 sourceFinancement,
+																				 typeProcedure,
+																				 dateReceptionDAO,
+																				 dateAnoSurDAO,
+																				 datePublicationDAO, 
+																				 dateOuverturePlis, 
+																				 dateRapportEvaluation, 
+																				 dateAnoSurRapEval,
+																				 dateNotifProvisoir,
+																				 projetNegoContrat,
+																				 dateAnoProjetContrat, 
+																				 attribuaire,
+																				 montant,
+																				 approbationAC,
+																				 approbationACGPMP, 
+																				 approbationMEF,
+																				 totalJour, 
+																				 inferieur60, 
+																				 inferieur90, 
+																				 inferieur120, 
+																				 superieur120, 
+																				 commentaire, 
+																				 dateInsertion 
 																				)
-															VALUES(
-																			'',
-																			:numContrat,
+															VALUES( '',
 																			:autoriteContractante,
 																			:description,
-																			:beneficiaire,
-																			:phase,
-																			:montant,
+																			:sourceFinancement,
+																			:typeProcedure,
 																			:dateReceptionDAO,
-																			:dateOuverturePlis,
-																			:dateRapportEvaluation,
-																			:datePublicationAttribution,
-																			:projetCeContrat,
-																			:approbationAttribuaire,
+																			:dateAnoSurDAO,
+																			:datePublicationDAO, 
+																			:dateOuverturePlis, 
+																			:dateRapportEvaluation, 
+																			:dateAnoSurRapEval,
+																			:dateNotifProvisoir,
+																			:projetNegoContrat,
+																			:dateAnoProjetContrat, 
+																			:attribuaire,
+																			:montant,
 																			:approbationAC,
-																			:approbationACGPMP,
+																			:approbationACGPMP, 
 																			:approbationMEF,
-																			:totalJour,
-																			:inferieur60,
-																			:inferieur90,
-																			:inferieur120,
-																			:superieur120,
-																			:commentaire,
+																			:totalJour, 
+																			:inferieur60, 
+																			:inferieur90, 
+																			:inferieur120, 
+																			:superieur120, 
+																			:commentaire, 
 																			NOW()
 																)
 							");
 				$req->execute(
 					array(
-							'numContrat' => $projet -> getNumContrat(),
-							'autoriteContractante' => $projet -> getAutoriteContractante(),
-							'description' => $projet -> getDescription(),
-							'beneficiaire' => $projet -> getBeneficiaire(),
-							'phase' => $projet -> getPhase(),
-							'montant' => $projet -> getMontant(),
-							'dateReceptionDAO' => $projet -> getDateReceptionDAO(),
-							'dateOuverturePlis' => $projet -> getDateOuverturePlis(),
-							'dateRapportEvaluation' => $projet -> getDateRapportEvaluation(),
-							'datePublicationAttribution' => $projet -> getDatePublicationAttribution(),
-							'projetCeContrat' => $projet -> getProjetCeContrat(),
-							'approbationAttribuaire' => $projet -> getApprobationAttribuaire(),
-							'approbationAC' => $projet -> getApprobationAC(),
-							'approbationACGPMP' => $projet -> getApprobationACGPMP(),
-							'approbationMEF' => $projet -> getApprobationMEF(),
-							'totalJour' => $projet -> getTotalJour(),
-							'inferieur60' => $projet -> getInferieur60(),
-							'inferieur90' => $projet -> getInferieur90(),
-							'inferieur120' => $projet -> getInferieur120(),
-							'superieur120' => $projet -> getSuperieur120(),
-							'commentaire' => $projet -> getCommentaire()
+							'autoriteContractante' => $projet -> getautoriteContractante(),
+							'description' => $projet -> getdescription(),
+							'sourceFinancement' => $projet -> getsourceFinancement(),
+							'typeProcedure' => $projet -> gettypeProcedure(),
+							'dateReceptionDAO' => $projet -> getdateReceptionDAO(),
+							'dateAnoSurDAO' => $projet -> getdateAnoSurDAO(),
+							'datePublicationDAO' => $projet -> getdatePublicationDAO(), 
+							'dateOuverturePlis' => $projet -> getdateOuverturePlis(), 
+							'dateRapportEvaluation' => $projet -> getdateRapportEvaluation(), 
+							'dateAnoSurRapEval' => $projet -> getdateAnoSurRapEval(),
+							'dateNotifProvisoir' => $projet -> getdateNotifProvisoir(),
+							'projetNegoContrat' => $projet -> getprojetNegoContrat(),
+							'dateAnoProjetContrat' => $projet -> getdateAnoProjetContrat(), 
+							'attribuaire' => $projet -> getattribuaire(),
+							'montant' => $projet -> getmontant(),
+							'approbationAC' => $projet -> getapprobationAC(),
+							'approbationACGPMP' => $projet -> getapprobationACGPMP(), 
+							'approbationMEF' => $projet -> getapprobationMEF(),
+							'totalJour' => $projet -> gettotalJour(), 
+							'inferieur60' => $projet -> getinferieur60(), 
+							'inferieur90' => $projet -> getinferieur90(), 
+							'inferieur120' => $projet -> getinferieur120(), 
+							'superieur120' => $projet -> getsuperieur120(), 
+							'commentaire' => $projet -> getcommentaire ()
 					)
 				);
 			return true;
@@ -105,46 +113,25 @@ class CRUD{
 					);
 			}
 		
-		
-			public function insertSubstance(Substance $substance){
-				$req = $bdd->prepare ('INSERT IGNORE INTO substance (substance,nomSubstance)
-										VALUES (:substance,:nomSubstance) 
-									');
-				$req->execute(
-					array(
-						'substance' => $substance -> getSubstance(),
-						'nomSubstance' => $substance -> getNomSubstance()
-					)
-				);
-			}//fct
-			
-			public function insertPrefecture(Prefecture $prefecture){
-				$req = $bdd->prepare ('INSERT IGNORE INTO substance (idPrefecture,nomPrefecture)
-										VALUES (:idPrefecture, :nomPrefecture)
-									');
-				$req->execute(
-					array(
-						'idPrefecture' => $prefecture -> getIdPrefecture(),
-						'nomPrefecture' => $prefecture -> getNomPrefecture()
-					)
-				);
-		}//fct
 
 	public function updateProjet(Projet $projet) {
 					$req = $this->bdd->prepare('UPDATE projet 
 										SET 
-											numContrat = :numContrat,	
 											autoriteContractante = :autoriteContractante,
 											description = :description,
-											beneficiaire = :beneficiaire,
-											phase = :phase,
-											montant = :montant,
+											sourceFinancement = : sourceFinancement,
+											typeProcedure = : typeProcedure,
 											dateReceptionDAO = :dateReceptionDAO,
+											dateAnoSurDAO = :dateAnoSurDAO,
+											datePublicationDAO = :datePublicationDAO,
 											dateOuverturePlis = :dateOuverturePlis,
-											dateRapportEvaluation = :dateRapportEvaluation,
-											datePublicationAttribution = :datePublicationAttribution,
-											projetCeContrat = :projetCeContrat,
-											approbationAttribuaire = :approbationAttribuaire,
+											dateRapportEvaluation = :dateRapportEvaluation, 
+											dateAnoSurRapEval = :dateAnoSurRapEval,
+											dateNotifProvisoir = :dateNotifProvisoir,
+											projetNegoContrat = :projetNegoContrat,
+											dateAnoProjetContrat = :dateAnoProjetContrat,
+											attribuaire = :attribuaire,
+											montant = :montant,
 											approbationAC = :approbationAC,
 											approbationACGPMP = :approbationACGPMP,
 											approbationMEF = :approbationMEF,
@@ -154,39 +141,44 @@ class CRUD{
 											inferieur120 = :inferieur120,
 											superieur120 = :superieur120,
 											commentaire = :commentaire
-										WHERE idProjet = :idProjet
+										WHERE idProjet = :i
 										');
-			$req->execute( array(
-							'numContrat' => $projet -> getNumContrat(),
-							'autoriteContractante' => $projet -> getAutoriteContractante(),
-							'description' => $projet -> getDescription(),
-							'beneficiaire' => $projet -> getBeneficiaire(),
-							'phase' => $projet -> getPhase(),
-							'montant' => $projet -> getMontant(),
-							'dateReceptionDAO' => $projet -> getDateReceptionDAO(),
-							'dateOuverturePlis' => $projet -> getDateOuverturePlis(),
-							'dateRapportEvaluation' => $projet -> getDateRapportEvaluation(),
-							'datePublicationAttribution' => $projet -> getDatePublicationAttribution(),
-							'projetCeContrat' => $projet -> getProjetCeContrat(),
-							'approbationAttribuaire' => $projet -> getApprobationAttribuaire(),
-							'approbationAC' => $projet -> getApprobationAC(),
-							'approbationACGPMP' => $projet -> getApprobationACGPMP(),
-							'approbationMEF' => $projet -> getApprobationMEF(),
-							'totalJour' => $projet -> getTotalJour(),
-							'inferieur60' => $projet -> getInferieur60(),
-							'inferieur90' => $projet -> getInferieur90(),
-							'inferieur120' => $projet -> getInferieur120(),
-							'superieur120' => $projet -> getSuperieur120(),
-							'commentaire' => $projet -> getCommentaire(),
-							'idProjet'  => $projet -> getIdProjet()
-					)); 
+			$req->execute(
+				   array(
+									'autoriteContractante' => $projet -> getautoriteContractante(),
+									'description' => $projet -> getdescription(),
+									'sourceFinancement' => $projet -> getsourceFinancement(),
+									'typeProcedure' => $projet -> gettypeProcedure(),
+									'dateReceptionDAO' => $projet -> getdateReceptionDAO(),
+									'dateAnoSurDAO' => $projet -> getdateAnoSurDAO(),
+									'datePublicationDAO' => $projet -> getdatePublicationDAO(), 
+									'dateOuverturePlis' => $projet -> getdateOuverturePlis(), 
+									'dateRapportEvaluation' => $projet -> getdateRapportEvaluation(), 
+									'dateAnoSurRapEval' => $projet -> getdateAnoSurRapEval(),
+									'dateNotifProvisoir' => $projet -> getdateNotifProvisoir(),
+									'projetNegoContrat' => $projet -> getprojetNegoContrat(),
+									'dateAnoProjetContrat' => $projet -> getdateAnoProjetContrat(), 
+									'attribuaire' => $projet -> getattribuaire(),
+									'montant' => $projet -> getmontant(),
+									'approbationAC' => $projet -> getapprobationAC(),
+									'approbationACGPMP' => $projet -> getapprobationACGPMP(), 
+									'approbationMEF' => $projet -> getapprobationMEF(),
+									'totalJour' => $projet -> gettotalJour(), 
+									'inferieur60' => $projet -> getinferieur60(), 
+									'inferieur90' => $projet -> getinferieur90(), 
+									'inferieur120' => $projet -> getinferieur120(), 
+									'superieur120' => $projet -> getsuperieur120(), 
+									'commentaire' => $projet -> getcommentaire (),
+									'id' => $projet -> getIdProjet()
+					     )
+					  ); 
 			return true; 
 		}//fct
 
 	public function selectProjetAll() {
 			$requete = $this -> bdd ->query('SELECT * FROM projet
 											ORDER BY dateInsertion DESC
-										');	  
+										');	 
 			$results = array();		
 			if($requete ->rowCount()>0){ //ya des resultat
 					while($tmp = $requete -> fetch()){
@@ -277,7 +269,7 @@ class CRUD{
 			
 		//seule fonction de modification des infos et du password
 	public function updateUser(User $user) {
-        $req = $this->bdd->prepare('UPDATE user 
+  $req = $this->bdd->prepare('UPDATE user 
 									SET 
 										nomUser = :nom,	
 										prenomUser = :prenom, 
@@ -297,7 +289,7 @@ class CRUD{
 						'id' => $user -> getIdUser()
 				)); 
 		return true; 
-  }//fct
+ }//fct
 
 	public function selectUsersForAlerte() {
 			$requete = $this -> bdd -> query ('SELECT * FROM user
@@ -313,15 +305,15 @@ class CRUD{
 		}//fct
 
 
-   /////
-  // fonction d'alerte'
+ /////
+ // fonction d'alerte'
 	////
 
 	public function insertAlert(Alert $alert){
 			$req = $this -> bdd -> prepare(
 									"INSERT IGNORE INTO alert (idAlert, dateAlert, typeAlert, idProjet, messageAlert) 
 											VALUES('', NOW(), :typeAlert, :idProjet, :messageAlert)
-								   ");
+								 ");
 					$req->execute(
 						array(
 							'typeAlert' => $alert -> getTypeAlert(),
@@ -334,7 +326,7 @@ class CRUD{
 	public function selectAlertAll() {
 			$requete = $this -> bdd ->query('SELECT * FROM alert
 											ORDER BY idProjet ASC
-										');	  
+										');	 
 			$results = array();		
 			if($requete ->rowCount() > 0){ //ya des resultat
 					while($tmp = $requete -> fetch()){
@@ -383,8 +375,8 @@ class CRUD{
 
 
 	//seule fonction de modification des infos et du password
-	  public function updateAlert(Alert $alert) {
-        $req = $this->bdd->prepare('UPDATE Alert
+	 public function updateAlert(Alert $alert) {
+  $req = $this->bdd->prepare('UPDATE Alert
 									SET 
 										dateAlert = :dateAlert,	
 										typeAlert = :typeAlert, 
@@ -400,7 +392,7 @@ class CRUD{
 						'id' => $alert -> getIdAlert()
 				)); 
 		return true; 
-  }//fct
+ }//fct
 	
 }//class
 

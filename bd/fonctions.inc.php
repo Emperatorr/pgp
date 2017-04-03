@@ -86,41 +86,48 @@ function processXML ($file_path, $obj_bdd) {
     // var_dump($xml);
      $nbr = 0 ;
      foreach($xml as $contrat) {
-
-        $numContrat = $contrat -> NumContrat ;
+        // $numContrat = $contrat -> NumContrat ;
+        $id = $contrat -> Id ;
         $autoriteContractante = $contrat -> AutContractante ;
-        $description = $contrat -> Description ;
-        $beneficiaire = $contrat -> Beneficiare ;
-        $phase = $contrat -> Phase ;
+        $description = $contrat -> DescripContrat ;
+        $sourceFinancement = $contrat -> SrcFinancement ;
+        $typeProcedure = $contrat -> TypePro ;
+        $dateReceptionDAO = $contrat -> RecepDAODNMP ;
+        $dateAnoSurDAO =  $contrat ->  DatANOsurDAO ;
+        $datePublicationDAO =  $contrat -> DatPubDAO ;
+        $dateOuverturePlis = $contrat -> DatOuvPlis ;
+        $dateRapportEvaluation = $contrat -> DatRapEval ;
+        $dateAnoSurRapEval = $contrat -> DatANOsurRapEval ;
+        $dateNotifProvisoir = $contrat -> DatNotifProv ;
+        $projetNegoContrat = $contrat -> DatRecepNegoProCntrats ;
+        $dateAnoProjetContrat = $contrat -> Dateanoprojetdecontrat ;
+        $attribuaire = $contrat -> Attributaire ;
         $montant = $contrat -> Montant ;
-        $dateReceptionDAO = $contrat -> DateRecepDAO ;
-        $dateOuverturePlis = $contrat -> DateOuvPlis ;
-        $dateRapportEvaluation = $contrat -> DateRappEval ;
-        $datePublicationAttribution = $contrat  -> DatePubAttr ;
-        $projetCeContrat = $contrat -> ProjCeContrat ;
-        $approbationAttribuaire = $contrat -> ApprAttribuaire ;
-        $approbationAC  = $contrat -> ApprobationAC ;
-        $approbationACGPMP = $contrat -> ApprACGPMP ;
-        $approbationMEF = $contrat -> ApprMEF ;
-        $commentaire = $contrat -> Comment ;
+        $approbationAC  = $contrat -> SignatureAC ;
+        $approbationACGPMP = $contrat -> SignACGPMP ;
+        $approbationMEF = $contrat -> ApproMEF ;
+        $commentaire = $contrat -> Comments ;
         
         // creation du projet et insertion 
         $projet = new Projet ();
-        $projet -> setNumContrat($numContrat);
-        $projet -> setautoriteContractante($autoriteContractante);
-        $projet -> setdescription($description);
-        $projet -> setbeneficiaire($beneficiaire);
-        $projet -> setphase($phase);
+        $projet -> setAutoriteContractante($autoriteContractante);
+        $projet -> setDescription($description);
+        $projet -> setSourceFinancement($sourceFinancement);
+        $projet -> setTypeProcedure($typeProcedure);
+        $projet -> setDateReceptionDAO($dateReceptionDAO);
+        $projet -> setDateAnoSurDAO($dateAnoSurDAO);
+        $projet -> setDatePublicationDAO($datePublicationDAO);
+        $projet -> setDateOuverturePlis($dateOuverturePlis);
+        $projet -> setDateRapportEvaluation($dateRapportEvaluation);
+        $projet -> setDateAnoSurRapEval($dateAnoSurRapEval);
+        $projet -> setDateNotifProvisoir($dateNotifProvisoir);
+        $projet -> setProjetNegoContrat($projetNegoContrat);
+        $projet -> setDateAnoProjetContrat($dateAnoProjetContrat);
+        $projet -> setAttribuaire($attribuaire);
         $projet -> setmontant($montant);
-        $projet -> setdateReceptionDAO($dateReceptionDAO);
-        $projet -> setdateOuverturePlis($dateOuverturePlis);
-        $projet -> setdateRapportEvaluation($dateRapportEvaluation);
-        $projet -> setdatePublicationAttribution($datePublicationAttribution);
-        $projet -> setprojetCeContrat($projetCeContrat);
-        $projet -> setapprobationAttribuaire($approbationAttribuaire);
-        $projet -> setapprobationAC($approbationAC);
-        $projet -> setapprobationACGPMP($approbationACGPMP);
-        $projet -> setapprobationMEF($approbationMEF);
+        $projet -> setApprobationAC($approbationAC);
+        $projet -> setApprobationACGPMP($approbationACGPMP);
+        $projet -> setApprobationMEF($approbationMEF);
         $projet -> setCommentaire($commentaire);
 
         $obj_bdd -> insertProjet($projet) ;
@@ -145,45 +152,16 @@ function etatProjet($id_projet,$obj_bdd) {
     $dateReceptionDAO = DateTime::createFromFormat($format, $projet -> getDateReceptionDAO());
     $dateOuverturePlis = DateTime::createFromFormat($format, $projet -> getDateOuverturePlis());
     $dateRapportEvaluation = DateTime::createFromFormat($format, $projet -> getDateRapportEvaluation());
-    $datePublicationAttribution = DateTime::createFromFormat($format, $projet -> getDatePublicationAttribution());
-    $projetCeContrat = DateTime::createFromFormat($format, $projet -> getProjetCeContrat());
-    $approbationAttribuaire = DateTime::createFromFormat($format,$projet -> getApprobationAttribuaire());
+    $dateAnoSurRapEval = DateTime::createFromFormat($format, $projet -> getDateAnoSurRapEval());
+    $projetCeContrat = DateTime::createFromFormat($format, $projet -> getProjetNegoContrat());
+    $approbationAttribuaire = DateTime::createFromFormat($format,$projet -> getDateAnoProjetContrat());
     $approbationAC = DateTime::createFromFormat($format, $projet -> getApprobationAC());
     $approbationACGPMP = DateTime::createFromFormat($format, $projet -> getApprobationACGPMP());
     $approbationMEF = DateTime::createFromFormat($format, $projet -> getApprobationMEF());
 
-    $reception_ouverture = array(
-    'autorise' => 10,
-    'alerte' => 5 
-    ) ;
-     $ouverture_evaluation = array(
-        'autorise' => 5,
-        'alerte' => 3 
-        ) ;
-    $evaluation_publlication = array(
-        'autorise' => 15,
-        'alerte' => 10 
-        );
-     $publlication_contrat = array(
-        'autorise' => 12,
-        'alerte' => 8 
-        ) ;
-     $contrat_attribuaire = array(
-        'autorise' => 12,
-        'alerte' => 8 
-        ) ;
-     $attribuaire_ac = array(
-        'autorise' => 20,
-        'alerte' => 5 
-        ) ;
-     $ac_acgpmp = array(
-        'autorise' => 40,
-        'alerte' => 25 
-        ) ;
-     $acgpmp_mef = array(
-        'autorise' => 40,
-        'alerte' => 25 
-        ) ;
+    // inclusion du fichier qui contient les intervales de date 
+    // entre les differentes etappes de traitement de etatProjet
+    require ('inc/date_interval.inc.php');
     
     if ($dateReceptionDAO != false ) {
         if($dateOuverturePlis == false ) {
@@ -237,7 +215,7 @@ function etatProjet($id_projet,$obj_bdd) {
             $totalJour += $interval_ouverture_today ;
 
            }else { // la date du rapport est fournie
-             if($datePublicationAttribution == false ) {
+             if($dateAnoSurRapEval == false ) {
                  $interval_rapport_today = date_diff($dateRapportEvaluation, $today) -> days ;
                 if($interval_rapport_today < $evaluation_publlication['autorise']) {
                  if($interval_rapport_today < $evaluation_publlication['alerte']) {
@@ -263,7 +241,7 @@ function etatProjet($id_projet,$obj_bdd) {
 
             } else { //la date de publication est fourni
                if($projetCeContrat == false) {
-                   $interval_publication_today = date_diff($datePublicationAttribution, $today) -> days ;
+                   $interval_publication_today = date_diff($datePublication, $today) -> days ;
                    if($interval_publication_today < $publlication_contrat['autorise']) {
                     if($interval_publication_today < $publlication_contrat['alerte']) {
                         //pas de blem ici
@@ -289,8 +267,8 @@ function etatProjet($id_projet,$obj_bdd) {
                } else { // la date du contrat est fourni
                 if($approbationAttribuaire == false) {
                     $interval_contrat_today = date_diff($projetCeContrat, $today) -> days ;
-                    if($interval_contrat_today < $contrat_attribiaire['autorise']) {
-                    if($interval_contrat_today < $contrat_attribiaire['alerte']) {
+                    if($interval_contrat_today < $contrat_attribuaire['autorise']) {
+                    if($interval_contrat_today < $contrat_attribuaire['alerte']) {
                         //pas de blem ici
                         $etat['OK'] = true;
 
