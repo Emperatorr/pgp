@@ -62,20 +62,23 @@
 
 			$projet = $obj_bdd -> selectProjetById($_SESSION['id']);
             $res = etatProjet($_SESSION['id'], $obj_bdd);
-            $totalJour = $res['TOTALJOUR'] ;
-			
-			$numContrat = ((isset($_POST['numContrat']) && !empty($_POST['numContrat'])) ? htmlspecialchars($_POST['numContrat']) : ((isset($projet) && !empty($projet)) ? $projet -> getNumContrat() : '' ));
+            $totalJour  = (int) $res['TOTALJOUR'] ;
+	
 			$autoriteContractante = ((isset($_POST['autoriteContractante']) && !empty($_POST['autoriteContractante'])) ? htmlspecialchars($_POST['autoriteContractante']) : ((isset($projet) && !empty($projet)) ? $projet -> getAutoriteContractante() : '' ));
             $description = ((isset($_POST['description']) && !empty($_POST['description'])) ? htmlspecialchars($_POST['description']) : ((isset($projet) && !empty($projet)) ? $projet -> getDescription() : '' ));
-            $beneficiaire = ((isset($_POST['beneficiaire']) && !empty($_POST['beneficiaire'])) ? htmlspecialchars($_POST['beneficiaire']) : ((isset($projet) && !empty($projet)) ? $projet -> getBeneficiaire() : '' ));
-            $phase = ((isset($_POST['phase']) && !empty($_POST['phase'])) ? htmlspecialchars($_POST['phase']) : ((isset($projet) && !empty($projet)) ? $projet -> getPhase() : '' ));
-            $montant = ((isset($_POST['montant']) && !empty($_POST['montant'])) ? htmlspecialchars($_POST['montant']) : ((isset($projet) && !empty($projet)) ? $projet -> getMontant() : '' ));
+            $sourceFinancement = ((isset($_POST['sourceFinancement']) && !empty($_POST['sourceFinancement'])) ? htmlspecialchars($_POST['sourceFinancement']) : ((isset($projet) && !empty($projet)) ? $projet -> getsourceFinancement() : '' ));
+            $typeProcedure = ((isset($_POST['typeProcedure']) && !empty($_POST['typeProcedure'])) ? htmlspecialchars($_POST['typeProcedure']) : ((isset($projet) && !empty($projet)) ? $projet -> gettypeProcedure() : '' ));
             $dateReceptionDAO = ((isset($_POST['dateReceptionDAO']) && !empty($_POST['dateReceptionDAO'])) ? htmlspecialchars($_POST['dateReceptionDAO']) : ((isset($projet) && !empty($projet)) ? $projet -> getDateReceptionDAO() : '' ));
+            $dateAnoSurDAO = ((isset($_POST['dateAnoSurDAO']) && !empty($_POST['dateAnoSurDAO'])) ? htmlspecialchars($_POST['dateAnoSurDAO']) : ((isset($projet) && !empty($projet)) ? $projet -> getDateAnoSurDAO() : '' ));
+            $datePublicationDAO = ((isset($_POST['datePublicationDAO']) && !empty($_POST['datePublicationDAO'])) ? htmlspecialchars($_POST['datePublicationDAO']) : ((isset($projet) && !empty($projet)) ? $projet -> getdatePublicationDAO() : '' ));
             $dateOuverturePlis = ((isset($_POST['dateOuverturePlis']) && !empty($_POST['dateOuverturePlis'])) ? htmlspecialchars($_POST['dateOuverturePlis']) : ((isset($projet) && !empty($projet)) ? $projet -> getDateOuverturePlis() : '' ));
             $dateRapportEvaluation = ((isset($_POST['dateRapportEvaluation']) && !empty($_POST['dateRapportEvaluation'])) ? htmlspecialchars($_POST['dateRapportEvaluation']) : ((isset($projet) && !empty($projet)) ? $projet -> getDateRapportEvaluation() : '' ));
-            $datePublicationAttribution = ((isset($_POST['datePublicationAttribution']) && !empty($_POST['datePublicationAttribution'])) ? htmlspecialchars($_POST['datePublicationAttribution']) : ((isset($projet) && !empty($projet)) ? $projet -> getDatePublicationAttribution() : '' ));
-            $projetCeContrat = ((isset($_POST['projetCeContrat']) && !empty($_POST['projetCeContrat'])) ? htmlspecialchars($_POST['projetCeContrat']) : ((isset($projet) && !empty($projet)) ? $projet -> getProjetCeContrat() : '' ));
-            $approbationAttribuaire = ((isset($_POST['approbationAttribuaire']) && !empty($_POST['approbationAttribuaire'])) ? htmlspecialchars($_POST['approbationAttribuaire']) : ((isset($projet) && !empty($projet)) ? $projet -> getApprobationAttribuaire() : '' ));
+            $dateAnoSurRapEval = ((isset($_POST['dateAnoSurRapEval']) && !empty($_POST['dateAnoSurRapEval'])) ? htmlspecialchars($_POST['dateAnoSurRapEval']) : ((isset($projet) && !empty($projet)) ? $projet -> getDateAnoSurRapEval() : '' ));
+            $dateNotifProvisoir = ((isset($_POST['dateNotifProvisoir']) && !empty($_POST['dateNotifProvisoir'])) ? htmlspecialchars($_POST['dateNotifProvisoir']) : ((isset($projet) && !empty($projet)) ? $projet -> getDateNotifProvisoir() : '' ));
+            $projetNegoContrat = ((isset($_POST['projetNegoContrat']) && !empty($_POST['projetNegoContrat'])) ? htmlspecialchars($_POST['projetNegoContrat']) : ((isset($projet) && !empty($projet)) ? $projet -> getProjetNegoContrat() : '' ));
+            $dateAnoProjetContrat = ((isset($_POST['dateAnoProjetContrat']) && !empty($_POST['dateAnoProjetContrat'])) ? htmlspecialchars($_POST['dateAnoProjetContrat']) : ((isset($projet) && !empty($projet)) ? $projet -> getDateAnoProjetContrat() : '' ));
+            $attribuaire = ((isset($_POST['attribuaire']) && !empty($_POST['attribuaire'])) ? htmlspecialchars($_POST['attribuaire']) : ((isset($projet) && !empty($projet)) ? $projet -> getattribuaire() : '' ));
+            $montant = ((isset($_POST['montant']) && !empty($_POST['montant'])) ? htmlspecialchars($_POST['montant']) : ((isset($projet) && !empty($projet)) ? $projet -> getMontant() : '' ));
             $approbationAC = ((isset($_POST['approbationAC']) && !empty($_POST['approbationAC'])) ? $_POST['approbationAC'] : ((isset($projet) && !empty($projet)) ? $projet -> getApprobationAC() : '' ));
             $approbationACGPMP = ((isset($_POST['approbationACGPMP']) && !empty($_POST['approbationACGPMP'])) ? htmlspecialchars($_POST['approbationACGPMP']) : ((isset($projet) && !empty($projet)) ? $projet -> getApprobationACGPMP() : '' ));
             $approbationMEF = ((isset($_POST['approbationMEF']) && !empty($_POST['approbationMEF'])) ? htmlspecialchars($_POST['approbationMEF']) : ((isset($projet) && !empty($projet)) ? $projet -> getApprobationMEF() : '' ));
@@ -94,18 +97,18 @@
 			if(isset($_POST['action']) && $_POST['action']){
                 
                 $projet = new Projet ();
-                $projet -> setNumContrat($numContrat);
+                // $projet -> setNumContrat($numContrat);
                 $projet -> setautoriteContractante($autoriteContractante);
                 $projet -> setdescription($description);
-                $projet -> setbeneficiaire($beneficiaire);
-                $projet -> setphase($phase);
+                $projet -> setsourceFinancement($sourceFinancement);
+                $projet -> settypeProcedure($typeProcedure);
                 $projet -> setmontant($montant);
                 $projet -> setdateReceptionDAO($dateReceptionDAO);
                 $projet -> setdateOuverturePlis($dateOuverturePlis);
                 $projet -> setdateRapportEvaluation($dateRapportEvaluation);
-                $projet -> setdatePublicationAttribution($datePublicationAttribution);
-                $projet -> setprojetCeContrat($projetCeContrat);
-                $projet -> setapprobationAttribuaire($approbationAttribuaire);
+                $projet -> setdatePublicationDAO($datePublicationDAO);
+                $projet -> setprojetNegoContrat($projetNegoContrat);
+                $projet -> setattribuaire($attribuaire);
                 $projet -> setapprobationAC($approbationAC);
                 $projet -> setapprobationACGPMP($approbationACGPMP);
                 $projet -> setapprobationMEF($approbationMEF);
@@ -155,14 +158,7 @@
 		?>
 		<form role="form" action = 'data.php' method='POST'>
             <div class="col-lg-8 center">
-				 <div class="form-group">
-                    <label for="numContrat">Numero du contrat</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="numContrat" id="numContrat" placeholder="numero du contrat"   <?php echo"value='$numContrat'" ;?> >
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-                    </div>
-                </div>
-				<div class="form-group">
+              <div class="form-group">
                     <label for="autoriteContractante">Autorité Contractante</label>
                     <div class="input-group">
                         <input type="text" class="form-control" name="autoriteContractante" id="autoriteContractante" placeholder="Autorité Contractante "   <?php echo"value='$autoriteContractante'" ;?> >
@@ -178,23 +174,16 @@
                 </div>
 				
 				<div class="form-group">
-                    <label for="beneficiaire">Beneficiaire</label>
+                    <label for="sourceFinancement">Source de financement</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="beneficiaire" id="beneficiaire" placeholder="Beneficiaire"   <?php echo"value='$beneficiaire'" ;?>>
+                        <input type="text" class="form-control" name="sourceFinancement" id="sourceFinancement" placeholder="sourceFinancement"   <?php echo"value='$sourceFinancement'" ;?>>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
 				<div class="form-group">
-                    <label for="phase">Phase</label>
+                    <label for="typeProcedure">type Procedure</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="phase" id="phase" placeholder="Phase"  <?php echo"value='$phase'" ;?> >
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
-                    </div>
-                </div>
-				<div class="form-group">
-                    <label for="montant">Montant</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="montant" id="montant" placeholder="Montant"   <?php echo"value='$montant'" ;?>>
+                        <input type="text" class="form-control" name="typeProcedure" id="typeProcedure" placeholder="typeProcedure"  <?php echo"value='$typeProcedure'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
@@ -205,13 +194,27 @@
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
+				 <div class="form-group">
+                    <label for="dateAnoSurDAO">Date Ano sur DAO</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="dateAnoSurDAO" id="dateAnoSurDAO" placeholder="date ano sur DAO"   <?php echo"value='$dateAnoSurDAO'" ;?> >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
                 <div class="form-group">
+                    <label for="datePublicationDAO">Date Publication DAO </label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="datePublicationDAO" id="datePublicationDAO"   <?php echo"value='$datePublicationDAO'" ;?> >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                 <div class="form-group">
                     <label for="dateOuverturePlis">Date Ouverture Plis</label>
                     <div class="input-group">
                         <input type="text" class="form-control" name="dateOuverturePlis" id="dateOuverturePlis"   <?php echo"value='$dateOuverturePlis'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
-                </div>
+                </div>               
                 <div class="form-group">
                     <label for="dateRapportEvaluation">Date Rapport Evaluation</label>
                     <div class="input-group">
@@ -219,24 +222,38 @@
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
+                 <div class="form-group">
+                    <label for="dateNotifProvisoir">Date Notification Provisoire</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="dateNotifProvisoir" id="dateNotifProvisoir"   <?php echo"value='$dateNotifProvisoir'" ;?> >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>  
+                 <div class="form-group">
+                    <label for="projetNegoContrat">Projet Ce Contrat</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="projetNegoContrat" id="projetNegoContrat"   <?php echo"value='$projetNegoContrat'" ;?> >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
                 <div class="form-group">
-                    <label for="datePublicationAttribution">Date Publication Attribution</label>
+                    <label for="dateAnoProjetContrat">Projet Ano Projet de Contrat</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="datePublicationAttribution" id="datePublicationAttribution"   <?php echo"value='$datePublicationAttribution'" ;?> >
+                        <input type="text" class="form-control" name="dateAnoProjetContrat" id="dateAnoProjetContrat"   <?php echo"value='$dateAnoProjetContrat'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
-                    <label for="projetCeContrat">Projet Ce Contrat</label>
+                    <label for="attribuaire">Attribuaire</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="projetCeContrat" id="projetCeContrat"   <?php echo"value='$projetCeContrat'" ;?> >
+                        <input type="text" class="form-control" name="attribuaire" id="attribuaire"   <?php echo"value='$attribuaire'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
-                 <div class="form-group">
-                    <label for="approbationAttribuaire">Approbation Attribuaire</label>
+                <div class="form-group">
+                    <label for="montant">Montant</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="approbationAttribuaire" id="approbationAttribuaire"   <?php echo"value='$approbationAttribuaire'" ;?> >
+                        <input type="text" class="form-control" name="montant" id="montant" placeholder="Montant"   <?php echo"value='$montant'" ;?>>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>

@@ -72,7 +72,7 @@ class Projet {
 	public function setDateNotifProvisoir($p) { $this -> dateNotifProvisoir = $p ; }
 	
 	public function setprojetNegoContrat($p) { $this -> projetNegoContrat = $p ; }
-	public function setDateAnoProjetContrat($p) { $this -> setDateAnoProjetContrat = $p ;}
+	public function setDateAnoProjetContrat($p) { $this -> dateAnoProjetContrat = $p ;}
 	public function setAttribuaire($p) { $this -> attribuaire = $p ; }
 	public function setMontant($p) { $this -> montant = $p ; }
 	public function setApprobationAC($p) { $this -> approbationAC = $p ; }
