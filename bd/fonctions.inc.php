@@ -533,7 +533,7 @@ function etatProjet($id_projet,$obj_bdd) {
         } // fin else ouverture
     } // date receptionDAO
  
- $etat['TOTALJOUR'] = $totalJour ;
+// $etat['TOTALJOUR'] = $totalJour ;
  return $etat;
 }
 
@@ -612,4 +612,57 @@ function delaiTraitement() {
 		}
  }
 
+ function totalJour($id_projet, $obj_bdd){
+    $id_projet = (int) $id_projet ;
+    $format = 'd/m/Y';
+    $today = DateTime::createFromFormat($format, date ('d/m/Y')) ;
+    $totalJour = 0 ;
+    
+    $projet = $obj_bdd -> selectProjetById($id_projet) ;
+
+    $dateReceptionDAO = DateTime::createFromFormat($format, $projet -> getDateReceptionDAO());
+    $dateAnoSurDAO =  DateTime::createFromFormat($format, $projet -> getDateAnoSurDAO());
+    $datePublicationDAO = DateTime::createFromFormat($format, $projet -> getDatePublicationDAO());
+    $dateOuverturePlis = DateTime::createFromFormat($format, $projet -> getDateOuverturePlis());
+    $dateRapportEvaluation = DateTime::createFromFormat($format, $projet -> getDateRapportEvaluation());
+    $dateAnoSurRapEval = DateTime::createFromFormat($format, $projet -> getDateAnoSurRapEval());
+    $dateNotifProvisoir = DateTime::createFromFormat($format, $projet -> getDateNotifProvisoir());
+    $projetNegoContrat = DateTime::createFromFormat($format, $projet -> getProjetNegoContrat());
+    $dateAnoProjetContrat = DateTime::createFromFormat($format, $projet -> getDateAnoProjetContrat());
+    $approbationAttribuaire = DateTime::createFromFormat($format,$projet -> getApprobationAttribuaire());
+    $approbationAC = DateTime::createFromFormat($format, $projet -> getApprobationAC());
+    $approbationACGPMP = DateTime::createFromFormat($format, $projet -> getApprobationACGPMP());
+    $approbationMEF = DateTime::createFromFormat($format, $projet -> getApprobationMEF());
+
+    if($dateReceptionDAO != false) {
+        if($approbationMEF != false) {
+            $totalJour = date_diff($dateReceptionDAO, $approbationMEF) -> days ;
+        } else if ($approbationACGPMP !=false ) {
+            $totalJour = date_diff($dateReceptionDAO, $approbationACGPMP) -> days ;
+        } else if ($approbationAC !=false ) {
+            $totalJour = date_diff($dateReceptionDAO, $approbationAC) -> days ;
+        }  else if ($approbationAttribuaire !=false ) {
+            $totalJour = date_diff($dateReceptionDAO, $approbationAttribuaire) -> days ;
+        } else if ($dateAnoProjetContrat !=false ) {
+            $totalJour = date_diff($dateReceptionDAO, $dateAnoProjetContrat) -> days ;
+        } else if ($projetNegoContrat !=false ) {
+            $totalJour = date_diff($dateReceptionDAO, $projetNegoContrat) -> days ;
+        } else if ($dateNotifProvisoir !=false ) {
+            $totalJour = date_diff($dateReceptionDAO, $dateNotifProvisoir) -> days ;
+        } else if ($dateAnoSurRapEval !=false ) {
+            $totalJour = date_diff($dateReceptionDAO, $dateAnoSurRapEval) -> days ;
+        }else if ($dateRapportEvaluation !=false ) {
+            $totalJour = date_diff($dateReceptionDAO,$dateRapportEvaluation) -> days ;
+        } else if ($dateOuverturePlis !=false ) {
+            $totalJour = date_diff($dateReceptionDAO,$dateOuverturePlis) -> days ;
+        }else if ($datePublicationDAO !=false ) {
+            $totalJour = date_diff($dateReceptionDAO,$datePublicationDAO) -> days ;
+        }else if ($dateAnoSurDAO !=false ) {
+            $totalJour = date_diff($dateReceptionDAO, $dateAnoSurDAO) -> days ;
+        } else {
+            $totalJour = date_diff($dateReceptionDAO, $today) -> days ;
+        }
+    }
+    return $totalJour ;
+  }
 ?>

@@ -62,7 +62,7 @@
 
 			$projet = $obj_bdd -> selectProjetById($_SESSION['id']);
             $res = etatProjet($_SESSION['id'], $obj_bdd);
-            $totalJour  = (int) $res['TOTALJOUR'] ;
+            $totalJour  = (int) totalJour($_SESSION['id'], $obj_bdd);
 	
 			$autoriteContractante = ((isset($_POST['autoriteContractante']) && !empty($_POST['autoriteContractante'])) ? htmlspecialchars($_POST['autoriteContractante']) : ((isset($projet) && !empty($projet)) ? $projet -> getAutoriteContractante() : '' ));
             $description = ((isset($_POST['description']) && !empty($_POST['description'])) ? htmlspecialchars($_POST['description']) : ((isset($projet) && !empty($projet)) ? $projet -> getDescription() : '' ));
