@@ -147,65 +147,98 @@ function etatProjet($id_projet,$obj_bdd) {
         'ALERT' => false,
         'DEPASSE' => false,
         'MESSAGE' => ''
-        ) ;
-
+    ) ;
+    
     $dateReceptionDAO = DateTime::createFromFormat($format, $projet -> getDateReceptionDAO());
+    $dateAnoSurDAO =  DateTime::createFromFormat($format, $projet -> getDateAnoSurDAO());
+    $datePublicationDAO = DateTime::createFromFormat($format, $projet -> getDatePublicationDAO());
     $dateOuverturePlis = DateTime::createFromFormat($format, $projet -> getDateOuverturePlis());
     $dateRapportEvaluation = DateTime::createFromFormat($format, $projet -> getDateRapportEvaluation());
     $dateAnoSurRapEval = DateTime::createFromFormat($format, $projet -> getDateAnoSurRapEval());
-    $projetCeContrat = DateTime::createFromFormat($format, $projet -> getProjetNegoContrat());
-    $approbationAttribuaire = DateTime::createFromFormat($format,$projet -> getDateAnoProjetContrat());
+    $dateNotifProvisoir = DateTime::createFromFormat($format, $projet -> getDateNotifProvisoir());
+    $projetNegoContrat = DateTime::createFromFormat($format, $projet -> getProjetNegoContrat());
+    $dateAnoProjetContrat = DateTime::createFromFormat($format, $projet -> getDateAnoProjetContrat());
+    $approbationAttribuaire = DateTime::createFromFormat($format,$projet -> getApprobationAttribuaire());
     $approbationAC = DateTime::createFromFormat($format, $projet -> getApprobationAC());
     $approbationACGPMP = DateTime::createFromFormat($format, $projet -> getApprobationACGPMP());
     $approbationMEF = DateTime::createFromFormat($format, $projet -> getApprobationMEF());
+    $typeProcedure = $projet -> getTypeProcedure() ;
 
-    $reception_ouverture = array(
-    'autorise' => 7,
-    'alerte' => 4
-    ) ;
-     $ouverture_evaluation = array(
+    if ($typeProcedure == "AOI") {
+        $delai = 45;
+        $alert = 35 ; 
+    } else {
+        $delai = 30;
+        $alert = 25 ; 
+    }
+ 
+    $reception_ano = array(
         'autorise' => 7,
         'alerte' => 4
         ) ;
-    $evaluation_publlication = array(
+    $ano_publication = array(
         'autorise' => 7,
-        'alerte' => 4 
-        );
-     $publlication_contrat = array(
-        'autorise' => 30,
-        'alerte' => 25 
-        ) ;
-     $contrat_attribuaire = array(
-        'autorise' => 45,
-        'alerte' => 35 
-        ) ;
-     $attribuaire_ac = array(
-        'autorise' => 3,
-        'alerte' => 2
-        ) ;
-     $ac_acgpmp = array(
-        'autorise' => 40,
-        'alerte' => 30 
-        ) ;
-     $acgpmp_mef = array(
-        'autorise' => 40,
-        'alerte' => 30 
+        'alerte' => 4
         ) ;
     
-    if ($dateReceptionDAO != false ) {
-        if($dateOuverturePlis == false ) {
+    
+    $publication_ouverture = array(
+         'autorise' => (int) $delai,
+        'alerte' => (int)  $alert 
+        );
+    $ouverture_evaluation = array(
+        'autorise' => 10,
+        'alerte' => 6 
+        ) ;
+    $evaluation_rapport = array(
+        'autorise' => 7,
+        'alerte' => 4 
+        ) ;
+    $rapport_provisoir = array(
+        'autorise' => 3,
+        'alerte' => 2 
+        ) ;
+    $provisoir_nego = array(
+        'autorise' => 5,
+        'alerte' => 3 
+        ) ;
+    $nego_contrat = array(
+        'autorise' => 5,
+        'alerte' => 3 
+        ) ;
+    $contrat_attribuaire = array(
+        'autorise' => 3,
+        'alerte' => 2 
+        ) ;
+    $attribuaire_ac = array(
+        'autorise' => 2,
+        'alerte' => 1
+        ) ;
+    $ac_acgpmp = array(
+        'autorise' => 2,
+        'alerte' => 1
+        ) ;
+    $acgpmp_mef = array(
+        'autorise' => 5,
+        'alerte' => 3
+    ) ;
+    
+   if ($dateReceptionDAO != false ) {
+        echo "la date de reception est differente de null <br/> " ;
+        if($dateAnoSurDAO == false ) {
+            echo "la date ano est false <br/> " ;
              $interval_reception_today = date_diff($dateReceptionDAO, $today) -> days ;
-             if($interval_reception_today < $reception_ouverture['autorise']) {
-                 if($interval_reception_today < $reception_ouverture['alerte']) {
+             if($interval_reception_today < $reception_ano['autorise']) {
+                 if($interval_reception_today < $reception_ano['alerte']) {
                      //pas de blem ici
                      $etat['OK'] = true;
 
-                 } else {
+                    } else {
                      //alerte jaune
                      $etat['OK'] = false;
                      $etat['ALERT'] = true ;
                      $etat['DEPASSE'] = false ;
-                     $etat['MESSAGE'] = "la date d'ouverture de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                     $etat['MESSAGE'] = "la date d'anonce sur DAO de ce projet n'a pas encore été fournie alors que le delai approche " ;
                  }
 
              } else {
@@ -213,16 +246,15 @@ function etatProjet($id_projet,$obj_bdd) {
                 $etat['OK'] = false;
                 $etat['ALERT'] = true ;
                 $etat['DEPASSE'] = true ;
-                $etat['MESSAGE'] = "le delai permis pour la date d'ouverture est depassé" ;
+                $etat['MESSAGE'] = "le delai permis pour la date d'anonce sur DAO est depassé" ;
               }
-         $totalJour += $interval_reception_today ;
         
-        } else { //la date d'ouverture est fourni
-            $totalJour += date_diff($dateReceptionDAO, $dateOuverturePlis) -> days ;
-           if($dateRapportEvaluation == false) { 
-                $interval_ouverture_today = date_diff($dateOuverturePlis, $today) -> days ;
-                if($interval_ouverture_today < $ouverture_evaluation['autorise']) {
-                 if($interval_ouverture_today < $ouverture_evaluation['alerte']) {
+        } else { //la date D'ano sur dao est fourni
+            //echo " la date d'ano sur dao est fournie <br/>";
+           if($datePublicationDAO == false) {
+                $interval_ano_today = date_diff($dateAnoSurDAO, $today) -> days ;
+                if($interval_ano_today  < $ano_publication['autorise']) {
+                 if($interval_ano_today < $ano_publication['alerte']) {
                      //pas de blem ici
                      $etat['OK'] = true;
 
@@ -231,7 +263,7 @@ function etatProjet($id_projet,$obj_bdd) {
                      $etat['OK'] = false;
                      $etat['ALERT'] = true ;
                      $etat['DEPASSE'] = false ;
-                     $etat['MESSAGE'] = "la date d'evaluation de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                     $etat['MESSAGE'] = "la date de publication DAO de ce projet n'a pas encore été fournie alors que le delai approche " ;
                  }
 
              } else {
@@ -239,40 +271,15 @@ function etatProjet($id_projet,$obj_bdd) {
                 $etat['OK'] = false;
                 $etat['ALERT'] = true ;
                 $etat['DEPASSE'] = true ;
-                $etat['MESSAGE'] = "le delai permis pour la date d'evaluation est depassé" ;
+                $etat['MESSAGE'] = "le delai permis pour la date de publication DAO est depassé" ;
               }
-            $totalJour += $interval_ouverture_today ;
 
-           }else { // la date du rapport est fournie
-             if($dateAnoSurRapEval == false ) {
-                 $interval_rapport_today = date_diff($dateRapportEvaluation, $today) -> days ;
-                if($interval_rapport_today < $evaluation_publlication['autorise']) {
-                 if($interval_rapport_today < $evaluation_publlication['alerte']) {
-                     //pas de blem ici
-                     $etat['OK'] = true;
-
-                 } else {
-                     //alerte jaune
-                     $etat['OK'] = false;
-                     $etat['ALERT'] = true ;
-                     $etat['DEPASSE'] = false ;
-                     $etat['MESSAGE'] = "la date de publication de ce projet n'a pas encore été fournie alors que le delai approche " ;
-                 }
-
-             } else {
-                //alerte rouge
-                $etat['OK'] = false;
-                $etat['ALERT'] = true ;
-                $etat['DEPASSE'] = true ;
-                $etat['MESSAGE'] = "le delai permis pour la date de publication est depassé" ;
-              }
-            $totalJour += $interval_rapport_today ;
-
-            } else { //la date de publication est fourni
-               if($projetCeContrat == false) {
-                   $interval_publication_today = date_diff($dateAnoSurRapEval, $today) -> days ;
-                   if($interval_publication_today < $publlication_contrat['autorise']) {
-                    if($interval_publication_today < $publlication_contrat['alerte']) {
+           } else { // la date de publication DAO est fournie
+               // echo " la date de publication DAO est fournie <br/>";
+               if($dateOuverturePlis == false) {
+                   $interval_publication_today = date_diff($datePublicationDAO, $today) -> days ;
+                   if($interval_publication_today < $publication_ouverture['autorise']) {
+                    if($interval_publication_today < $publication_ouverture['alerte']) {
                         //pas de blem ici
                         $etat['OK'] = true;
 
@@ -281,7 +288,7 @@ function etatProjet($id_projet,$obj_bdd) {
                         $etat['OK'] = false;
                         $etat['ALERT'] = true ;
                         $etat['DEPASSE'] = false ;
-                        $etat['MESSAGE'] = "la date de contrat de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                        $etat['MESSAGE'] = "la date d'ouverture du plis de ce projet n'a pas encore été fournie alors que le delai approche " ;
                     }
 
                 } else {
@@ -289,15 +296,15 @@ function etatProjet($id_projet,$obj_bdd) {
                     $etat['OK'] = false;
                     $etat['ALERT'] = true ;
                     $etat['DEPASSE'] = true ;
-                    $etat['MESSAGE'] = "le delai permis pour la date du contrat est depassé" ;
+                    $etat['MESSAGE'] = "le delai permis pour la date d'ouverture du plis est depassé" ;
                 }
-                $totalJour += $interval_publication_today ;
                
-               } else { // la date du contrat est fourni
-                if($approbationAttribuaire == false) {
-                    $interval_contrat_today = date_diff($projetCeContrat, $today) -> days ;
-                    if($interval_contrat_today < $contrat_attribuaire['autorise']) {
-                    if($interval_contrat_today < $contrat_attribuaire['alerte']) {
+               } else { // la date d'ouverture du plis du contrat
+                // echo " la date d'ouverture du plis du contrat <br/>";
+                if($dateRapportEvaluation == false) {
+                    $interval_ouverture_today = date_diff($dateOuverturePlis, $today) -> days ;
+                    if($interval_ouverture_today < $ouverture_evaluation['autorise']) {
+                    if($interval_ouverture_today < $ouverture_evaluation['alerte']) {
                         //pas de blem ici
                         $etat['OK'] = true;
 
@@ -306,7 +313,7 @@ function etatProjet($id_projet,$obj_bdd) {
                         $etat['OK'] = false;
                         $etat['ALERT'] = true ;
                         $etat['DEPASSE'] = false ;
-                        $etat['MESSAGE'] = "la date d'approbation attribuaire de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                        $etat['MESSAGE'] = "la date du rapport d'evaluation de ce projet n'a pas encore été fournie alors que le delai approche " ;
                     }
 
                 } else {
@@ -314,15 +321,15 @@ function etatProjet($id_projet,$obj_bdd) {
                     $etat['OK'] = false;
                     $etat['ALERT'] = true ;
                     $etat['DEPASSE'] = true ;
-                    $etat['MESSAGE'] = "le delai permis pour la date d'approbation attribuaire de contrat est depassé" ;
+                    $etat['MESSAGE'] = "le delai permis pour la date de rapport d'evaluation des contrats est depassé" ;
                   }
-                  $totalJour += $interval_contrat_today ;   
-
-                } else { // la date d'approbation attribiaire est fourni
-                    if($approbationAC == false ) {
-                        $interval_attribuaire_today = date_diff($approbationAttribuaire, $today) -> days ;
-                        if($interval_attribuaire_today < $attribuaire_ac['autorise']) {
-                            if($interval_attribuaire_today < $attribuaire_ac['alerte']) {
+                
+                } else { // la date du rapport d'evaluation est fournie
+                    //echo " la date du rapport d'evaluation est fournie <br/>";
+                    if($dateAnoSurRapEval == false ) {
+                        $interval_evaluation_today = date_diff($dateRapportEvaluation, $today) -> days ;
+                        if($interval_evaluation_today < $attribuaire_ac['autorise']) {
+                            if($interval_evaluation_today < $attribuaire_ac['alerte']) {
                                 //pas de blem ici
                                 $etat['OK'] = true;
 
@@ -331,7 +338,7 @@ function etatProjet($id_projet,$obj_bdd) {
                                 $etat['OK'] = false;
                                 $etat['ALERT'] = true ;
                                 $etat['DEPASSE'] = false ;
-                                $etat['MESSAGE'] = "la date d'approbation AC de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                                $etat['MESSAGE'] = "la date d'annonce du rapport d'evaluation de ce projet n'a pas encore été fournie alors que le delai approche " ;
                             }
 
                         } else {
@@ -339,15 +346,16 @@ function etatProjet($id_projet,$obj_bdd) {
                             $etat['OK'] = false;
                             $etat['ALERT'] = true ;
                             $etat['DEPASSE'] = true ;
-                            $etat['MESSAGE'] = "le delai permis pour la date d'approbation AC de contrat est depassé" ;
+                            $etat['MESSAGE'] = "le delai permis pour la date d'annonce du rapport d'evaluation des contrats est depassé" ;
                         }
-                        $totalJour += $interval_attribuaire_today ;
-                    } else { // approbation AC est fourni
-                        if($approbationACGPMP == false ) {
-                            $interval_ac_today = date_diff($approbationAC, $today) -> days ;
+
+                    } else { // la date d'annonce du rapport evaluation est fournie
+                       //echo " la date d'annonce du rapport evaluation est fournie <br/>";
+                        if($dateNotifProvisoir == false ) {
+                            $interval_anonce_today = date_diff($dateAnoSurRapEval, $today) -> days ;
                             
-                            if($interval_ac_today < $ac_acgpmp['autorise']) {
-                            if($interval_ac_today < $ac_acgpmp['alerte']) {
+                            if($interval_anonce_today < $rapport_provisoir['autorise']) {
+                            if($interval_anonce_today < $rapport_provisoir['alerte']) {
                                 //pas de blem ici
                                 $etat['OK'] = true;
 
@@ -356,23 +364,21 @@ function etatProjet($id_projet,$obj_bdd) {
                                 $etat['OK'] = false;
                                 $etat['ALERT'] = true ;
                                 $etat['DEPASSE'] = false ;
-                                $etat['MESSAGE'] = "la date d'approbation ACGPMP de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                                $etat['MESSAGE'] = "la date de notification provisoire de ce projet n'a pas encore été fournie alors que le delai approche " ;
                             }
-
                         } else {
                             //alerte rouge
                             $etat['OK'] = false;
                             $etat['ALERT'] = true ;
                             $etat['DEPASSE'] = true ;
-                            $etat['MESSAGE'] = "le delai permis pour la date d'approbation ACGPMP de contrat est depassé" ;
-                        }
-                        $totalJour += $interval_ac_today ;
-
-                        }else { // approbation ACGPMP est fournie
-                            if($approbationMEF == false) {
-                                $interval_acgpmp_today = date_diff($approbationACGPMP, $today) -> days ;
-                                if($interval_acgpmp_today < $acgpmp_mef['autorise']) {
-                                    if($interval_acgpmp_today < $acgpmp_mef['alerte']) {
+                            $etat['MESSAGE'] = "le delai permis pour la date de notification provisoir des contrats est depassé" ;
+                           }
+                        } else { // la date de notification provisoire est fournie
+                         // echo " la date de notification provisoire est fournie <br/>";
+                            if($projetNegoContrat == false) {
+                                $interval_notif_today = date_diff($dateNotifProvisoir, $today) -> days ;
+                                if($interval_notif_today < $provisoir_nego['autorise']) {
+                                    if($interval_notif_today < $provisoir_nego['alerte']) {
                                         //pas de blem ici
                                         $etat['OK'] = true;
 
@@ -381,7 +387,7 @@ function etatProjet($id_projet,$obj_bdd) {
                                         $etat['OK'] = false;
                                         $etat['ALERT'] = true ;
                                         $etat['DEPASSE'] = false ;
-                                        $etat['MESSAGE'] = "la date d'approbation MEF de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                                        $etat['MESSAGE'] = "la date de negociation de contrat de ce projet n'a pas encore été fournie alors que le delai approche " ;
                                     }
 
                                 } else {
@@ -389,10 +395,133 @@ function etatProjet($id_projet,$obj_bdd) {
                                     $etat['OK'] = false;
                                     $etat['ALERT'] = true ;
                                     $etat['DEPASSE'] = true ;
-                                    $etat['MESSAGE'] = "le delai permis pour la date d'approbation MEF de contrat est depassé" ;
+                                    $etat['MESSAGE'] = "le delai permis pour la negociation de contrat est depassé" ;
                                 }
-                             $totalJour += $interval_acgpmp_today ;
-                            } // fin if mef
+                           
+                            } else {  //la date de projet de negociation de contrat est fournie
+                             // echo " la date de projet de negociation de contrat est fournie <br/>";
+                               if($dateAnoProjetContrat == false ) {
+                                   $interval_nego_today = date_diff($projetNegoContrat, $today) -> days ;
+                                    if($interval_nego_today < $nego_contrat['autorise']) {
+                                        if($interval_nego_today < $nego_contrat['alerte']) {
+                                            //pas de blem ici
+                                            $etat['OK'] = true;
+
+                                        } else {
+                                            //alerte jaune
+                                            $etat['OK'] = false;
+                                            $etat['ALERT'] = true ;
+                                            $etat['DEPASSE'] = false ;
+                                            $etat['MESSAGE'] = "la date d'annonce du contrat de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                                        }
+
+                                    } else {
+                                        //alerte rouge
+                                        $etat['OK'] = false;
+                                        $etat['ALERT'] = true ;
+                                        $etat['DEPASSE'] = true ;
+                                        $etat['MESSAGE'] = "le delai permis pour l'annonce du contrat est depassé" ;
+                                    }
+                               } else { // la date $dateAnoProjetContrat est fournie 
+                                //  echo " la date dateAnoProjetContrat est fournie <br/>";
+                                  if($approbationAttribuaire == false ) {
+                                       $interval_ano_today = date_diff($dateAnoProjetContrat, $today) -> days ;
+                                       if($interval_ano_today < $contrat_attribuaire['autorise']) {
+                                         if($interval_ano_today < $contrat_attribuaire['alerte']) {
+                                            //pas de blem ici
+                                            $etat['OK'] = true ;
+                                        } else {
+                                            //alerte jaune
+                                            $etat['OK'] = false;
+                                            $etat['ALERT'] = true ;
+                                            $etat['DEPASSE'] = false ;
+                                            $etat['MESSAGE'] = "la date d'approbation attributiare du contrat de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                                        }
+                                    } else {
+                                        //alerte rouge
+                                        $etat['OK'] = false;
+                                        $etat['ALERT'] = true ;
+                                        $etat['DEPASSE'] = true ;
+                                        $etat['MESSAGE'] = "le delai permis pour la date d'approbation attribuaire du contrat est depassé" ;
+                                    }
+
+                                  } else { // la date $approbationAttribuaire est fournie
+                                  // echo " la date approbationAttribuaire est fournie <br/>";
+                                    if ($approbationAC == false ) {
+                                        $interval_attribuaire_today = date_diff($approbationAttribuaire, $today) -> days ;
+                                        if($interval_attribuaire_today < $attribuaire_ac['autorise']) {
+                                            if($interval_attribuaire_today < $attribuaire_ac['alerte']) {
+                                                //pas de blem ici
+                                                $etat['OK'] = true ;
+                                            } else {
+                                                //alerte jaune
+                                                $etat['OK'] = false;
+                                                $etat['ALERT'] = true ;
+                                                $etat['DEPASSE'] = false ;
+                                                $etat['MESSAGE'] = "la date d'approbation AC du contrat de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                                            }
+                                        } else {
+                                            //alerte rouge
+                                            $etat['OK'] = false;
+                                            $etat['ALERT'] = true ;
+                                            $etat['DEPASSE'] = true ;
+                                            $etat['MESSAGE'] = "le delai permis pour la date d'approbation AC du contrat est depassé" ;
+                                        }
+                                    } else { //approbation AC est fournie
+                                     //echo "La date d' approbation AC est fournie <br/>";
+                                      if($approbationACGPMP == false ) {
+                                        $interval_ac_today = date_diff($approbationAC, $today) -> days ;
+                                       if($interval_ac_today < $ac_acgpmp['autorise']) {
+                                         if($interval_ac_today < $ac_acgpmp['alerte']) {
+                                            //pas de blem ici
+                                            $etat['OK'] = true ;
+                                        } else {
+                                            //alerte jaune
+                                            $etat['OK'] = false;
+                                            $etat['ALERT'] = true ;
+                                            $etat['DEPASSE'] = false ;
+                                            $etat['MESSAGE'] = "la date d'approbation ACGPMP du contrat de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                                        }
+                                    } else {
+                                        //alerte rouge
+                                        $etat['OK'] = false;
+                                        $etat['ALERT'] = true ;
+                                        $etat['DEPASSE'] = true ;
+                                        $etat['MESSAGE'] = "le delai permis pour la date d'approbation ACGPMP du contrat est depassé" ;
+                                    }
+                                   } else { // approbation ACGPMP est fournie
+                                     //echo "La date d' approbation ACGPMP est fournie <br/>";
+                                     if($approbationMEF == false ) {
+                                                                                 $interval_ac_today = date_diff($approbationAC, $today) -> days ;
+                                       if($interval_acgpmp_today < $acgpmp_mef['autorise']) {
+                                         if($interval_acgpmp_today < $acgpmp_mef['alerte']) {
+                                            //pas de blem ici
+                                            $etat['OK'] = true ;
+                                        } else {
+                                            //alerte jaune
+                                            $etat['OK'] = false;
+                                            $etat['ALERT'] = true ;
+                                            $etat['DEPASSE'] = false ;
+                                            $etat['MESSAGE'] = "la date d'approbation MEF du contrat de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                                        }
+                                    } else {
+                                        //alerte rouge
+                                        $etat['OK'] = false;
+                                        $etat['ALERT'] = true ;
+                                        $etat['DEPASSE'] = true ;
+                                        $etat['MESSAGE'] = "le delai permis pour la date d'approbation MEF du contrat est depassé" ;
+                                      }
+
+                                   } //approbation MEF est fournie tout est bon
+                                    else {
+                                       // echo "La date d' approbation MEF est fournie <br/>";
+                                    }
+                                   } // ACGPMP
+                                 } //approbation AC
+
+                                 }// Approbation attribuaire
+                            } //projet de negociaion
+                             // fin if mef
                         } // fin else ACGPMP
                     } // fin else approbation AC
                   } //fin else approbation attribuaire
@@ -449,7 +578,8 @@ function delaiTraitement() {
 	if($results != null) {
 			foreach ($results AS $projet) {
 				$id = $projet -> getIdProjet();
-				$res = etatProjet($id, $obj_bdd);
+				// $res = etatProjet($id, $obj_bdd);
+                $res['TOTALJOUR'] = rand(1,500);
 
 				if (isset($res['TOTALJOUR']) &&  !empty($res['TOTALJOUR'])) {
 						if((int) $res['TOTALJOUR'] < 60 ) {

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client: localhost
--- Généré le : Lun 03 Avril 2017 à 22:37
+-- Généré le : Mer 05 Avril 2017 à 09:30
 -- Version du serveur: 5.5.16
 -- Version de PHP: 5.3.8
 
@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS `projet` (
   `projetNegoContrat` varchar(20) NOT NULL,
   `dateAnoProjetContrat` varchar(20) NOT NULL,
   `attribuaire` varchar(20) NOT NULL,
+  `approbationAttribuaire` varchar(20) DEFAULT NULL,
   `montant` varchar(25) NOT NULL,
   `approbationAC` varchar(20) NOT NULL,
   `approbationACGPMP` varchar(20) NOT NULL,
@@ -80,14 +81,14 @@ CREATE TABLE IF NOT EXISTS `projet` (
   `commentaire` tinytext NOT NULL,
   `dateInsertion` datetime NOT NULL,
   PRIMARY KEY (`idProjet`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Contenu de la table `projet`
 --
 
-INSERT INTO `projet` (`idProjet`, `autoriteContractante`, `description`, `sourceFinancement`, `typeProcedure`, `dateReceptionDAO`, `dateAnoSurDAO`, `datePublicationDAO`, `dateOuverturePlis`, `dateRapportEvaluation`, `dateAnoSurRapEval`, `dateNotifProvisoir`, `projetNegoContrat`, `dateAnoProjetContrat`, `attribuaire`, `montant`, `approbationAC`, `approbationACGPMP`, `approbationMEF`, `totalJour`, `inferieur60`, `inferieur90`, `inferieur120`, `superieur120`, `commentaire`, `dateInsertion`) VALUES
-(1, 'MEF', 'ACHAT', 'BND', 'AOI', '20/03/2017', '25/03/2017', '30/03/2017', '30/03/2017', '31/03/2017', '01/04/2017', '01/04/2017', '31/03/2017', '30/03/2017', '', '5000000000', '', '', '', NULL, '', '', '', '', 'HUGE', '2017-04-03 21:57:21');
+INSERT INTO `projet` (`idProjet`, `autoriteContractante`, `description`, `sourceFinancement`, `typeProcedure`, `dateReceptionDAO`, `dateAnoSurDAO`, `datePublicationDAO`, `dateOuverturePlis`, `dateRapportEvaluation`, `dateAnoSurRapEval`, `dateNotifProvisoir`, `projetNegoContrat`, `dateAnoProjetContrat`, `attribuaire`, `approbationAttribuaire`, `montant`, `approbationAC`, `approbationACGPMP`, `approbationMEF`, `totalJour`, `inferieur60`, `inferieur90`, `inferieur120`, `superieur120`, `commentaire`, `dateInsertion`) VALUES
+(1, 'MEF', 'ACHAT', 'BND', 'AOI', '20/03/2017', '25/03/2017', '30/03/2017', '30/03/2017', '31/03/2017', '01/04/2017', '01/04/2017', '31/03/2017', '30/03/2017', '', '01/04/2017', '5000000000', '02/04/2017', '03/04/2017', '04/04/2017', NULL, '', '', '', '', 'HUGE', '2017-04-03 21:57:21');
 
 -- --------------------------------------------------------
 

@@ -16,6 +16,7 @@ class Projet {
 	private $projetNegoContrat ;
 	private $dateAnoProjetContrat ;
 	private $attribuaire ;
+	private $approbationAttribuaire ;
 	private $montant ;
 	private $approbationAC ;
 	private $approbationACGPMP ;
@@ -45,6 +46,7 @@ class Projet {
 	public function getprojetNegoContrat() { return $this -> projetNegoContrat ; }
 	public function getDateAnoProjetContrat() { return $this -> dateAnoProjetContrat ; }
 	public function getAttribuaire() { return $this -> attribuaire ; }
+	public function getApprobationAttribuaire() { return $this -> approbationAttribuaire ; }
 	public function getMontant() { return $this -> montant ; }
 	public function getApprobationAC() { return $this -> approbationAC ; }
 	public function getApprobationACGPMP() { return $this -> approbationACGPMP ; }
@@ -74,6 +76,7 @@ class Projet {
 	public function setprojetNegoContrat($p) { $this -> projetNegoContrat = $p ; }
 	public function setDateAnoProjetContrat($p) { $this -> dateAnoProjetContrat = $p ;}
 	public function setAttribuaire($p) { $this -> attribuaire = $p ; }
+	public function setApprobationAttribuaire($p) { $this -> approbationAttribuaire = $p ; }
 	public function setMontant($p) { $this -> montant = $p ; }
 	public function setApprobationAC($p) { $this -> approbationAC = $p ; }
 	public function setapprobationACGPMP($p) { $this -> approbationACGPMP = $p ; }
