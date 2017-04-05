@@ -78,6 +78,7 @@
             $projetNegoContrat = ((isset($_POST['projetNegoContrat']) && !empty($_POST['projetNegoContrat'])) ? htmlspecialchars($_POST['projetNegoContrat']) : ((isset($projet) && !empty($projet)) ? $projet -> getProjetNegoContrat() : '' ));
             $dateAnoProjetContrat = ((isset($_POST['dateAnoProjetContrat']) && !empty($_POST['dateAnoProjetContrat'])) ? htmlspecialchars($_POST['dateAnoProjetContrat']) : ((isset($projet) && !empty($projet)) ? $projet -> getDateAnoProjetContrat() : '' ));
             $attribuaire = ((isset($_POST['attribuaire']) && !empty($_POST['attribuaire'])) ? htmlspecialchars($_POST['attribuaire']) : ((isset($projet) && !empty($projet)) ? $projet -> getattribuaire() : '' ));
+            $approbationAttribuaire = ((isset($_POST['approbationAttribuaire']) && !empty($_POST['approbationAttribuaire'])) ? htmlspecialchars($_POST['approbationAttribuaire']) : ((isset($projet) && !empty($projet)) ? $projet -> getApprobationAttribuaire() : '' ));
             $montant = ((isset($_POST['montant']) && !empty($_POST['montant'])) ? htmlspecialchars($_POST['montant']) : ((isset($projet) && !empty($projet)) ? $projet -> getMontant() : '' ));
             $approbationAC = ((isset($_POST['approbationAC']) && !empty($_POST['approbationAC'])) ? $_POST['approbationAC'] : ((isset($projet) && !empty($projet)) ? $projet -> getApprobationAC() : '' ));
             $approbationACGPMP = ((isset($_POST['approbationACGPMP']) && !empty($_POST['approbationACGPMP'])) ? htmlspecialchars($_POST['approbationACGPMP']) : ((isset($projet) && !empty($projet)) ? $projet -> getApprobationACGPMP() : '' ));
@@ -97,7 +98,6 @@
 			if(isset($_POST['action']) && $_POST['action']){
                 
                 $projet = new Projet ();
-                // $projet -> setNumContrat($numContrat);
                 $projet -> setautoriteContractante($autoriteContractante);
                 $projet -> setdescription($description);
                 $projet -> setsourceFinancement($sourceFinancement);
@@ -109,6 +109,7 @@
                 $projet -> setdatePublicationDAO($datePublicationDAO);
                 $projet -> setprojetNegoContrat($projetNegoContrat);
                 $projet -> setattribuaire($attribuaire);
+                $projet -> setApprobationAttribuaire($approbationAttribuaire);
                 $projet -> setapprobationAC($approbationAC);
                 $projet -> setapprobationACGPMP($approbationACGPMP);
                 $projet -> setapprobationMEF($approbationMEF);
@@ -247,6 +248,13 @@
                     <label for="attribuaire">Attribuaire</label>
                     <div class="input-group">
                         <input type="text" class="form-control" name="attribuaire" id="attribuaire"   <?php echo"value='$attribuaire'" ;?> >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+                 <div class="form-group">
+                    <label for="approbationAttribuaire">Approbation Attribuaire</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="approbationAttribuaire" id="approbationAttribuaire"   <?php echo"value='$approbationAttribuaire'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>

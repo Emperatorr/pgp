@@ -102,6 +102,7 @@ function processXML ($file_path, $obj_bdd) {
         $projetNegoContrat = $contrat -> DatRecepNegoProCntrats ;
         $dateAnoProjetContrat = $contrat -> Dateanoprojetdecontrat ;
         $attribuaire = $contrat -> Attributaire ;
+        $approbationAttribuaire = $contrat -> SignatureAttributaire ;
         $montant = $contrat -> Montant ;
         $approbationAC  = $contrat -> SignatureAC ;
         $approbationACGPMP = $contrat -> SignACGPMP ;
@@ -124,6 +125,7 @@ function processXML ($file_path, $obj_bdd) {
         $projet -> setProjetNegoContrat($projetNegoContrat);
         $projet -> setDateAnoProjetContrat($dateAnoProjetContrat);
         $projet -> setAttribuaire($attribuaire);
+        $projet -> setApprobationAttribuaire($approbationAttribuaire);
         $projet -> setmontant($montant);
         $projet -> setApprobationAC($approbationAC);
         $projet -> setApprobationACGPMP($approbationACGPMP);
@@ -224,9 +226,9 @@ function etatProjet($id_projet,$obj_bdd) {
     ) ;
     
    if ($dateReceptionDAO != false ) {
-        echo "la date de reception est differente de null <br/> " ;
+       // echo "la date de reception est differente de null <br/> " ;
         if($dateAnoSurDAO == false ) {
-            echo "la date ano est false <br/> " ;
+           // echo "la date ano est false <br/> " ;
              $interval_reception_today = date_diff($dateReceptionDAO, $today) -> days ;
              if($interval_reception_today < $reception_ano['autorise']) {
                  if($interval_reception_today < $reception_ano['alerte']) {
