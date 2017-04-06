@@ -1,35 +1,25 @@
 /* Form */
 body {
-    font-family: Arial;
-    background-color: #3498DB;
+    font-family: Arial;  
 }
 
 .form {
+  max-width: 500px;
+  width: 400px;
   position: relative;
   z-index: 1;
-  background: #FFFFFF;
-  max-width: 300px;
-  margin: 20% auto 100px;
+  max-width: 500px;
+  margin: 10% auto;
   padding: 30px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
   text-align: center;
-  
-  border:1px solid black;
+  border:1px solid rgb(226, 222, 222);
+  border-radius: 5px;
 }
 .form .thumbnail {
-  background:  #3498DB;
   width: 150px;
   height: 150px;
   margin: 0 auto 30px;
-  padding: 20px 30px;
-  border-top-left-radius: 100%;
-  border-top-right-radius: 100%;
-  border-bottom-left-radius: 100%;
-  border-bottom-right-radius: 100%;
-  box-sizing: border-box;
+  padding: 10px 30px;
 }
 .form .thumbnail img {
   display: block;
@@ -52,10 +42,7 @@ body {
   border: 0;
   margin: 0 0 15px;
   padding: 15px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
+  border-radius: 3px;
   box-sizing: border-box;
   font-size: 14px;
 }
@@ -91,7 +78,7 @@ body {
 .container {
   position: relative;
   z-index: 1;
-  max-width: 400px;
+  max-width: 500px;
   margin: 0 auto;
 }
 

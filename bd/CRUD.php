@@ -339,7 +339,7 @@ class CRUD{
 	public function selectAlertById($id) {
 			$id = htmlspecialchars($id);
 			
-			$requete = $this -> bdd ->prepare('SELECT * FROM Alert
+			$requete = $this -> bdd ->prepare('SELECT * FROM alert
 												WHERE idAlert = :id
 												LIMIT 1
 												');
@@ -358,7 +358,7 @@ class CRUD{
 		public function selectAlertByIdProjet($id) {
 			$id = htmlspecialchars($id);
 			
-			$requete = $this -> bdd ->prepare('SELECT * FROM Alert
+			$requete = $this -> bdd ->prepare('SELECT * FROM alert
 												WHERE idProjet = :id
 												');
 			$requete->execute(array(

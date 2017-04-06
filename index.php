@@ -63,12 +63,13 @@
 
 	?>
 
-
-
  <div class="form">
   <div class="thumbnail">
-	<img src="img/icone_guinee.png"/>
+	    <img src="img/icone_guinee.png"/>
   </div>
+	<h3>
+	 	 Ministère de l'Economie et des Finances
+	<h3>
   <form class="login-form" method='POST' action='index.php'>
   <?php 
 	if(isset($_ERROR) && $_ERROR['state']){

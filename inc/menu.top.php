@@ -2,9 +2,10 @@
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">
-						<?php
-							echo ((isset($page_title) && !empty($page_title)) ? $page_title : 'Tableau de bord');
-						?>
+                      <!--img src="img/icone_guinee.png" style="width:30px;height:35px;display:inline-block;"/-->
+                      <?php
+                        echo ((isset($page_title) && !empty($page_title)) ? $page_title : 'Tableau de bord');
+                       ?>
 					</a>
                 </div>
                 <div class="collapse navbar-collapse">

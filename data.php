@@ -44,11 +44,10 @@
 			?>
 
      <div class="content">
-		  <div class="container-fluid">
+		  <div class="container-fluid" style ="max-width:100%; overflow-x: scroll;">
 			<table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
-			<thead style='background-color:#D6EAF8;'>
+			<thead>
 				<tr>
-				  <td>ID</td>
 					<td>Aut. Contractante</td>
 					<td>S. Financement</td>
 					<td>Type</td>
@@ -59,8 +58,19 @@
 					<td>Rap. Eval.</td>
 					<td>ANO sur Rap. Eval.</td>
 					<td>Notif Prov.</td>
+					
+					<td>Nego. Contrat</td>
+					<td>ANO Projet de Contrat</td>
+					<td>Attribuaire</td>
+					<td>App. Attribuaire</td>
+					<td>Montant</td>
+					<td>App. AC</td>
+					<td>App. ACGPMP</td>
+					<td>App. MEF</td>
+					<td>Total Jrs</td>
+
 					<td>Etat</td>
-					<td>Details</td>
+					<td>Alertes</td>
 
 				</tr>
 			</thead>
@@ -78,6 +88,7 @@
 					foreach ($results AS $projet){
 						$id = $projet -> getIdProjet();
 						$res = etatProjet($id, $obj_bdd);
+						$totalJour  = (int) totalJour($id, $obj_bdd);
 						
 						 $class = 'ok';
 						 $msg = 'OK' ;
@@ -94,7 +105,6 @@
 
 						echo "
 							<tr>
-								<td>".$projet -> getIdProjet()."</td>
 								<td>".$projet -> getAutoriteContractante()."</td>
 								<td>".$projet -> getSourceFinancement()."</td>
 								<td>".$projet -> getTypeProcedure()."</td>
@@ -105,8 +115,18 @@
 								<td>".$projet -> getDateRapportEvaluation()."</td>
 								<td>".$projet -> getDateAnoSurRapEval()."</td>
 								<td>".$projet -> getDateNotifProvisoir()."</td>
+								
+								<td>".$projet -> getprojetNegoContrat()."</td>
+								<td>".$projet -> getDateAnoProjetContrat()."</td>
+								<td>".$projet -> getAttribuaire()."</td>
+								<td>".$projet -> getApprobationAttribuaire()."</td>
+								<td>".$projet -> getMontant()."</td>
+								<td>".$projet -> getApprobationAC()."</td>
+								<td>".$projet -> getApprobationACGPMP()."</td>
+								<td>".$projet -> getApprobationMEF()."</td>
+								<td>".$totalJour."</td>
 								<td class ='$class' title ='$title'>".$msg."</td>
-								<td><a href='projet.php?id=$id'> Afficher </a></td>
+								<td><a href='alertes.php?projet=$id'> Voir </a></td>
 							</tr>
 						";
 					}
