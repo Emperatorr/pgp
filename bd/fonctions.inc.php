@@ -84,10 +84,12 @@ function processXML ($file_path, $obj_bdd) {
      $xml = simplexml_load_file ($file_path);
 
     // var_dump($xml);
-     $nbr = 0 ;
+     $nbr = array(
+         "insert" => 0,
+         "update" => 0
+         ) ;
      foreach($xml as $contrat) {
-        // $numContrat = $contrat -> NumContrat ;
-        $id = $contrat -> Id ;
+        $idImport = $contrat -> Id ; // id du projet dans le fichier xml
         $autoriteContractante = $contrat -> AutContractante ;
         $description = $contrat -> DescripContrat ;
         $sourceFinancement = $contrat -> SrcFinancement ;
@@ -109,31 +111,62 @@ function processXML ($file_path, $obj_bdd) {
         $approbationMEF = $contrat -> ApproMEF ;
         $commentaire = $contrat -> Comments ;
         
-        // creation du projet et insertion 
-        $projet = new Projet ();
-        $projet -> setAutoriteContractante($autoriteContractante);
-        $projet -> setDescription($description);
-        $projet -> setSourceFinancement($sourceFinancement);
-        $projet -> setTypeProcedure($typeProcedure);
-        $projet -> setDateReceptionDAO($dateReceptionDAO);
-        $projet -> setDateAnoSurDAO($dateAnoSurDAO);
-        $projet -> setDatePublicationDAO($datePublicationDAO);
-        $projet -> setDateOuverturePlis($dateOuverturePlis);
-        $projet -> setDateRapportEvaluation($dateRapportEvaluation);
-        $projet -> setDateAnoSurRapEval($dateAnoSurRapEval);
-        $projet -> setDateNotifProvisoir($dateNotifProvisoir);
-        $projet -> setProjetNegoContrat($projetNegoContrat);
-        $projet -> setDateAnoProjetContrat($dateAnoProjetContrat);
-        $projet -> setAttribuaire($attribuaire);
-        $projet -> setApprobationAttribuaire($approbationAttribuaire);
-        $projet -> setmontant($montant);
-        $projet -> setApprobationAC($approbationAC);
-        $projet -> setApprobationACGPMP($approbationACGPMP);
-        $projet -> setApprobationMEF($approbationMEF);
-        $projet -> setCommentaire($commentaire);
+        $res = $obj_bdd -> selectProjetByidImport($idImport);
 
-        $obj_bdd -> insertProjet($projet) ;
-        $nbr++ ;
+        if($res == null) {
+           // creation du projet et insertion 
+            $projet = new Projet ();
+            $projet -> setidImport($idImport);
+            $projet -> setAutoriteContractante($autoriteContractante);
+            $projet -> setDescription($description);
+            $projet -> setSourceFinancement($sourceFinancement);
+            $projet -> setTypeProcedure($typeProcedure);
+            $projet -> setDateReceptionDAO($dateReceptionDAO);
+            $projet -> setDateAnoSurDAO($dateAnoSurDAO);
+            $projet -> setDatePublicationDAO($datePublicationDAO);
+            $projet -> setDateOuverturePlis($dateOuverturePlis);
+            $projet -> setDateRapportEvaluation($dateRapportEvaluation);
+            $projet -> setDateAnoSurRapEval($dateAnoSurRapEval);
+            $projet -> setDateNotifProvisoir($dateNotifProvisoir);
+            $projet -> setProjetNegoContrat($projetNegoContrat);
+            $projet -> setDateAnoProjetContrat($dateAnoProjetContrat);
+            $projet -> setAttribuaire($attribuaire);
+            $projet -> setApprobationAttribuaire($approbationAttribuaire);
+            $projet -> setmontant($montant);
+            $projet -> setApprobationAC($approbationAC);
+            $projet -> setApprobationACGPMP($approbationACGPMP);
+            $projet -> setApprobationMEF($approbationMEF);
+            $projet -> setCommentaire($commentaire);
+            
+            $obj_bdd -> insertProjet($projet) ;
+            $nbr["insert"]++;
+
+        } else {
+            // on update c'est un encien projet
+            $res -> setAutoriteContractante($autoriteContractante);
+            $res -> setDescription($description);
+            $res -> setSourceFinancement($sourceFinancement);
+            $res -> setTypeProcedure($typeProcedure);
+            $res -> setDateReceptionDAO($dateReceptionDAO);
+            $res -> setDateAnoSurDAO($dateAnoSurDAO);
+            $res -> setDatePublicationDAO($datePublicationDAO);
+            $res -> setDateOuverturePlis($dateOuverturePlis);
+            $res -> setDateRapportEvaluation($dateRapportEvaluation);
+            $res -> setDateAnoSurRapEval($dateAnoSurRapEval);
+            $res -> setDateNotifProvisoir($dateNotifProvisoir);
+            $res -> setProjetNegoContrat($projetNegoContrat);
+            $res -> setDateAnoProjetContrat($dateAnoProjetContrat);
+            $res -> setAttribuaire($attribuaire);
+            $res -> setApprobationAttribuaire($approbationAttribuaire);
+            $res -> setmontant($montant);
+            $res -> setApprobationAC($approbationAC);
+            $res -> setApprobationACGPMP($approbationACGPMP);
+            $res -> setApprobationMEF($approbationMEF);
+            $res -> setCommentaire($commentaire);
+            
+            $obj_bdd -> updateProjet($res) ;
+            $nbr["update"]++;
+        }
      }
      return $nbr ;
   }

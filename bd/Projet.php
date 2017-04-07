@@ -2,6 +2,7 @@
 class Projet {
 
 	private $idProjet ;
+	private $idImport ;
 	private $autoriteContractante ; 
 	private $description ; 
 	private $sourceFinancement ; 
@@ -32,6 +33,7 @@ class Projet {
 	
 	// les getteurs
 	public function getIdProjet () { return $this -> idProjet; }
+	public function getIdImport () { return $this -> idImport; }
 	public function getSourceFinancement () { return $this -> sourceFinancement; }
 	public function getAutoriteContractante () { return $this -> autoriteContractante; }
 	public function getDescription () { return $this -> description; }
@@ -61,6 +63,7 @@ class Projet {
 	
 	//les setters
 	public function setIdProjet($p) { $this -> idProjet = $p ; }
+	public function setIdImport($p) { $this -> idImport = $p ; }
 	public function setSourceFinancement($p) { $this -> sourceFinancement = $p ; }
 	public function setAutoriteContractante($p) { $this -> autoriteContractante = $p ; }
 	public function setDescription($p) { $this -> description = $p ; }

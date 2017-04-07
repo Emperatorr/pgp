@@ -69,7 +69,8 @@
 					<div class='col-md-12'>
 						<div class='alert alert-success'>
 							<strong><span class='glyphicon glyphicon-ok'></span> Fichier importé avec succès </strong><br/>
-							<strong><span class='glyphicon glyphicon-ok'></span> $res_process projets inserés avec succès </strong>
+							<strong><span class='glyphicon glyphicon-ok'></span> $res_process[insert] projets inserés avec succès </strong>
+                            <strong><span class='glyphicon glyphicon-ok'></span> $res_process[update] projets mis à jour avec succès </strong>
 						</div>
 					</div>
 				</div>";
