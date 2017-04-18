@@ -90,25 +90,25 @@ function processXML ($file_path, $obj_bdd) {
          ) ;
      foreach($xml as $contrat) {
         $idImport = $contrat -> Id ; // id du projet dans le fichier xml
-        $autoriteContractante = $contrat -> AutContractante ;
-        $description = $contrat -> DescripContrat ;
-        $sourceFinancement = $contrat -> SrcFinancement ;
-        $typeProcedure = $contrat -> TypePro ;
-        $dateReceptionDAO = $contrat -> RecepDAODNMP ;
-        $dateAnoSurDAO =  $contrat ->  DatANOsurDAO ;
-        $datePublicationDAO =  $contrat -> DatPubDAO ;
-        $dateOuverturePlis = $contrat -> DatOuvPlis ;
-        $dateRapportEvaluation = $contrat -> DatRapEval ;
-        $dateAnoSurRapEval = $contrat -> DatANOsurRapEval ;
-        $dateNotifProvisoir = $contrat -> DatNotifProv ;
-        $projetNegoContrat = $contrat -> DatRecepNegoProCntrats ;
-        $dateAnoProjetContrat = $contrat -> Dateanoprojetdecontrat ;
+        $autoriteContractante = $contrat -> Autorite_Contractante ;
+        $description = $contrat -> Description_du_Contrat ;
+        $sourceFinancement = $contrat -> Source_de_Financement ;
+        $typeProcedure = $contrat -> Type_de_Procedures ;
+        $dateReceptionDAO = $contrat -> Creation_du_DAO ;
+        $dateAnoSurDAO =  $contrat ->  Date_ANO_sur_DAO ;
+        $datePublicationDAO =  $contrat -> Date_Publication_DAO ;
+        $dateOuverturePlis = $contrat -> Date_Ouverture_des_Plis ;
+        $dateRapportEvaluation = $contrat -> Date_Rapport_Evaluation ;
+        $dateAnoSurRapEval = $contrat -> Date_ANO_sur_Rapport_Evaluation ;
+        $dateNotifProvisoir = $contrat -> Date_Notif_Provisoire ;
+        $projetNegoContrat = $contrat -> Date_Reception_et_Nego_Projet_de_Cntrats ;
+        $dateAnoProjetContrat = $contrat -> Date_ANO_Projet_de_Contrat ;
         $attribuaire = $contrat -> Attributaire ;
-        $approbationAttribuaire = $contrat -> SignatureAttributaire ;
+        $approbationAttribuaire = $contrat -> Signature_Attributaire ;
         $montant = $contrat -> Montant ;
-        $approbationAC  = $contrat -> SignatureAC ;
-        $approbationACGPMP = $contrat -> SignACGPMP ;
-        $approbationMEF = $contrat -> ApproMEF ;
+        $approbationAC  = $contrat -> Signature_AC ;
+        $approbationACGPMP = $contrat -> Signature_ACGPMP ;
+        $approbationMEF = $contrat -> Approbation_MEF ;
         $commentaire = $contrat -> Comments ;
         
         $res = $obj_bdd -> selectProjetByidImport($idImport);
