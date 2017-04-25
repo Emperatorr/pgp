@@ -48,25 +48,26 @@
 			<table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
 			<thead>
 				<tr>
-					<td>Aut. Contractante</td>
-					<td>S. Financement</td>
-					<td>Type</td>
-					<td>Reception DAO</td>
+					<td>Autorite Contractante</td>
+					<td>Description du Contrat</td>
+					<td>Source du Financement</td>
+					<td>Type de Procedures</td>
+					<td>Creation du DAO</td>
 					<td>ANO sur DAO</td>
 					<td>Publication DAO</td>
-					<td>Ouverture Plis</td>
-					<td>Rap. Eval.</td>
-					<td>ANO sur Rap. Eval.</td>
-					<td>Notif Prov.</td>
+					<td>Ouverture des Plis</td>
+					<td>Rapport Evaluation</td>
+					<td>ANO sur Rapport Evaluation</td>
+					<td>Notif Provisoire</td>
 					
 					<td>Nego. Contrat</td>
 					<td>ANO Projet de Contrat</td>
 					<td>Attribuaire</td>
-					<td>App. Attribuaire</td>
+					<td>Approbation Attributaire</td>
 					<td>Montant</td>
-					<td>App. AC</td>
-					<td>App. ACGPMP</td>
-					<td>App. MEF</td>
+					<td>Approbation AC</td>
+					<td>Approbation ACGPMP</td>
+					<td>Approbation MEF</td>
 					<td>Total Jrs</td>
 
 					<td>Etat</td>
@@ -106,6 +107,7 @@
 						echo "
 							<tr>
 								<td>".$projet -> getAutoriteContractante()."</td>
+								<td>".$projet -> getDescription()."</td>
 								<td>".$projet -> getSourceFinancement()."</td>
 								<td>".$projet -> getTypeProcedure()."</td>
 								<td>".$projet -> getDateReceptionDAO()."</td>
