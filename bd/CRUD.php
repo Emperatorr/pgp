@@ -12,7 +12,6 @@ class CRUD{
 	public function insertProjet(Projet $projet) {
 				$req = $this -> bdd -> prepare("INSERT IGNORE INTO projet (
 																				 idProjet,
-																				 idImport,
 																				 autoriteContractante,
 																				 description,
 																				 sourceFinancement,
@@ -31,6 +30,8 @@ class CRUD{
 																				 approbationAC,
 																				 approbationACGPMP, 
 																				 approbationMEF,
+																				 enregistrementImpots,
+																				 immatriculation,
 																				 totalJour, 
 																				 inferieur60, 
 																				 inferieur90, 
@@ -40,7 +41,6 @@ class CRUD{
 																				 dateInsertion 
 																				)
 															VALUES( '',
-																			:idImport,
 																			:autoriteContractante,
 																			:description,
 																			:sourceFinancement,
@@ -59,6 +59,8 @@ class CRUD{
 																			:approbationAC,
 																			:approbationACGPMP, 
 																			:approbationMEF,
+																			:enregistrementImpots,
+																			:immatriculation,
 																			:totalJour, 
 																			:inferieur60, 
 																			:inferieur90, 
@@ -70,7 +72,6 @@ class CRUD{
 							");
 				$req->execute(
 					array(
-							'idImport'  => $projet -> getIdImport(),
 							'autoriteContractante' => $projet -> getautoriteContractante(),
 							'description' => $projet -> getdescription(),
 							'sourceFinancement' => $projet -> getsourceFinancement(),
@@ -89,6 +90,8 @@ class CRUD{
 							'approbationAC' => $projet -> getapprobationAC(),
 							'approbationACGPMP' => $projet -> getapprobationACGPMP(), 
 							'approbationMEF' => $projet -> getapprobationMEF(),
+							'enregistrementImpots' => $projet -> getenregistrementImpots(),
+							'immatriculation' => $projet -> getimmatriculation(),
 							'totalJour' => $projet -> gettotalJour(), 
 							'inferieur60' => $projet -> getinferieur60(), 
 							'inferieur90' => $projet -> getinferieur90(), 
@@ -138,6 +141,8 @@ class CRUD{
 											approbationAC = :approbationAC,
 											approbationACGPMP = :approbationACGPMP, 
 											approbationMEF = :approbationMEF,
+											enregistrementImpots = :enregistrementImpots,
+											immatriculation = :immatriculation,
 											totalJour = :totalJour, 
 											inferieur60 = :inferieur60, 
 											inferieur90 = :inferieur90, 
@@ -166,6 +171,8 @@ class CRUD{
 							'approbationAC' => $projet -> getapprobationAC(),
 							'approbationACGPMP' => $projet -> getapprobationACGPMP(), 
 							'approbationMEF' => $projet -> getapprobationMEF(),
+							'enregistrementImpots' => $projet -> getenregistrementImpots(),
+							'immatriculation' => $projet -> getimmatriculation(),
 							'totalJour' => $projet -> gettotalJour(), 
 							'inferieur60' => $projet -> getinferieur60(), 
 							'inferieur90' => $projet -> getinferieur90(), 
