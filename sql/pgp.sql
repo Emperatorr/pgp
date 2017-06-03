@@ -54,7 +54,6 @@ INSERT INTO `alert` (`idAlert`, `dateAlert`, `typeAlert`, `idProjet`, `messageAl
 
 CREATE TABLE IF NOT EXISTS `projet` (
   `idProjet` int(11) NOT NULL AUTO_INCREMENT,
-  `idImport` varchar(20) DEFAULT NULL,
   `autoriteContractante` varchar(20) NOT NULL,
   `description` tinytext NOT NULL,
   `sourceFinancement` varchar(60) NOT NULL,
@@ -74,6 +73,8 @@ CREATE TABLE IF NOT EXISTS `projet` (
   `approbationAC` varchar(20) NOT NULL,
   `approbationACGPMP` varchar(20) NOT NULL,
   `approbationMEF` varchar(20) NOT NULL,
+  `enregistrementImpots` varchar(20) NOT NULL,
+  `immatriculation` varchar(20) NOT NULL,
   `totalJour` varchar(10) DEFAULT NULL,
   `inferieur60` varchar(10) NOT NULL,
   `inferieur90` varchar(10) NOT NULL,
