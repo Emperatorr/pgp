@@ -2,7 +2,7 @@
 class Projet {
 
 	private $idProjet ;
-	private $idImport ;
+	//private $idImport ;
 	private $autoriteContractante ; 
 	private $description ; 
 	private $sourceFinancement ; 
@@ -22,6 +22,8 @@ class Projet {
 	private $approbationAC ;
 	private $approbationACGPMP ;
 	private $approbationMEF ;
+	private $enregistrementImpots ;
+	private $immatriculation ;
 	private $totalJour ;
 	private $inferieur60 ;
 	private $inferieur90 ;
@@ -33,7 +35,7 @@ class Projet {
 	
 	// les getteurs
 	public function getIdProjet () { return $this -> idProjet; }
-	public function getIdImport () { return $this -> idImport; }
+	//public function getIdImport () { return $this -> idImport; }
 	public function getSourceFinancement () { return $this -> sourceFinancement; }
 	public function getAutoriteContractante () { return $this -> autoriteContractante; }
 	public function getDescription () { return $this -> description; }
@@ -53,6 +55,8 @@ class Projet {
 	public function getApprobationAC() { return $this -> approbationAC ; }
 	public function getApprobationACGPMP() { return $this -> approbationACGPMP ; }
 	public function getApprobationMEF() { return $this -> approbationMEF ; }
+	public function getEnregistrementImpots() { return $this -> enregistrementImpots ; }
+	public function getImmatriculation() { return $this -> immatriculation ; }
 	public function getTotalJour() { return $this -> totalJour ; }
 	public function getInferieur60() { return $this -> inferieur60 ; }
 	public function getInferieur90() { return $this -> inferieur90 ; }
@@ -83,11 +87,13 @@ class Projet {
 	public function setMontant($p) { $this -> montant = $p ; }
 	public function setApprobationAC($p) { $this -> approbationAC = $p ; }
 	public function setapprobationACGPMP($p) { $this -> approbationACGPMP = $p ; }
-	public function setApprobationMEF($p) { $this -> approbationMEF = $p ; }
+	public function setapprobationMEF($p) { $this -> approbationMEF = $p ; }
+	public function setEnregistrementImpots($p) { $this -> enregistrementImpots = $p ; }
+	public function setImmatriculation($p) { $this -> immatriculation = $p ; }
 	public function setTotalJour($p) { $this -> totalJour = $p ; }
 	public function setInferieur60($p) { $this -> inferieur60 = $p ; }
 	public function setInferieur90($p) { $this -> inferieur90 = $p ; }
- public function setInferieur120($p) { $this -> inferieur120 = $p ; }
+	public function setInferieur120($p) { $this -> inferieur120 = $p ; }
 	public function setSuperieur120($p) { $this -> superieur120 = $p ; }
 	public function setCommentaire($p) { $this -> commentaire = $p ; }
 	public function setDateInsertion($p) { $this -> dateInsertion = $p ; }
