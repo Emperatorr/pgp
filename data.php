@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -48,29 +48,33 @@
 			<table id="table" class="table table-striped table-bordered" cellspacing="0" width="100%">
 			<thead>
 				<tr>
-					<td>Aut. Contractante</td>
-					<td>S. Financement</td>
-					<td>Type</td>
-					<td>Reception DAO</td>
-					<td>ANO sur DAO</td>
-					<td>Publication DAO</td>
-					<td>Ouverture Plis</td>
-					<td>Rap. Eval.</td>
-					<td>ANO sur Rap. Eval.</td>
-					<td>Notif Prov.</td>
+					<td>Autorite Contractante</td>
+					<td>Description du Contrat</td>
+					<td>Source du Financement</td>
+					<td>Type de Procedures</td>
+					<td>Creation du DAO</td>
+					<td>Date ANO sur DAO</td>
+					<td>Date Publication DAO</td>
+					<td>Date Ouverture des Plis</td>
+					<td>Date Rapport Evaluation</td>
+					<td>Date ANO sur Rapport Evaluation</td>
+					<td>Date Notif Provisoire</td>
 					
-					<td>Nego. Contrat</td>
-					<td>ANO Projet de Contrat</td>
+					<td>Date Reception et Negociation Projet Contrat</td>
+					<td>Date ANO Projet Contrat</td>
 					<td>Attribuaire</td>
-					<td>App. Attribuaire</td>
+					<td>Date Signature Attributaire</td>
 					<td>Montant</td>
-					<td>App. AC</td>
-					<td>App. ACGPMP</td>
-					<td>App. MEF</td>
+					<td>Date Signature AC</td>
+					<td>Date Signature ACGPMP</td>
+					<td>Date Signature MEF</td>
+					<td>Date Enregistrement Impots</td>
+					<td>Date Immatriculation</td>
 					<td>Total Jrs</td>
 
 					<td>Etat</td>
 					<td>Alertes</td>
+					<td>Editer</td>
 
 				</tr>
 			</thead>
@@ -106,6 +110,7 @@
 						echo "
 							<tr>
 								<td>".$projet -> getAutoriteContractante()."</td>
+								<td>".$projet -> getDescription()."</td>
 								<td>".$projet -> getSourceFinancement()."</td>
 								<td>".$projet -> getTypeProcedure()."</td>
 								<td>".$projet -> getDateReceptionDAO()."</td>
@@ -123,10 +128,13 @@
 								<td>".$projet -> getMontant()."</td>
 								<td>".$projet -> getApprobationAC()."</td>
 								<td>".$projet -> getApprobationACGPMP()."</td>
-								<td>".$projet -> getApprobationMEF()."</td>
+								<td>".$projet -> getapprobationMEF()."</td>
+								<td>".$projet -> getEnregistrementImpots()."</td>
+								<td>".$projet -> getImmatriculation()."</td>
 								<td>".$totalJour."</td>
 								<td class ='$class' title ='$title'>".$msg."</td>
 								<td><a href='alertes.php?projet=$id'> Voir </a></td>
+								<td><a href='projet.php?id=$id'> Editer </a></td>
 							</tr>
 						";
 					}
