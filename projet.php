@@ -1,4 +1,4 @@
-﻿<?php session_start(); ?>
+<?php session_start(); ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -42,7 +42,7 @@
             $action = "Update";
 
         } else {
-            $_SESSION['id'] = null;
+            $_SESSION['id'] = 0;
             $isEdition = false ;
             $page_title = "Nouveau Projet";
             $action = "Insert";
@@ -59,10 +59,13 @@
             require_once('bd/fonctions.inc.php');
 			require_once('bd/CRUD.php');
 			$obj_bdd = new CRUD ($bdd);
-
+			
+			if($_SESSION['id'] != 0){
 			$projet = $obj_bdd -> selectProjetById($_SESSION['id']);
             $res = etatProjet($_SESSION['id'], $obj_bdd);
             $totalJour  = (int) totalJour($_SESSION['id'], $obj_bdd);
+			}else{$totalJour  = 0;}
+			
 	
 			$autoriteContractante = ((isset($_POST['autoriteContractante']) && !empty($_POST['autoriteContractante'])) ? htmlspecialchars($_POST['autoriteContractante']) : ((isset($projet) && !empty($projet)) ? $projet -> getAutoriteContractante() : '' ));
             $description = ((isset($_POST['description']) && !empty($_POST['description'])) ? htmlspecialchars($_POST['description']) : ((isset($projet) && !empty($projet)) ? $projet -> getDescription() : '' ));
@@ -83,16 +86,25 @@
             $approbationAC = ((isset($_POST['approbationAC']) && !empty($_POST['approbationAC'])) ? $_POST['approbationAC'] : ((isset($projet) && !empty($projet)) ? $projet -> getApprobationAC() : '' ));
             $approbationACGPMP = ((isset($_POST['approbationACGPMP']) && !empty($_POST['approbationACGPMP'])) ? htmlspecialchars($_POST['approbationACGPMP']) : ((isset($projet) && !empty($projet)) ? $projet -> getApprobationACGPMP() : '' ));
             $approbationMEF = ((isset($_POST['approbationMEF']) && !empty($_POST['approbationMEF'])) ? htmlspecialchars($_POST['approbationMEF']) : ((isset($projet) && !empty($projet)) ? $projet -> getApprobationMEF() : '' ));
-           // $totalJour = ((isset($_POST['totalJour']) && !empty($_POST['totalJour'])) ? htmlspecialchars($_POST['totalJour']) : ((isset($projet) && !empty($projet)) ? $projet -> getTotalJour() : '' ));
+            $enregistrementImpots = ((isset($_POST['enregistrementImpots']) && !empty($_POST['enregistrementImpots'])) ? htmlspecialchars($_POST['enregistrementImpots']) : ((isset($projet) && !empty($projet)) ? $projet -> getEnregistrementImpots() : '' ));
+            $immatriculation = ((isset($_POST['immatriculation']) && !empty($_POST['immatriculation'])) ? htmlspecialchars($_POST['immatriculation']) : ((isset($projet) && !empty($projet)) ? $projet -> getImmatriculation() : '' ));
+           
+		   // $totalJour = ((isset($_POST['totalJour']) && !empty($_POST['totalJour'])) ? htmlspecialchars($_POST['totalJour']) : ((isset($projet) && !empty($projet)) ? $projet -> getTotalJour() : '' ));
            // $inferieur60 = ((isset($_POST['inferieur60']) && !empty($_POST['inferieur60'])) ? htmlspecialchars($_POST['inferieur60']) : ((isset($projet) && !empty($projet)) ? $projet -> getInferieur60() : '' ));
            // $inferieur90 = ((isset($_POST['inferieur90']) && !empty($_POST['inferieur90'])) ? htmlspecialchars($_POST['inferieur90']) : ((isset($projet) && !empty($projet)) ? $projet -> getInferieur90() : '' ));
            // $inferieur120 = ((isset($_POST['inferieur120']) && !empty($_POST['inferieur120'])) ? htmlspecialchars($_POST['inferieur120']) : ((isset($projet) && !empty($projet)) ? $projet -> getInferieur120() : '' ));
            // $superieur120 = ((isset($_POST['superieur120']) && !empty($_POST['superieur120'])) ? htmlspecialchars($_POST['superieur120']) : ((isset($projet) && !empty($projet)) ? $projet -> getSuperieur120() : '' ));
-            $inferieur60 = ($totalJour < 60 ) ? 'OUI' : 'NON' ;
+            if($_SESSION['id'] != 0){
+			$inferieur60 = ($totalJour < 60 ) ? 'OUI' : 'NON' ;
             $inferieur90 = ($totalJour < 90 ) ? 'OUI' : 'NON' ;
             $inferieur120 = ($totalJour < 120 ) ? 'OUI' : 'NON' ;
             $superieur120 = ($totalJour > 120 ) ? 'OUI' : 'NON' ;
-            
+            }else {
+			$inferieur60 = 'NON' ;
+            $inferieur90 = 'NON' ;
+            $inferieur120 = 'NON' ;
+            $superieur120 ='NON' ;
+			}
             $commentaire = ((isset($_POST['commentaire']) && !empty($_POST['commentaire'])) ? htmlspecialchars($_POST['commentaire']) : ((isset($projet) && !empty($projet)) ? $projet -> getCommentaire() : '' ));
   			
 			if(isset($_POST['action']) && $_POST['action']){
@@ -113,6 +125,8 @@
                 $projet -> setapprobationAC($approbationAC);
                 $projet -> setapprobationACGPMP($approbationACGPMP);
                 $projet -> setapprobationMEF($approbationMEF);
+                $projet -> setEnregistrementImpots($enregistrementImpots);
+                $projet -> setImmatriculation($immatriculation);
                 $projet -> settotalJour($totalJour);
                 $projet -> setInferieur60($inferieur60);
                 $projet -> setInferieur90($inferieur90);
@@ -157,7 +171,7 @@
 				</div>";
             }
 		?>
-		<form role="form" action = 'data.php' method='POST'>
+		<form role="form" action = 'projet.php' method='POST'>
             <div class="col-lg-8 center">
               <div class="form-group">
                     <label for="autoriteContractante">Autorité Contractante</label>
@@ -191,70 +205,70 @@
                 <div class="form-group">
                     <label for="dateReceptionDAO">Date Reception DAO</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="dateReceptionDAO" id="dateReceptionDAO"   <?php echo"value='$dateReceptionDAO'" ;?> >
+                        <input type="date" class="form-control" name="dateReceptionDAO" id="dateReceptionDAO"   <?php echo"value='$dateReceptionDAO'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
 				 <div class="form-group">
                     <label for="dateAnoSurDAO">Date Ano sur DAO</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="dateAnoSurDAO" id="dateAnoSurDAO" placeholder="date ano sur DAO"   <?php echo"value='$dateAnoSurDAO'" ;?> >
+                        <input type="date" class="form-control" name="dateAnoSurDAO" id="dateAnoSurDAO" placeholder="date ano sur DAO"   <?php echo"value='$dateAnoSurDAO'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="datePublicationDAO">Date Publication DAO </label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="datePublicationDAO" id="datePublicationDAO"   <?php echo"value='$datePublicationDAO'" ;?> >
+                        <input type="date" class="form-control" name="datePublicationDAO" id="datePublicationDAO"   <?php echo"value='$datePublicationDAO'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
                     <label for="dateOuverturePlis">Date Ouverture Plis</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="dateOuverturePlis" id="dateOuverturePlis"   <?php echo"value='$dateOuverturePlis'" ;?> >
+                        <input type="date" class="form-control" name="dateOuverturePlis" id="dateOuverturePlis"   <?php echo"value='$dateOuverturePlis'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>               
                 <div class="form-group">
                     <label for="dateRapportEvaluation">Date Rapport Evaluation</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="dateRapportEvaluation" id="dateRapportEvaluation"   <?php echo"value='$dateRapportEvaluation'" ;?> >
+                        <input type="date" class="form-control" name="dateRapportEvaluation" id="dateRapportEvaluation"   <?php echo"value='$dateRapportEvaluation'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
                     <label for="dateNotifProvisoir">Date Notification Provisoire</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="dateNotifProvisoir" id="dateNotifProvisoir"   <?php echo"value='$dateNotifProvisoir'" ;?> >
+                        <input type="date" class="form-control" name="dateNotifProvisoir" id="dateNotifProvisoir"   <?php echo"value='$dateNotifProvisoir'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>  
                  <div class="form-group">
                     <label for="projetNegoContrat">Projet Ce Contrat</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="projetNegoContrat" id="projetNegoContrat"   <?php echo"value='$projetNegoContrat'" ;?> >
+                        <input type="date" class="form-control" name="projetNegoContrat" id="projetNegoContrat"   <?php echo"value='$projetNegoContrat'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="dateAnoProjetContrat">Projet Ano Projet de Contrat</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="dateAnoProjetContrat" id="dateAnoProjetContrat"   <?php echo"value='$dateAnoProjetContrat'" ;?> >
+                        <input type="date" class="form-control" name="dateAnoProjetContrat" id="dateAnoProjetContrat"   <?php echo"value='$dateAnoProjetContrat'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
-                    <label for="attribuaire">Attribuaire</label>
+                    <label for="attribuaire">Attributaire</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="attribuaire" id="attribuaire"   <?php echo"value='$attribuaire'" ;?> >
+                        <input type="date" class="form-control" name="attribuaire" id="attribuaire"   <?php echo"value='$attribuaire'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
-                    <label for="approbationAttribuaire">Approbation Attribuaire</label>
+                    <label for="approbationAttribuaire">Signature Attributaire</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="approbationAttribuaire" id="approbationAttribuaire"   <?php echo"value='$approbationAttribuaire'" ;?> >
+                        <input type="date" class="form-control" name="approbationAttribuaire" id="approbationAttribuaire"   <?php echo"value='$approbationAttribuaire'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
@@ -266,51 +280,65 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="approbationAC">Approbation AC</label>
+                    <label for="approbationAC">Signature AC</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="approbationAC" id="approbationAC"   <?php echo"value='$approbationAC'" ;?> >
+                        <input type="date" class="form-control" name="approbationAC" id="approbationAC"   <?php echo"value='$approbationAC'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
-                    <label for="approbationACGPMP">Approbation ACGPMP</label>
+                    <label for="approbationACGPMP">Signature ACGPMP</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="approbationACGPMP" id="approbationACGPMP"   <?php echo"value='$approbationACGPMP'" ;?> >
+                        <input type="date" class="form-control" name="approbationACGPMP" id="approbationACGPMP"   <?php echo"value='$approbationACGPMP'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
-                    <label for="approbationMEF">Approbation MEF</label>
+                    <label for="approbationMEF">Signature MEF</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="approbationMEF" id="approbationMEF"   <?php echo"value='$approbationMEF'" ;?> >
+                        <input type="date" class="form-control" name="approbationMEF" id="approbationMEF"   <?php echo"value='$approbationMEF'" ;?> >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label for="enregistrementImpots">Enregistrement Impots</label>
+                    <div class="input-group">
+                        <input type="date" class="form-control" name="enregistrementImpots" id="enregistrementImpots"   <?php echo"value='$enregistrementImpots'" ;?> >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
+                    </div>
+                </div>
+				<div class="form-group">
+                    <label for="immatriculation">Immatriculation</label>
+                    <div class="input-group">
+                        <input type="date" class="form-control" name="immatriculation" id="immatriculation"   <?php echo"value='$immatriculation'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="totalJour">Total Jour</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="totalJour" id="totalJour"   <?php echo"value='$totalJour'" ;?> >
+                        <input type="text" class="form-control" name="totalJour" id="totalJour" disabled="disabled"  <?php echo"value='$totalJour'" ;?> >
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inferieur60"> Inferieur 60 </label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="inferieur60" id="inferieur60" placeholder="inferieur 60"  <?php echo"value='$inferieur60'" ;?>>
+                        <input type="text" class="form-control" name="inferieur60" id="inferieur60" placeholder="inferieur 60" disabled="disabled" <?php echo"value='$inferieur60'" ;?>>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
                     <label for="inferieur90"> Inferieur 90 </label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="inferieur90" id="inferieur90" placeholder="inferieur 90"  <?php echo"value='$inferieur90'" ;?>>
+                        <input type="text" class="form-control" name="inferieur90" id="inferieur90" placeholder="inferieur 90" disabled="disabled" <?php echo"value='$inferieur90'" ;?>>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
                     <label for="inferieur120"> Inferieur 120 </label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="inferieur120" id="inferieur120" placeholder="inferieur 120"  <?php echo"value='$inferieur120'" ;?>>
+                        <input type="text" class="form-control" name="inferieur120" id="inferieur120" placeholder="inferieur 120" disabled="disabled"  <?php echo"value='$inferieur120'" ;?>>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
@@ -318,7 +346,7 @@
                 <div class="form-group">
                     <label for="superieur120"> Superieur 120 </label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="superieur120" id="superieur120" placeholder="superieur 120"  <?php echo"value='$superieur120'" ;?>>
+                        <input type="text" class="form-control" name="superieur120" id="superieur120" placeholder="superieur 120" disabled="disabled" <?php echo"value='$superieur120'" ;?>>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
@@ -331,9 +359,10 @@
                     </div>
                 </div>
 				
+								
 				<input type ='hidden' name = 'action' <?php echo"value='$action'" ;?> />
                 <a <?php echo "href='alertes.php?projet=$_SESSION[id]'"; ?> class="btn btn-info pull-right" style ="margin-left:10px;">Voir l'historique des alertes</a>
-                <input type="submit" name="submit" id="submit" value="Retour à la liste " class="btn btn-info pull-right">
+                <input type="submit" name="submit" id="submit" value="Soumettre " class="btn btn-info pull-right">
                
            
             </div>
