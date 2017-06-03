@@ -1,4 +1,5 @@
 <?php session_start(); ?>
+<?php session_start(); ?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -42,7 +43,7 @@
             $action = "Update";
 
         } else {
-            $_SESSION['id'] = 0;
+            $_SESSION['id'] = false;
             $isEdition = false ;
             $page_title = "Nouveau Projet";
             $action = "Insert";
@@ -60,11 +61,11 @@
 			require_once('bd/CRUD.php');
 			$obj_bdd = new CRUD ($bdd);
 			
-			if($_SESSION['id'] != 0){
+			//if($_SESSION['id'] != 0){
 			$projet = $obj_bdd -> selectProjetById($_SESSION['id']);
             $res = etatProjet($_SESSION['id'], $obj_bdd);
             $totalJour  = (int) totalJour($_SESSION['id'], $obj_bdd);
-			}else{$totalJour  = 0;}
+			//}else{$totalJour  = 0;}
 			
 	
 			$autoriteContractante = ((isset($_POST['autoriteContractante']) && !empty($_POST['autoriteContractante'])) ? htmlspecialchars($_POST['autoriteContractante']) : ((isset($projet) && !empty($projet)) ? $projet -> getAutoriteContractante() : '' ));
@@ -94,17 +95,17 @@
            // $inferieur90 = ((isset($_POST['inferieur90']) && !empty($_POST['inferieur90'])) ? htmlspecialchars($_POST['inferieur90']) : ((isset($projet) && !empty($projet)) ? $projet -> getInferieur90() : '' ));
            // $inferieur120 = ((isset($_POST['inferieur120']) && !empty($_POST['inferieur120'])) ? htmlspecialchars($_POST['inferieur120']) : ((isset($projet) && !empty($projet)) ? $projet -> getInferieur120() : '' ));
            // $superieur120 = ((isset($_POST['superieur120']) && !empty($_POST['superieur120'])) ? htmlspecialchars($_POST['superieur120']) : ((isset($projet) && !empty($projet)) ? $projet -> getSuperieur120() : '' ));
-            if($_SESSION['id'] != 0){
+           // if($_SESSION['id'] != 0){
 			$inferieur60 = ($totalJour < 60 ) ? 'OUI' : 'NON' ;
             $inferieur90 = ($totalJour < 90 ) ? 'OUI' : 'NON' ;
             $inferieur120 = ($totalJour < 120 ) ? 'OUI' : 'NON' ;
             $superieur120 = ($totalJour > 120 ) ? 'OUI' : 'NON' ;
-            }else {
+            /*}else {
 			$inferieur60 = 'NON' ;
             $inferieur90 = 'NON' ;
             $inferieur120 = 'NON' ;
             $superieur120 ='NON' ;
-			}
+			}*/
             $commentaire = ((isset($_POST['commentaire']) && !empty($_POST['commentaire'])) ? htmlspecialchars($_POST['commentaire']) : ((isset($projet) && !empty($projet)) ? $projet -> getCommentaire() : '' ));
   			
 			if(isset($_POST['action']) && $_POST['action']){
