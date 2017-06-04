@@ -1,7 +1,7 @@
 <?php session_start();
-	$_SESSION['isConnected'] = false;
 	$_SESSION['idUser'] = '';
 	$_SESSION['emailUser'] = '';
+	$_SESSION['levelUser'] = 0;
 	?>
 <!DOCTYPE html>
 <html >
@@ -42,9 +42,10 @@
 				if($res != null){
 				 $_ERROR['state'] = false;
 				 
-				 $_SESSION['isConnected'] = true ;
 				 $_SESSION['idUser'] = $res[0] -> getIdUser();
 				 $_SESSION['emailUser'] = $res[0] -> getEmailUser() ;
+				 $_SESSION['levelUser'] = $res[0] -> getLevelUser() ;
+
 				
 				 //redirection vers le tableau
 				 header('location:data.php');

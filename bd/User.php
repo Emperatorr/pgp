@@ -6,7 +6,8 @@ class User {
 	private $prenomUser ; 
 	private $emailUser ; 
 	private $passUser ; 
-	private $telephoneUser ; 
+	private $telephoneUser ;
+	private $levelUser ; 
 	private $recevoirEmail ;
 	private $dateInscription ;
 	
@@ -17,6 +18,7 @@ class User {
 	public function  getEmailUser  () { return $this -> emailUser ; }
 	public function  getPassUser  () { return $this -> passUser ; }
 	public function  getTelephoneUser  () { return $this -> telephoneUser ; }
+	public function  getLevelUser  () { return $this -> levelUser ; }
 	public function  getRecevoirEmail () { return $this -> recevoirEmail ; }
 	public function  getDateInscription  () { return $this -> dateInscription ; }
 	
@@ -27,6 +29,7 @@ class User {
 	public function  setEmailUser ($p) { $this -> emailUser = $p ; }
 	public function  setPassUser ($p) { $this -> passUser = $p ; }
 	public function  setTelephoneUser ($p) { $this -> telephoneUser = $p ; }
+	public function  setLevelUser ($p) { $this -> levelUser = $p ; }
 	public function  setRecevoirEmail ($p) { $this -> recevoirEmail = $p ; }
 	public function  setDateInscription ($p) { $this -> dateInscription = $p ; }
 	

@@ -12,7 +12,6 @@ class CRUD{
 	public function insertProjet(Projet $projet) {
 				$req = $this -> bdd -> prepare("INSERT IGNORE INTO projet (
 																				 idProjet,
-																				 idImport,
 																				 autoriteContractante,
 																				 description,
 																				 sourceFinancement,
@@ -27,10 +26,13 @@ class CRUD{
 																				 projetNegoContrat,
 																				 dateAnoProjetContrat, 
 																				 attribuaire,
+																				 approbationAttribuaire,
 																				 montant,
 																				 approbationAC,
 																				 approbationACGPMP, 
 																				 approbationMEF,
+																				 enregistrementImpots,
+																				 immatriculation,
 																				 totalJour, 
 																				 inferieur60, 
 																				 inferieur90, 
@@ -40,7 +42,6 @@ class CRUD{
 																				 dateInsertion 
 																				)
 															VALUES( '',
-																			:idImport,
 																			:autoriteContractante,
 																			:description,
 																			:sourceFinancement,
@@ -55,10 +56,13 @@ class CRUD{
 																			:projetNegoContrat,
 																			:dateAnoProjetContrat, 
 																			:attribuaire,
+																			:approbationAttribuaire,
 																			:montant,
 																			:approbationAC,
 																			:approbationACGPMP, 
 																			:approbationMEF,
+																			:enregistrementImpots,
+																			:immatriculation,
 																			:totalJour, 
 																			:inferieur60, 
 																			:inferieur90, 
@@ -70,7 +74,6 @@ class CRUD{
 							");
 				$req->execute(
 					array(
-							'idImport'  => $projet -> getIdImport(),
 							'autoriteContractante' => $projet -> getautoriteContractante(),
 							'description' => $projet -> getdescription(),
 							'sourceFinancement' => $projet -> getsourceFinancement(),
@@ -85,10 +88,13 @@ class CRUD{
 							'projetNegoContrat' => $projet -> getprojetNegoContrat(),
 							'dateAnoProjetContrat' => $projet -> getdateAnoProjetContrat(), 
 							'attribuaire' => $projet -> getattribuaire(),
+							'approbationAttribuaire' => $projet -> getApprobationAttribuaire(),
 							'montant' => $projet -> getmontant(),
 							'approbationAC' => $projet -> getapprobationAC(),
 							'approbationACGPMP' => $projet -> getapprobationACGPMP(), 
 							'approbationMEF' => $projet -> getapprobationMEF(),
+							'enregistrementImpots' => $projet -> getenregistrementImpots(),
+							'immatriculation' => $projet -> getimmatriculation(),
 							'totalJour' => $projet -> gettotalJour(), 
 							'inferieur60' => $projet -> getinferieur60(), 
 							'inferieur90' => $projet -> getinferieur90(), 
@@ -134,10 +140,13 @@ class CRUD{
 											projetNegoContrat = :projetNegoContrat,
 											dateAnoProjetContrat = :dateAnoProjetContrat, 
 											attribuaire = :attribuaire,
+											approbationAttribuaire = :approbationAttribuaire,
 											montant = :montant,
 											approbationAC = :approbationAC,
 											approbationACGPMP = :approbationACGPMP, 
 											approbationMEF = :approbationMEF,
+											enregistrementImpots = :enregistrementImpots,
+											immatriculation = :immatriculation,
 											totalJour = :totalJour, 
 											inferieur60 = :inferieur60, 
 											inferieur90 = :inferieur90, 
@@ -162,10 +171,13 @@ class CRUD{
 							'projetNegoContrat' => $projet -> getprojetNegoContrat(),
 							'dateAnoProjetContrat' => $projet -> getdateAnoProjetContrat(), 
 							'attribuaire' => $projet -> getattribuaire(),
+							'approbationAttribuaire' => $projet -> getApprobationAttribuaire(),
 							'montant' => $projet -> getmontant(),
 							'approbationAC' => $projet -> getapprobationAC(),
 							'approbationACGPMP' => $projet -> getapprobationACGPMP(), 
 							'approbationMEF' => $projet -> getapprobationMEF(),
+							'enregistrementImpots' => $projet -> getenregistrementImpots(),
+							'immatriculation' => $projet -> getimmatriculation(),
 							'totalJour' => $projet -> gettotalJour(), 
 							'inferieur60' => $projet -> getinferieur60(), 
 							'inferieur90' => $projet -> getinferieur90(), 
@@ -295,6 +307,7 @@ class CRUD{
 										emailUser = :email, 
 										passUser = :pass, 
 										telephoneUser = :telephone,
+										levelUser = :level,
 										recevoirEmail = :recevoirEmail
 									WHERE idUser =:id
 									');
@@ -304,6 +317,7 @@ class CRUD{
 						'email' => $user -> getEmailUser(),
 						'pass' => $user -> getPassUser(),
 						'telephone' => $user -> getTelephoneUser(),
+						'level' => $user -> getLevelUser(),
 						'recevoirEmail' => $user -> getRecevoirEmail(),
 						'id' => $user -> getIdUser()
 				)); 

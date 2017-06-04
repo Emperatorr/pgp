@@ -10,7 +10,18 @@
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
+                    <?php 
+                        if(isset($_SESSION['levelUser']) && $_SESSION['levelUser'] == 1){
+                            echo "
+                            <li>
+                               <a href='projet.php?action=new'>
+                                   Nouveau
+                                </a>
+                             </li> ";
+                        }
+                    ?>
+                     
+						<li>
                             <a href="data.php">
                                 Liste
                             </a>
