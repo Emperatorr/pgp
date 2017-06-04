@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Dim 04 Juin 2017 à 18:40
+-- Généré le :  Dim 04 Juin 2017 à 23:01
 -- Version du serveur :  10.1.21-MariaDB
 -- Version de PHP :  5.6.30
 
@@ -90,7 +90,16 @@ CREATE TABLE `projet` (
 
 INSERT INTO `projet` (`idProjet`, `idImport`, `autoriteContractante`, `description`, `sourceFinancement`, `typeProcedure`, `dateReceptionDAO`, `dateAnoSurDAO`, `datePublicationDAO`, `dateOuverturePlis`, `dateRapportEvaluation`, `dateAnoSurRapEval`, `dateNotifProvisoir`, `projetNegoContrat`, `dateAnoProjetContrat`, `attribuaire`, `approbationAttribuaire`, `montant`, `approbationAC`, `approbationACGPMP`, `approbationMEF`, `enregistrementImpots`, `immatriculation`, `totalJour`, `inferieur60`, `inferieur90`, `inferieur120`, `superieur120`, `commentaire`, `dateInsertion`) VALUES
 (1, '1', 'Etat', 'Pret de 100000000000000000 a l etat ', 'BICICI', 'AOI', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '5555000000', '2017-05-30', '2017-05-30', '2017-05-30', '2017-06-01', '2017-06-02', '2', 'OUI', 'OUI', 'OUI', 'NON', 'Super', '2017-05-30 00:00:00'),
-(10, NULL, 'TEST', 'tatarata', 'BND', 'AON', '2017-06-01', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '2017-06-10', '2017-06-11', '455555', '2017-06-12', '2017-06-13', '2017-06-14', '2017-06-15', '2017-06-16', '0', 'NON', 'NON', 'NON', 'NON', 'Huge !!!!!!!!!!!!', '2017-06-04 12:17:40');
+(10, NULL, 'TEST edited', 'tatarata edited', 'BND', 'AON', '2017-06-01', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '2017-06-10', '2017-06-11', '455555', '2017-06-12', '2017-06-13', '2017-06-14', '2017-06-15', '2017-06-16', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'Huge !!!!!!!!!!!!', '2017-06-04 12:17:40'),
+(11, NULL, 'TEST edited', 'test edited', 'test edited', 'test lansana', '2017-06-10', '2017-06-10', '2017-06-04', '2017-06-04', '2017-06-10', '2017-06-04', '2017-06-10', '2017-06-18', '2017-06-04', '2017-06-18', '2017-06-04', '50000000', '2017-06-16', '2017-06-23', '2017-06-24', '2017-06-17', '2017-06-17', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'un bon projet', '2017-06-04 16:47:38'),
+(12, NULL, 'test lansana edited', 'test lansana edited', 'test lansana edited', 'test lansana', '2017-06-10', '2017-06-17', '2017-06-18', '2017-06-19', '2017-06-20', '2017-06-21', '2017-06-22', '2017-06-23', '2017-06-24', '2017-06-25', '2017-06-26', '500000', '2017-06-27', '2017-06-28', '2017-06-29', '2017-06-30', '2017-07-01', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'test lansana', '2017-06-04 16:49:53'),
+(13, NULL, 'test', 'test', 'test', 'test', '2017-06-10', '2017-06-10', '2017-06-04', '2017-06-04', '2017-06-10', '2017-06-04', '2017-06-10', '2017-06-18', '2017-06-04', '2017-06-18', '2017-06-04', '50000000', '2017-06-16', '2017-06-23', '2017-06-24', '2017-06-17', '2017-06-17', '0', 'NON', 'NON', 'NON', 'NON', 'un bon projet', '2017-06-04 17:29:43'),
+(14, NULL, 'TEST edited', 'tatarata edited', 'BND', 'AON', '2017-06-01', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '2017-06-10', '2017-06-11', '455555', '2017-06-12', '2017-06-13', '2017-06-14', '2017-06-15', '2017-06-16', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'Huge !!!!!!!!!!!!', '2017-06-04 18:13:40'),
+(15, NULL, 'TEST edited', 'tatarata edited', 'BND', 'AON', '2017-06-01', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '2017-06-10', '2017-06-11', '455555', '2017-06-12', '2017-06-13', '2017-06-14', '2017-06-15', '2017-06-16', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'Huge !!!!!!!!!!!!', '2017-06-04 18:13:52'),
+(16, NULL, 'TEST edited', 'tatarata edited', 'BND', 'AON', '2017-06-01', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '2017-06-10', '2017-06-11', '455555', '2017-06-12', '2017-06-13', '2017-06-14', '2017-06-15', '2017-06-16', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'Huge !!!!!!!!!!!!', '2017-06-04 18:14:01'),
+(17, NULL, 'TEST edited', 'tatarata edited', 'BND', 'AON', '2017-06-01', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '2017-06-10', '2017-06-11', '455555', '2017-06-12', '2017-06-13', '2017-06-14', '2017-06-15', '2017-06-16', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'Huge !!!!!!!!!!!!', '2017-06-04 18:14:22'),
+(18, NULL, 'dernier test', 'dernier test', 'dernier test', 'dernier test', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '2017-06-10', '2017-06-11', '2017-06-12', '2017-06-13', '2017-06-14', '6000000', '2017-06-16', '2017-06-17', '2017-06-18', '2017-06-19', '2017-06-20', '0', 'NON', 'NON', 'NON', 'NON', 'jeuduejdue', '2017-06-04 18:32:48'),
+(19, NULL, 'oupreoiure', 'oupreoiure', 'oupreoiure', 'oupreoiure', '2017-06-17', '2017-06-10', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-16', '2017-06-04', '2017-06-04', '2017-06-04', '2017-06-04', '2017-06-10', '88989898', '2017-06-10', '2017-06-09', '2017-06-04', '2017-06-04', '2017-06-03', '0', 'NON', 'NON', 'NON', 'NON', 'reoiprepoi[re', '2017-06-04 18:42:04');
 
 -- --------------------------------------------------------
 
@@ -105,6 +114,7 @@ CREATE TABLE `user` (
   `emailUser` varchar(60) NOT NULL,
   `passUser` varchar(75) NOT NULL,
   `telephoneUser` varchar(20) DEFAULT NULL,
+  `levelUser` int(2) NOT NULL DEFAULT '1',
   `recevoirEmail` int(2) DEFAULT '0',
   `dateInscription` datetime NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -113,9 +123,9 @@ CREATE TABLE `user` (
 -- Contenu de la table `user`
 --
 
-INSERT INTO `user` (`idUser`, `nomUser`, `prenomUser`, `emailUser`, `passUser`, `telephoneUser`, `recevoirEmail`, `dateInscription`) VALUES
-(1, 'Sylla', 'Lansana', 'lansanalsm@gmail.com', 'lansana', '666494787', 1, '2016-12-29 21:57:36'),
-(2, 'testeur', 'testeur', 'beta@testeur.test', 'test123', NULL, 1, '2017-03-15 00:00:00');
+INSERT INTO `user` (`idUser`, `nomUser`, `prenomUser`, `emailUser`, `passUser`, `telephoneUser`, `levelUser`, `recevoirEmail`, `dateInscription`) VALUES
+(1, 'Sylla', 'Lansana', 'lansanalsm@gmail.com', 'lansana', '666494787', 1, 1, '2016-12-29 21:57:36'),
+(2, 'testeur', 'testeur', 'beta@testeur.test', 'test123', NULL, 1, 1, '2017-03-15 00:00:00');
 
 --
 -- Index pour les tables exportées
@@ -152,7 +162,7 @@ ALTER TABLE `alert`
 -- AUTO_INCREMENT pour la table `projet`
 --
 ALTER TABLE `projet`
-  MODIFY `idProjet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idProjet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
