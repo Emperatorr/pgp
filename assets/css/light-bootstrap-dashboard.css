@@ -3421,6 +3421,9 @@ background: rgba(203, 203, 210, 0.15);
 .depasser {
   background-color: pink;
 }
+.txt_depasser {
+  background-color: pink;
+}
 .ok {
   background-color: #a2d246 ;
 }

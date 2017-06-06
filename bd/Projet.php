@@ -31,8 +31,8 @@ class Projet {
 	private $superieur120 ;
 	private $commentaire ;
 	private $dateInsertion ;
-	
-	
+
+		
 	// les getteurs
 	public function getIdProjet () { return $this -> idProjet; }
 	//public function getIdImport () { return $this -> idImport; }
@@ -97,6 +97,175 @@ class Projet {
 	public function setSuperieur120($p) { $this -> superieur120 = $p ; }
 	public function setCommentaire($p) { $this -> commentaire = $p ; }
 	public function setDateInsertion($p) { $this -> dateInsertion = $p ; }
+
+	// les dates excedentaires
+
+	public function getDateReceptionDAOEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this ->getDateReceptionDAO(), $this -> getDateAnoSurDAO());
+		 $autorise =  (int) $reception_ano['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	}
+	public function getDateAnoSurDAOEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this ->getDateAnoSurDAO(), $this -> getDatePublicationDAO());
+		 $autorise =  (int) $ano_publication['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	}
+	public function getDatePublicationDAOEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this ->getDatePublicationDAO(), $this -> getDateOuverturePlis());
+		 $autorise =  (int) $publication_ouverture['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	}
+	public function  getDateOuverturePlisEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this -> getDateOuverturePlis(), $this -> getDateRapportEvaluation());
+		 $autorise =  (int) $ouverture_evaluation['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	}
+	
+	public function  getDateRapportEvaluationEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this -> getDateRapportEvaluation(), $this -> getDateAnoSurRapEval());
+		 $autorise =  (int) $evaluation_rapport['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	}
+	public function  getDateAnoSurRapEvalEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this -> getDateAnoSurRapEval(), $this -> getDateNotifProvisoir());
+		 $autorise =  (int) $rapport_provisoir['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	}
+	/////
+	public function  getDateNotifProvisoirEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this -> getDateNotifProvisoir(), $this -> getprojetNegoContrat());
+		 $autorise =  (int) $provisoir_nego['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	}
+		public function  getprojetNegoContratEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this -> getprojetNegoContrat(), $this -> getDateAnoProjetContrat());
+		 $autorise =  (int) $nego_contrat['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	}
+	public function  getDateAnoProjetContratEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this -> getDateAnoProjetContrat(), $this ->getApprobationAttribuaire());
+		 $autorise =  (int) $contrat_attribuaire['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	} //////
+	public function  getApprobationAttribuaireEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this -> getApprobationAttribuaire(), $this ->getApprobationAC());
+		 $autorise =  (int) $attribuaire_ac['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	}
+	public function  getApprobationACEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this -> getApprobationAC(), $this ->getApprobationACGPMP());
+		 $autorise =  (int) $ac_acgpmp['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	}
+	public function  getApprobationACGPMPEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this -> getApprobationACGPMP(), $this ->getApprobationMEF());
+		 $autorise =  (int) $acgpmp_mef['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	}
+	public function  getApprobationMEFEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this -> getApprobationMEF(), $this ->getEnregistrementImpots());
+		 $autorise =  (int) $mef_impot['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	}
+	public function  getEnregistrementImpotsEx(){
+		 require('inc/array_interval.inc.php');
+		 $res = (int) $this -> calculateInterval($this -> getEnregistrementImpots(), $this ->getImmatriculation());
+		 $autorise =  (int) $impot_immatriculation['autorise'] ;
+		 if( $res > $autorise) {
+			 return $res - $autorise;
+		 } else {
+			 return 0 ;
+		 }
+	}
+
+ private function calculateInterval ($date1, $date2) {
+	 // le format des dates 
+	  $format = 'Y-m-d';
+		$dif = 0 ;
+
+	 if(!empty($date1) && !empty($date2)){
+		 $d1 =  DateTime::createFromFormat($format, $date1);
+		 $d2 =  DateTime::createFromFormat($format, $date2);
+		
+		 if($d1 != false ){
+			  if($d2 != false ) {
+					$dif = date_diff($d1, $d2) -> days ;
+				}else {
+					// si la date suivante n'est pas fourni on prend la date actuelle
+					$today = DateTime::createFromFormat($format, date ($format)) ;
+					$dif =  date_diff($d1, $today) -> days ;
+				}
+		 }
+	 }
+	 return $dif;
+ }
+
+
 
 	public function __construct(){
 	  if(func_num_args() >0)

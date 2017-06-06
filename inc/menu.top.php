@@ -27,8 +27,8 @@
                             </a>
                         </li>
                         <li>
-                            <a href="import.php">
-                                Importer
+                            <a href="rapport.php">
+                                Rapport
                             </a>
                         </li>
 						 <li>
