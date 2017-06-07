@@ -86,6 +86,7 @@
 					<td class='date_element'>Ex. Date Enregistrement Impots</td>
 					<td class='date_element'>Ex. Date Immatriculation</td>
 					<td>Total Jrs</td>
+          <td>Total Excedent</td>
           <td>Graphes</td>
 					<td>Alertes</td>
 				</tr>
@@ -120,6 +121,30 @@
             $cl_app_mef = ($projet -> getapprobationMEFEx () > 0) ? 'txt_depasser' : '' ;
             $cl_enreg = ($projet ->getEnregistrementImpotsEx () > 0) ? 'txt_depasser' : '' ;
 
+            $totalExcedent = $projet -> getDateReceptionDAOEx() + 
+                            $projet -> getDateAnoSurDAOEx() +
+                            $projet -> getDateOuverturePlisEx() +
+                            $projet -> getDateRapportEvaluationEx() +
+                            $projet -> getDateAnoSurRapEvalEx() +
+                            $projet -> getDateNotifProvisoirEx() +
+                            $projet ->getprojetNegoContratEx() +
+                            $projet ->getDateAnoProjetContratEx () +
+                            $projet ->getApprobationAttribuaireEx () +
+                            $projet -> getApprobationACEx() +
+                            $projet ->getApprobationACGPMPEx () +
+                            $projet -> getapprobationMEFEx () +
+                            $projet ->getEnregistrementImpotsEx () ;
+
+
+
+
+
+
+
+
+
+
+
 						echo "
 							<tr>
 								<td>".$projet -> getAutoriteContractante()."</td>
@@ -144,6 +169,7 @@
 								<td class = '$cl_enreg' >".$projet -> getEnregistrementImpotsEx()."</td>
 								<td>".$projet -> getImmatriculation()."</td>
 								<td>".$totalJour."</td>
+                <td>".$totalExcedent."</td>
                 <td><a href='chart.php?projet=$id'> Voir </a></td>
 								<td><a href='alertes.php?projet=$id'> Voir </a></td>
 							</tr>
