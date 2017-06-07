@@ -31,11 +31,6 @@
                                 Rapport
                             </a>
                         </li>
-						 <li>
-                            <a href="chart.php">
-                                graphes
-                            </a>
-                        </li>
 						 <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     Mon compte

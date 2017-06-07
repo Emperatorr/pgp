@@ -35,7 +35,7 @@
 
     function drawChartDelaiTraitement() {
       var jsonData = $.ajax({
-          url: "inc/chartData.php?chart=delaiTraitement",
+          url: "inc/chartData.php?projet=" + $('#projet_id').val(),
           dataType: "json",
           async: false
           }).responseText;
@@ -43,19 +43,23 @@
       // Create our data table out of JSON data loaded from server.
       var data = new google.visualization.DataTable(jsonData);
 	  var options = {
-          title: 'Delai de traitement des contrats (attention: des données aléatoires ont été ajouter à ce graphe pour le test)',
+          title: 'Avancement du projet (Delai Reglementaire VS delai de traitement)',
           is3D: 'true',
-          width: 900,
           height: 900
         };
 		
-      var chart = new google.visualization.ColumnChart(document.getElementById('chart1'));
+      var chart = new google.visualization.BarChart(document.getElementById('chart1'));
       chart.draw(data, options);
     }
     </script>
 
 </head>
 <body style='margin-bottom:0px;'>
+    <?php 
+       if(isset($_GET['projet']) && !empty($_GET['projet'])){
+         echo "<input id='projet_id' type='text' value='$_GET[projet]' />";
+       }
+     ?>
 <div class="wrapper">
   <!--menu vertical -->
 
@@ -71,7 +75,7 @@
             ?>
         <div class="content">
 		 <div class="container-fluid" >
-            <div id='chart1' style='border-top:1px solid black;background:white;'></div>
+            <div id='chart1' style='border-top:1px solid black;background:white;text-align:center;'></div>
 		</div>
         </div>
 
@@ -94,9 +98,4 @@
 	<!--  Charts Plugin -->
 	<script src="assets/js/chartist.min.js"></script>
 
-    <!--  Notifications Plugin    -->
-    <script src="assets/js/bootstrap-notify.js"></script>
-
-    <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-	<script src="assets/js/light-bootstrap-dashboard.js"></script>
 </html>

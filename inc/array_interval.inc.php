@@ -1,6 +1,13 @@
 <?php 
+// ce fichier contient les delai de traitements
+// NB: ce fichier est utilisé actuelement dans :
+//  bd/Projet.php
+// inc/fonction.inc.php
+// inc/chartData.php
+// DONC ATTENTION EN LE MODIFIANT
+
  $delai = 30;
- $alert = 25 ; 
+ $alert = 25 ;
  
    $reception_ano = array(
         'autorise' => 7,

@@ -243,7 +243,7 @@ class Projet {
 		 }
 	}
 
- private function calculateInterval ($date1, $date2) {
+ public function calculateInterval ($date1, $date2) {
 	 // le format des dates 
 	  $format = 'Y-m-d';
 		$dif = 0 ;

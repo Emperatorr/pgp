@@ -86,6 +86,7 @@
 					<td class='date_element'>Ex. Date Enregistrement Impots</td>
 					<td class='date_element'>Ex. Date Immatriculation</td>
 					<td>Total Jrs</td>
+          <td>Graphes</td>
 					<td>Alertes</td>
 				</tr>
 			</thead>
@@ -143,6 +144,7 @@
 								<td class = '$cl_enreg' >".$projet -> getEnregistrementImpotsEx()."</td>
 								<td>".$projet -> getImmatriculation()."</td>
 								<td>".$totalJour."</td>
+                <td><a href='chart.php?projet=$id'> Voir </a></td>
 								<td><a href='alertes.php?projet=$id'> Voir </a></td>
 							</tr>
 						";
