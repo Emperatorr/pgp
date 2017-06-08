@@ -31,11 +31,12 @@
     // Load the Visualization API and the piechart package.
     google.charts.load('current', {'packages':['corechart']}); 
     // Set a callback to run when the Google Visualization API is loaded.
-	google.charts.setOnLoadCallback(drawChartDelaiTraitement);
+	google.charts.setOnLoadCallback(drawChartDelaiTraitement1);
+	google.charts.setOnLoadCallback(drawChartDelaiTraitement2);
 
-    function drawChartDelaiTraitement() {
+    function drawChartDelaiTraitement1() {
       var jsonData = $.ajax({
-          url: "inc/chartData.php?projet=" + $('#projet_id').val(),
+          url: "inc/chartData.php?chart=1 & projet=" + $('#projet_id').val(),
           dataType: "json",
           async: false
           }).responseText;
@@ -48,7 +49,26 @@
           height: 900
         };
 		
-      var chart = new google.visualization.BarChart(document.getElementById('chart1'));
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart1'));
+      chart.draw(data, options);
+    }
+
+    function drawChartDelaiTraitement2() {
+      var jsonData = $.ajax({
+          url: "inc/chartData.php?chart=2 & projet=" + $('#projet_id').val(),
+          dataType: "json",
+          async: false
+          }).responseText;
+          
+      // Create our data table out of JSON data loaded from server.
+      var data = new google.visualization.DataTable(jsonData);
+	  var options = {
+          title: 'Avancement du projet (Delai Reglementaire VS delai de traitement)',
+          is3D: 'true',
+          height: 900
+        };
+		
+      var chart = new google.visualization.BarChart(document.getElementById('chart2'));
       chart.draw(data, options);
     }
     </script>
@@ -76,6 +96,7 @@
         <div class="content">
 		 <div class="container-fluid" >
             <div id='chart1' style='border-top:1px solid black;background:white;text-align:center;'></div>
+            <div id='chart2' style='border-top:1px solid black;background:white;text-align:center;'></div>
 		</div>
         </div>
 

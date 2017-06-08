@@ -3,8 +3,10 @@
  if((!isset($_SESSION['idUser']) || empty($_SESSION['idUser'])) ||
 	  (!isset($_SESSION['emailUser']) || empty($_SESSION['emailUser'])) ||
 		(!isset($_SESSION['levelUser']) || empty($_SESSION['levelUser']))
+		// || (!isset($_SESSION['levelUser']) != 5)
+
    ) {
-	   header('location:index.php');
+	   header('location:data.php');
    } else {
 
 ?>
@@ -106,20 +108,20 @@
 						$id = $projet -> getIdProjet();
 						$totalJour  = (int) totalJour($id, $obj_bdd);
 
-            $cl_dao_recep = ($projet -> getDateReceptionDAOEx() > 0) ? 'txt_depasser' : '' ;
-            $cl_ano_dao = ($projet -> getDateAnoSurDAOEx() > 0) ? 'txt_depasser' : '' ;
-            $cl_pub_dao = ($projet -> getDatePublicationDAOEx() > 0) ? 'txt_depasser' : '' ;
-            $cl_ouv = ($projet -> getDateOuverturePlisEx() > 0) ? 'txt_depasser' : '' ;
-            $cl_rapp = ($projet -> getDateRapportEvaluationEx() > 0) ? 'txt_depasser' : '' ;
-            $cl_ano_rapp = ($projet -> getDateAnoSurRapEvalEx() > 0) ? 'txt_depasser' : '' ;
-            $cl_notif = ($projet -> getDateNotifProvisoirEx() > 0) ? 'txt_depasser' : '' ;
-            $cl_nego = ($projet ->getprojetNegoContratEx() > 0) ? 'txt_depasser' : '' ;
-            $cl_date_ano = ($projet ->getDateAnoProjetContratEx () > 0) ? 'txt_depasser' : '' ;
-            $cl_app_attr = ($projet ->getApprobationAttribuaireEx () > 0) ? 'txt_depasser' : '' ;
-            $cl_app_ac = ($projet -> getApprobationACEx() > 0) ? 'txt_depasser' : '' ;
-            $cl_app_acgpmp = ($projet ->getApprobationACGPMPEx () > 0) ? 'txt_depasser' : '' ;
-            $cl_app_mef = ($projet -> getapprobationMEFEx () > 0) ? 'txt_depasser' : '' ;
-            $cl_enreg = ($projet ->getEnregistrementImpotsEx () > 0) ? 'txt_depasser' : '' ;
+            $cl_dao_recep = ($projet -> getDateReceptionDAOEx() > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
+            $cl_ano_dao = ($projet -> getDateAnoSurDAOEx() > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
+            $cl_pub_dao = ($projet -> getDatePublicationDAOEx() > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
+            $cl_ouv = ($projet -> getDateOuverturePlisEx() > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
+            $cl_rapp = ($projet -> getDateRapportEvaluationEx() > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
+            $cl_ano_rapp = ($projet -> getDateAnoSurRapEvalEx() > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
+            $cl_notif = ($projet -> getDateNotifProvisoirEx() > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
+            $cl_nego = ($projet ->getprojetNegoContratEx() > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
+            $cl_date_ano = ($projet ->getDateAnoProjetContratEx () > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
+            $cl_app_attr = ($projet ->getApprobationAttribuaireEx () > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
+            $cl_app_ac = ($projet -> getApprobationACEx() > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
+            $cl_app_acgpmp = ($projet ->getApprobationACGPMPEx () > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
+            $cl_app_mef = ($projet -> getapprobationMEFEx () > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
+            $cl_enreg = ($projet ->getEnregistrementImpotsEx () > 0) ? 'txt_depasser' : 'txt_non_depasser' ;
 
             $totalExcedent = $projet -> getDateReceptionDAOEx() + 
                             $projet -> getDateAnoSurDAOEx() +
@@ -135,15 +137,21 @@
                             $projet -> getapprobationMEFEx () +
                             $projet ->getEnregistrementImpotsEx () ;
 
-
-
-
-
-
-
-
-
-
+														$reception_dao_ex = ($projet -> getDateReceptionDAOEx() > 0 ) ? $projet -> getDateReceptionDAOEx() : "" ;
+														$ano_sur_dao_ex = ($projet -> getDateAnoSurDAOEx() > 0 ) ? $projet -> getDateAnoSurDAOEx() : "" ;
+														$pub_dao = ($projet -> getDatePublicationDAOEx() > 0 ) ? $projet -> getDatePublicationDAOEx() : "" ;
+														$ouverture = ($projet -> getDateOuverturePlisEx() > 0 ) ? $projet -> getDateOuverturePlisEx() : "" ;
+														$rapport = ($projet -> getDateRapportEvaluationEx() > 0 ) ? $projet -> getDateRapportEvaluationEx() : "" ;
+														$ano_sur_rapport = ($projet -> getDateAnoSurRapEvalEx() > 0 ) ? $projet -> getDateAnoSurRapEvalEx() : "" ;
+														$notif_provisoire = ($projet -> getDateNotifProvisoirEx() > 0 ) ? $projet -> getDateNotifProvisoirEx() : "" ;
+														
+														$nego_contrat = ($projet -> getprojetNegoContratEx() > 0 ) ? $projet -> getprojetNegoContratEx() : "" ;
+														$date_ano = ($projet -> getDateAnoProjetContratEx() > 0 ) ? $projet -> getDateAnoProjetContratEx() : "" ;
+														$app_attr = ($projet -> getApprobationAttribuaireEx() > 0 ) ? $projet -> getApprobationAttribuaireEx() : "" ;
+														$app_ac = ($projet -> getApprobationACEx() > 0 ) ? $projet -> getApprobationACEx() : "" ;
+														$app_acgpmp = ($projet -> getApprobationACGPMPEx() > 0 ) ? $projet -> getApprobationACGPMPEx() : "" ;
+														$app_mef = ($projet -> getapprobationMEFEx() > 0 ) ? $projet -> getapprobationMEFEx() : "" ;
+														$enreg = ($projet -> getEnregistrementImpotsEx() > 0 ) ? $projet -> getEnregistrementImpotsEx() : "" ;
 
 						echo "
 							<tr>
@@ -152,21 +160,21 @@
 								<td>".$projet -> getSourceFinancement()."</td>
 								<td>".$projet -> getTypeProcedure()."</td>
 
-								<td class = '$cl_dao_recep' >".$projet -> getDateReceptionDAOEx()."</td>
-								<td class = '$cl_ano_dao' >".$projet -> getDateAnoSurDAOEx()."</td>
-								<td class = '$cl_pub_dao' >".$projet -> getDatePublicationDAOEx()."</td>
-								<td class = '$cl_ouv' >".$projet -> getDateOuverturePlisEx()."</td>
-								<td class = '$cl_rapp' >".$projet -> getDateRapportEvaluationEx()."</td>
-								<td class = '$cl_ano_rapp' >".$projet -> getDateAnoSurRapEvalEx()."</td>
-								<td class = '$cl_notif' >".$projet -> getDateNotifProvisoirEx()."</td>
+								<td> <span class = '$cl_dao_recep' >".$reception_dao_ex ."</span></td>
+								<td> <span class = '$cl_ano_dao' >".$ano_sur_dao_ex."</span></td>
+								<td> <span class = '$cl_pub_dao' >".$pub_dao."</span></td>
+								<td> <span class = '$cl_ouv' >".$ouverture."</span></td>
+								<td> <span class = '$cl_rapp' >".$rapport."</span></td>
+								<td> <span class = '$cl_ano_rapp' >".$ano_sur_rapport."</span></td>
+								<td> <span class = '$cl_notif' >".$notif_provisoire."</span></td>
 								
-								<td class = '$cl_nego' >".$projet -> getprojetNegoContratEx()."</td>
-								<td class = '$cl_date_ano' >".$projet -> getDateAnoProjetContratEx()."</td>
-								<td class = '$cl_app_attr' >".$projet -> getApprobationAttribuaireEx()."</td>
-								<td class = '$cl_app_ac' >".$projet -> getApprobationACEx()."</td>
-								<td class = '$cl_app_acgpmp' >".$projet -> getApprobationACGPMPEx()."</td>
-								<td class = '$cl_app_mef' >".$projet -> getapprobationMEFEx()."</td>
-								<td class = '$cl_enreg' >".$projet -> getEnregistrementImpotsEx()."</td>
+								<td> <span  class = '$cl_nego' >".$nego_contrat."</span></td>
+								<td> <span  class = '$cl_date_ano' >".$date_ano."</span></td>
+								<td> <span  class = '$cl_app_attr' >".$app_attr."</span></td>
+								<td> <span  class = '$cl_app_ac' >".$app_ac."</span></td>
+								<td> <span  class = '$cl_app_acgpmp' >".$app_acgpmp."</span></td>
+								<td> <span  class = '$cl_app_mef' >".$app_mef."</span></td>
+								<td> <span  class = '$cl_enreg' >".$enreg."</span></td>
 								<td>".$projet -> getImmatriculation()."</td>
 								<td>".$totalJour."</td>
                 <td>".$totalExcedent."</td>

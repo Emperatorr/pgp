@@ -26,11 +26,19 @@
                                 Liste
                             </a>
                         </li>
-                        <li>
-                            <a href="rapport.php">
-                                Rapport
-                            </a>
-                        </li>
+                        <?php
+                             if (isset($_SESSION['levelUser']) && $_SESSION['levelUser']==5) {
+                                 echo "
+                                 <li>
+                                    <a href='rapport.php'>
+                                        Rapport
+                                    </a>
+                                </li>
+                                 ";
+                             }
+
+                        ?>
+                        
 						 <li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     Mon compte
