@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  127.0.0.1
--- Généré le :  Dim 04 Juin 2017 à 23:01
+-- Généré le :  Ven 09 Juin 2017 à 20:55
 -- Version du serveur :  10.1.21-MariaDB
 -- Version de PHP :  5.6.30
 
@@ -43,7 +43,14 @@ INSERT INTO `alert` (`idAlert`, `dateAlert`, `typeAlert`, `idProjet`, `messageAl
 (10, '2017-04-03', 2, 1, 'le delai permis pour la date d\'ouverture est depassÃ©'),
 (11, '2017-04-03', 2, 1, 'le delai permis pour la date d\'ouverture est depassÃ©'),
 (12, '2017-04-03', 1, 1, 'la date d\'evaluation de ce projet n\'a pas encore Ã©tÃ© fournie alors que le delai approche '),
-(13, '2017-04-03', 2, 1, 'le delai permis pour la date d\'approbation AC de contrat est depassÃ©');
+(13, '2017-04-03', 2, 1, 'le delai permis pour la date d\'approbation AC de contrat est depassÃ©'),
+(14, '2017-06-17', 2, 18, 'le delai permis pour la date d\'immatriculation du contrat est depassÃ©'),
+(15, '2017-06-16', 1, 18, 'la date d\'immatriculation de ce projet n\'a pas encore Ã©tÃ© fournie alors que le delai approche '),
+(16, '2017-06-06', 2, 20, 'le delai permis pour la date de rapport d\'evaluation des contrats est depassÃ©'),
+(17, '2017-06-07', 2, 20, 'le delai permis pour la date de rapport d\'evaluation des contrats est depassÃ©'),
+(18, '2017-06-07', 1, 21, 'la date d\'annonce du rapport d\'evaluation de ce projet n\'a pas encore Ã©tÃ© fournie alors que le delai approche '),
+(19, '2017-06-07', 2, 20, 'le delai permis pour la date de rapport d\'evaluation des contrats est depassÃ©'),
+(20, '2017-06-07', 1, 21, 'la date d\'annonce du rapport d\'evaluation de ce projet n\'a pas encore Ã©tÃ© fournie alors que le delai approche ');
 
 -- --------------------------------------------------------
 
@@ -89,17 +96,15 @@ CREATE TABLE `projet` (
 --
 
 INSERT INTO `projet` (`idProjet`, `idImport`, `autoriteContractante`, `description`, `sourceFinancement`, `typeProcedure`, `dateReceptionDAO`, `dateAnoSurDAO`, `datePublicationDAO`, `dateOuverturePlis`, `dateRapportEvaluation`, `dateAnoSurRapEval`, `dateNotifProvisoir`, `projetNegoContrat`, `dateAnoProjetContrat`, `attribuaire`, `approbationAttribuaire`, `montant`, `approbationAC`, `approbationACGPMP`, `approbationMEF`, `enregistrementImpots`, `immatriculation`, `totalJour`, `inferieur60`, `inferieur90`, `inferieur120`, `superieur120`, `commentaire`, `dateInsertion`) VALUES
-(1, '1', 'Etat', 'Pret de 100000000000000000 a l etat ', 'BICICI', 'AOI', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '2017-05-30', '5555000000', '2017-05-30', '2017-05-30', '2017-05-30', '2017-06-01', '2017-06-02', '2', 'OUI', 'OUI', 'OUI', 'NON', 'Super', '2017-05-30 00:00:00'),
-(10, NULL, 'TEST edited', 'tatarata edited', 'BND', 'AON', '2017-06-01', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '2017-06-10', '2017-06-11', '455555', '2017-06-12', '2017-06-13', '2017-06-14', '2017-06-15', '2017-06-16', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'Huge !!!!!!!!!!!!', '2017-06-04 12:17:40'),
-(11, NULL, 'TEST edited', 'test edited', 'test edited', 'test lansana', '2017-06-10', '2017-06-10', '2017-06-04', '2017-06-04', '2017-06-10', '2017-06-04', '2017-06-10', '2017-06-18', '2017-06-04', '2017-06-18', '2017-06-04', '50000000', '2017-06-16', '2017-06-23', '2017-06-24', '2017-06-17', '2017-06-17', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'un bon projet', '2017-06-04 16:47:38'),
-(12, NULL, 'test lansana edited', 'test lansana edited', 'test lansana edited', 'test lansana', '2017-06-10', '2017-06-17', '2017-06-18', '2017-06-19', '2017-06-20', '2017-06-21', '2017-06-22', '2017-06-23', '2017-06-24', '2017-06-25', '2017-06-26', '500000', '2017-06-27', '2017-06-28', '2017-06-29', '2017-06-30', '2017-07-01', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'test lansana', '2017-06-04 16:49:53'),
-(13, NULL, 'test', 'test', 'test', 'test', '2017-06-10', '2017-06-10', '2017-06-04', '2017-06-04', '2017-06-10', '2017-06-04', '2017-06-10', '2017-06-18', '2017-06-04', '2017-06-18', '2017-06-04', '50000000', '2017-06-16', '2017-06-23', '2017-06-24', '2017-06-17', '2017-06-17', '0', 'NON', 'NON', 'NON', 'NON', 'un bon projet', '2017-06-04 17:29:43'),
-(14, NULL, 'TEST edited', 'tatarata edited', 'BND', 'AON', '2017-06-01', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '2017-06-10', '2017-06-11', '455555', '2017-06-12', '2017-06-13', '2017-06-14', '2017-06-15', '2017-06-16', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'Huge !!!!!!!!!!!!', '2017-06-04 18:13:40'),
-(15, NULL, 'TEST edited', 'tatarata edited', 'BND', 'AON', '2017-06-01', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '2017-06-10', '2017-06-11', '455555', '2017-06-12', '2017-06-13', '2017-06-14', '2017-06-15', '2017-06-16', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'Huge !!!!!!!!!!!!', '2017-06-04 18:13:52'),
-(16, NULL, 'TEST edited', 'tatarata edited', 'BND', 'AON', '2017-06-01', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '2017-06-10', '2017-06-11', '455555', '2017-06-12', '2017-06-13', '2017-06-14', '2017-06-15', '2017-06-16', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'Huge !!!!!!!!!!!!', '2017-06-04 18:14:01'),
-(17, NULL, 'TEST edited', 'tatarata edited', 'BND', 'AON', '2017-06-01', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '2017-06-10', '2017-06-11', '455555', '2017-06-12', '2017-06-13', '2017-06-14', '2017-06-15', '2017-06-16', '0', 'OUI', 'OUI', 'OUI', 'OUI', 'Huge !!!!!!!!!!!!', '2017-06-04 18:14:22'),
-(18, NULL, 'dernier test', 'dernier test', 'dernier test', 'dernier test', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '2017-06-10', '2017-06-11', '2017-06-12', '2017-06-13', '2017-06-14', '6000000', '2017-06-16', '2017-06-17', '2017-06-18', '2017-06-19', '2017-06-20', '0', 'NON', 'NON', 'NON', 'NON', 'jeuduejdue', '2017-06-04 18:32:48'),
-(19, NULL, 'oupreoiure', 'oupreoiure', 'oupreoiure', 'oupreoiure', '2017-06-17', '2017-06-10', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-16', '2017-06-04', '2017-06-04', '2017-06-04', '2017-06-04', '2017-06-10', '88989898', '2017-06-10', '2017-06-09', '2017-06-04', '2017-06-04', '2017-06-03', '0', 'NON', 'NON', 'NON', 'NON', 'reoiprepoi[re', '2017-06-04 18:42:04');
+(29, NULL, 'MEF', 'last trial', 'BND', 'AOI', '2017-06-01', '2017-06-02', '2017-06-01', '2017-06-04', '2017-06-06', '2017-06-09', '2017-06-10', '2017-06-11', '2017-06-13', '123456789', '2017-06-14', '987654321', '2017-06-16', '2017-06-16', '2017-06-16', '2017-06-17', '2017-06-10', '16', 'OUI', 'OUI', 'OUI', 'OUI', 'important', '2017-06-08 00:54:22'),
+(30, NULL, 'MEF', 'sup 5milliard', 'BND', 'AOI', '2017-06-01', '2017-06-08', '', '', '', '', '', '', '', '6000000000', '', '', '', '', '', '', '', '7', 'OUI', 'OUI', 'OUI', 'OUI', '', '2017-06-08 02:10:26'),
+(31, NULL, 'MEPUE-A', 'Marche de fournitures  cahiers', 'BND', 'AAO', '2017-06-01', '2017-06-02', '2017-06-03', '2017-06-04', '2017-06-05', '2017-06-06', '2017-06-07', '2017-06-08', '2017-06-09', '1234567', '2017-06-10', '9876543', '2017-06-12', '', '2017-06-14', '2017-06-15', '2017-06-17', '14', 'OUI', 'OUI', 'OUI', 'OUI', '', '2017-06-08 10:55:15'),
+(35, NULL, 'MEPUE-A', 'titre de financement', 'FINEX', 'ED', '2017-06-03', '', '', '', '', '', '', '', '', '40000000000', '', '40000000000', '', '', '', '', '', '10', 'OUI', 'OUI', 'OUI', 'OUI', '', '2017-06-09 12:48:04'),
+(36, NULL, 'MEF', 'essai drop', 'BND', 'AAO', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', 'OUI', 'OUI', 'OUI', 'OUI', '', '2017-06-09 14:58:07'),
+(37, NULL, 'MEPUE-A', 'ess', 'BND', 'ED', '2017-06-07', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', 'NON', 'NON', 'NON', 'NON', '', '2017-06-09 15:29:35'),
+(38, NULL, 'MEF', 'notic', 'BND', 'AAO', '2017-06-01', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', 'NON', 'NON', 'NON', 'NON', '', '2017-06-09 15:41:31'),
+(39, NULL, 'MEF', 'att', 'BND', 'AAO', '2017-06-15', '2017-06-21', '', '', '', '', '', '', '', '300000', '', '300000', '', '', '', '', '', '6', 'OUI', 'OUI', 'OUI', 'OUI', '', '2017-06-09 15:54:45'),
+(40, NULL, 'MEF', 'cook', 'BND', 'AAO', '2017-06-09', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', 'NON', 'NON', 'NON', 'NON', '', '2017-06-09 18:26:43');
 
 -- --------------------------------------------------------
 
@@ -125,7 +130,13 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`idUser`, `nomUser`, `prenomUser`, `emailUser`, `passUser`, `telephoneUser`, `levelUser`, `recevoirEmail`, `dateInscription`) VALUES
 (1, 'Sylla', 'Lansana', 'lansanalsm@gmail.com', 'lansana', '666494787', 1, 1, '2016-12-29 21:57:36'),
-(2, 'testeur', 'testeur', 'beta@testeur.test', 'test123', NULL, 1, 1, '2017-03-15 00:00:00');
+(2, 'testeur', 'testeur', 'beta@testeur.test', 'test123', NULL, 7, 1, '2017-03-15 00:00:00'),
+(3, 'SOMPARE', 'Amara', 'amara@sompare.com', 'amara1234', '00000000', 2, 0, '2017-06-05 00:00:00'),
+(4, 'Bangoura', 'Fatoumata', 'fatoumata@bangoura.com', 'fatoumata123', '000000000', 1, 0, '2017-06-05 00:00:00'),
+(6, 'Prmp', 'Prenom prmp', 'prmp@prmp.com', 'prmp123', '000000000', 4, 0, '2017-06-05 00:00:00'),
+(7, 'BOUQUET', 'Monique', 'monique@bouquet.com', 'monique123', '000000000', 5, 0, '2017-06-05 00:00:00'),
+(8, 'Camara ', 'Lamine Minos', 'lamine.minos@camara.com', 'minos123', '000000000', 2, 0, '2017-06-05 00:00:00'),
+(9, 'KEITA', 'Elhadj Soriba ', 'elhadj.soriba@keita.com ', 'soriba123', '000000000', 3, 0, '2017-06-06 00:00:00');
 
 --
 -- Index pour les tables exportées
@@ -157,17 +168,17 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT pour la table `alert`
 --
 ALTER TABLE `alert`
-  MODIFY `idAlert` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idAlert` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT pour la table `projet`
 --
 ALTER TABLE `projet`
-  MODIFY `idProjet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `idProjet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
