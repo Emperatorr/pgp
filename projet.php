@@ -100,6 +100,7 @@
             $description = ((isset($_POST['description']) && !empty($_POST['description'])) ? htmlspecialchars($_POST['description']) : ((isset($projet) && !empty($projet)) ? $projet -> getDescription() : '' ));
             $sourceFinancement = ((isset($_POST['sourceFinancement']) && !empty($_POST['sourceFinancement'])) ? htmlspecialchars($_POST['sourceFinancement']) : ((isset($projet) && !empty($projet)) ? $projet -> getsourceFinancement() : '' ));
             $typeProcedure = ((isset($_POST['typeProcedure']) && !empty($_POST['typeProcedure'])) ? htmlspecialchars($_POST['typeProcedure']) : ((isset($projet) && !empty($projet)) ? $projet -> gettypeProcedure() : '' ));
+            
             $dateReceptionDAO = ((isset($_POST['dateReceptionDAO']) && !empty($_POST['dateReceptionDAO'])) ? htmlspecialchars($_POST['dateReceptionDAO']) : ((isset($projet) && !empty($projet)) ? $projet -> getDateReceptionDAO() : '' ));
             $dateAnoSurDAO = ((isset($_POST['dateAnoSurDAO']) && !empty($_POST['dateAnoSurDAO'])) ? htmlspecialchars($_POST['dateAnoSurDAO']) : ((isset($projet) && !empty($projet)) ? $projet -> getDateAnoSurDAO() : '' ));
             $datePublicationDAO = ((isset($_POST['datePublicationDAO']) && !empty($_POST['datePublicationDAO'])) ? htmlspecialchars($_POST['datePublicationDAO']) : ((isset($projet) && !empty($projet)) ? $projet -> getdatePublicationDAO() : '' ));
@@ -209,33 +210,96 @@
 		<form role="form" action = 'projet.php' method='POST'>
             <div class="col-lg-8 center">
              <?php 
-                    $drois = array(
-                        'autoriteContractante' => 'readonly',
-                        'description' => 'readonly',
-                        'sourceFinancement' => 'readonly',
+                    $droits = array(
+                        'autoriteContractante' => 'readonly', // creation
+                        'description' => 'readonly',  // creation 
+                        'sourceFinancement' => 'readonly', // creation
                         'typeProcedure' => 'readonly',
                         'dateReceptionDAO' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
-                        '' => 'readonly',
+                        'dateAnoSurDAO' => 'readonly',
+                        'datePublicationDAO' => 'readonly',
+                        'dateOuverturePlis' => 'readonly',
+                        'dateRapportEvaluation' => 'readonly',
+                        'dateAnoSurRapEval' => 'readonly',
+                        'dateNotifProvisoir' => 'readonly',
+                        'projetNegoContrat' => 'readonly',
+                        'dateAnoProjetContrat' => 'readonly',
+                        'attribuaire' => 'readonly',
+                        'approbationAttribuaire' => 'readonly',
+                        'montant' => 'readonly',
+                        'approbationAC' => 'readonly',
+                        'approbationACGPMP' => 'readonly',
+                        'approbationMEF' => 'readonly',
+                        'enregistrementImpots' => 'readonly',
+                        'immatriculation' => 'readonly',
+                        'commentaire' => ''
                         );
 
-                    if (isset($_SESSION['levelUser']) && $_SESSION['levelUser'] != 1) {
-                      $droitLevel1 = 'readonly';  
+                    if (isset($_SESSION['levelUser'])) {
+                        // user level 1
+                        if($_SESSION['levelUser'] == 1) {
+                         if(!empty($autoriteContractante) &&
+                             !empty($description) &&
+                                !empty($sourceFinancement) &&
+                                 !empty($typeProcedure) &&
+                                 !empty($dateReceptionDAO)) {
+                            
+                         
+                           $droits ['dateAnoSurDAO'] = '';
+                           $droits ['dateAnoSurRapEval'] = '';
+                           $droits ['dateNotifProvisoir'] = '';
+                           $droits ['dateAnoProjetContrat'] = '';
+                         }
+
+                           $droits ['autoriteContractante'] = '';
+                           $droits ['description'] = '';
+                           $droits ['sourceFinancement'] = '';
+                           $droits ['typeProcedure'] = '';
+                           $droits ['dateReceptionDAO'] = '';
+   
+                       }
+                        if($_SESSION['levelUser'] == 2 ) {
+
+                          if(!empty($autoriteContractante) &&
+                             !empty($description) &&
+                                !empty($sourceFinancement) &&
+                                 !empty($typeProcedure) &&
+                                 !empty($dateReceptionDAO)) {
+    
+                            $droits ['dateReceptionDAO'] = '';
+                            $droits ['dateAnoSurDAO'] = '';
+                            $droits ['dateAnoSurRapEval'] = '';
+                            $droits ['dateAnoProjetContrat'] = '';
+                            $droits ['approbationACGPMP'] = '';
+                         }
+
+                           $droits ['autoriteContractante'] = '';
+                           $droits ['description'] = '';
+                           $droits ['sourceFinancement'] = '';
+                           $droits ['typeProcedure'] = '';
+                           $droits ['dateReceptionDAO'] = '';
+                           
+                       }
+                        if($_SESSION['levelUser'] == 3 ) {
+                           $droits ['dateOuverturePlis'] = '';
+                           $droits ['dateRapportEvaluation'] = '';
+                           $droits ['immatriculation'] = '';
+
+                       }
+                      if($_SESSION['levelUser'] == 4 ) {
+                           $droits ['datePublicationDAO'] = '';
+                           $droits ['projetNegoContrat'] = '';
+                           $droits ['attribuaire'] = '';
+                           $droits ['approbationAttribuaire'] = '';
+                           $droits ['approbationAC'] = '';
+                           $droits ['enregistrementImpots'] = '';
+                       }
+                        if($_SESSION['levelUser'] == 5 ) {
+                           $droits ['approbationMEF'] = '';
+                       }
+
                     }
+                       
 
                 ?>
 
@@ -245,28 +309,41 @@
               <div class="form-group">
                     <label for="autoriteContractante">Autorité Contractante</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="autoriteContractante" id="autoriteContractante" placeholder="Autorité Contractante "   <?php echo"value='$autoriteContractante'" ;?> >
+                        <input type="text" class="form-control" name="autoriteContractante" id="autoriteContractante" placeholder="Autorité Contractante " 
+                             <?php echo"value='$autoriteContractante'" ;?>
+                             <?php echo $droits['autoriteContractante']; ?>
+                              />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="description" id="description" placeholder="Desciption"  <?php echo"value='$description'" ;?> >
+                        <input type="text" class="form-control" name="description" id="description" placeholder="Desciption"
+                          <?php echo"value='$description'" ;?> 
+                          <?php echo $droits['description']; ?>
+                          />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
 				
 				<div class="form-group">
                     <label for="sourceFinancement">Source de financement</label>
-                    <div class="input-group"> <input type="text" class="form-control" name="sourceFinancement" id="sourceFinancement" placeholder="sourceFinancement"   <?php echo"value='$sourceFinancement'" ;?>>
+                    <div class="input-group"> <input type="text" class="form-control" name="sourceFinancement" id="sourceFinancement" placeholder="sourceFinancement"
+                       <?php echo"value='$sourceFinancement'" ;?>
+                       <?php echo $droits['sourceFinancement']; ?>
+                       />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
 				<div class="form-group">
                     <label for="typeProcedure">type Procedure</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="typeProcedure" id="typeProcedure" placeholder="typeProcedure"  <?php echo"value='$typeProcedure'" ;?> >
+                        <input type="text" class="form-control" name="typeProcedure" id="typeProcedure" placeholder="typeProcedure"
+                          <?php echo"value='$typeProcedure'" ;?> 
+                           <?php echo $droits['typeProcedure']; ?>
+
+                          />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
@@ -275,125 +352,171 @@
                 <div class="form-group">
                     <label for="dateReceptionDAO">Date Reception DAO</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="dateReceptionDAO" id="dateReceptionDAO" <?php echo"value='$dateReceptionDAO'" ; echo "$droitLevel1 "; ?> >
+                        <input type="date" class="form-control" name="dateReceptionDAO" id="dateReceptionDAO" 
+                            <?php echo"value='$dateReceptionDAO'" ; ?> 
+                             <?php echo $droits['dateReceptionDAO']; ?>
+                            />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
 				 <div class="form-group">
                     <label for="dateAnoSurDAO">Date Ano sur DAO</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="dateAnoSurDAO" id="dateAnoSurDAO" placeholder="date ano sur DAO"   <?php echo"value='$dateAnoSurDAO'" ; echo "$droitLevel1 ";?> >
+                        <input type="date" class="form-control" name="dateAnoSurDAO" id="dateAnoSurDAO" placeholder="date ano sur DAO"
+                           <?php echo"value='$dateAnoSurDAO'" ;?> 
+                           <?php echo $droits['dateAnoSurDAO']; ?>                           
+                           />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="datePublicationDAO">Date Publication DAO </label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="datePublicationDAO" id="datePublicationDAO"   <?php echo"value='$datePublicationDAO'" ;?> >
+                        <input type="date" class="form-control" name="datePublicationDAO" id="datePublicationDAO"   
+                            <?php echo"value='$datePublicationDAO'" ;?> 
+                            <?php echo $droits['datePublicationDAO']; ?> 
+                            />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
                     <label for="dateOuverturePlis">Date Ouverture Plis</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="dateOuverturePlis" id="dateOuverturePlis"   <?php echo"value='$dateOuverturePlis'" ; echo "$droitLevel1";?> >
+                        <input type="date" class="form-control" name="dateOuverturePlis" id="dateOuverturePlis"
+                           <?php echo"value='$dateOuverturePlis'";?> 
+                             <?php echo $droits['dateOuverturePlis']; ?>                                                      
+                           />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>               
                 <div class="form-group">
                     <label for="dateRapportEvaluation">Date Rapport Evaluation</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="dateRapportEvaluation" id="dateRapportEvaluation"   <?php echo"value='$dateRapportEvaluation'" ;?> >
+                        <input type="date" class="form-control" name="dateRapportEvaluation" id="dateRapportEvaluation"
+                           <?php echo"value='$dateRapportEvaluation'" ;?>
+                           <?php echo $droits['dateRapportEvaluation']; ?>   
+                            />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
-                <?php 
-                    $daoEdit = '';
-                    if (isset($_SESSION['levelUser']) && $_SESSION['levelUser'] != 1) {
-                      $daoEdit = 'readonly';  
-                    }
-                ?>
 				<div class="form-group">
                     <label for="dateAnoSurRapEval">Date Ano Rapport Evaluation</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="dateAnoSurRapEval" id="dateAnoSurRapEval"   <?php echo"value='$dateAnoSurRapEval'" ; echo "$droitLevel1"; ?> >
+                        <input type="date" class="form-control" name="dateAnoSurRapEval" id="dateAnoSurRapEval"
+                           <?php echo"value='$dateAnoSurRapEval'" ;?>
+                            <?php echo $droits['dateAnoSurRapEval']; ?>   
+                            />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
                     <label for="dateNotifProvisoir">Date Notification Provisoire</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="dateNotifProvisoir" id="dateNotifProvisoir"   <?php echo"value='$dateNotifProvisoir'" ; ?> >
+                        <input type="date" class="form-control" name="dateNotifProvisoir" id="dateNotifProvisoir"  
+                          <?php echo"value='$dateNotifProvisoir'" ; ?> 
+                          <?php echo $droits['dateNotifProvisoir']; ?>
+                          
+                          />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>  
                  <div class="form-group">
                     <label for="projetNegoContrat">Date Reception et Negociation Projet  Contrat</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="projetNegoContrat" id="projetNegoContrat"   <?php echo"value='$projetNegoContrat'" ;?> >
+                        <input type="date" class="form-control" name="projetNegoContrat" id="projetNegoContrat" 
+                          <?php echo"value='$projetNegoContrat'" ;?> 
+                          <?php echo $droits['projetNegoContrat']; ?>
+                          />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="dateAnoProjetContrat">Projet Ano Projet de Contrat</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="dateAnoProjetContrat" id="dateAnoProjetContrat"   <?php echo"value='$dateAnoProjetContrat'" ; echo "$droitLevel1";?> >
+                        <input type="date" class="form-control" name="dateAnoProjetContrat" id="dateAnoProjetContrat" 
+                          <?php echo"value='$dateAnoProjetContrat'" ;?> 
+                          <?php echo $droits['dateAnoProjetContrat']; ?>
+                          />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
                     <label for="attribuaire">Attributaire</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="attribuaire" id="attribuaire"   <?php echo"value='$attribuaire'" ;?> >
+                        <input type="text" class="form-control" name="attribuaire" id="attribuaire"
+                           <?php echo"value='$attribuaire'" ;?>
+                           <?php echo $droits['attribuaire']; ?>
+                           />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
                     <label for="approbationAttribuaire">Signature Attributaire</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="approbationAttribuaire" id="approbationAttribuaire"   <?php echo"value='$approbationAttribuaire'" ;?> >
+                        <input type="date" class="form-control" name="approbationAttribuaire" id="approbationAttribuaire"
+                           <?php echo"value='$approbationAttribuaire'" ;?> 
+                           <?php echo $droits['approbationAttribuaire']; ?>
+                        />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="montant">Montant</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="montant" id="montant" placeholder="Montant"   <?php echo"value='$montant'" ;?>>
+                        <input type="text" class="form-control" name="montant" id="montant" placeholder="Montant"
+                           <?php echo"value='$montant'" ;?>
+                           <?php echo $droits['montant']; ?>                           
+                          />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="approbationAC">Signature AC</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="approbationAC" id="approbationAC"   <?php echo"value='$approbationAC'" ;?> >
+                        <input type="date" class="form-control" name="approbationAC" id="approbationAC"
+                           <?php echo"value='$approbationAC'" ;?> 
+                           <?php echo $droits['approbationAC']; ?> 
+                           />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
                     <label for="approbationACGPMP">Signature ACGPMP</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="approbationACGPMP" id="approbationACGPMP"   <?php echo"value='$approbationACGPMP'" ; echo "$droitLevel1";?> >
+                        <input type="date" class="form-control" name="approbationACGPMP" id="approbationACGPMP"
+                           <?php echo"value='$approbationACGPMP'" ;?> 
+                           <?php echo $droits['approbationACGPMP']; ?>                            
+                           />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
                  <div class="form-group">
                     <label for="approbationMEF">Signature MEF</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="approbationMEF" id="approbationMEF"   <?php echo"value='$approbationMEF'" ;?> >
+                        <input type="date" class="form-control" name="approbationMEF" id="approbationMEF"
+                           <?php echo"value='$approbationMEF'" ;?>
+                           <?php echo $droits['approbationMEF']; ?>                            
+                            />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
 				<div class="form-group">
                     <label for="enregistrementImpots">Enregistrement Impots</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="enregistrementImpots" id="enregistrementImpots"   <?php echo"value='$enregistrementImpots'" ;?> >
+                        <input type="date" class="form-control" name="enregistrementImpots" id="enregistrementImpots"
+                           <?php echo"value='$enregistrementImpots'" ;?> 
+                           <?php echo $droits['enregistrementImpots']; ?> 
+                           />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
 				<div class="form-group">
                     <label for="immatriculation">Immatriculation</label>
                     <div class="input-group">
-                        <input type="date" class="form-control" name="immatriculation" id="immatriculation"   <?php echo"value='$immatriculation'" ;?> >
+                        <input type="date" class="form-control" name="immatriculation" id="immatriculation" 
+                          <?php echo"value='$immatriculation'" ;?>
+                           <?php echo $droits['immatriculation']; ?> 
+                           />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>
@@ -437,7 +560,10 @@
 				<div class="form-group">
                     <label for="commentaire">Commentaire</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="commentaire" id="commentaire" placeholder="commentaire"  <?php echo"value='$commentaire'" ;?> >
+                        <input type="text" class="form-control" name="commentaire" id="commentaire" placeholder="commentaire"  
+                        <?php echo"value='$commentaire'" ;?> 
+                        <?php echo $droits['commentaire']; ?> 
+                        />
                         <span class="input-group-addon"><span class="glyphicon glyphicon-asterisk"></span></span>
                     </div>
                 </div>

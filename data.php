@@ -35,6 +35,13 @@
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
     <link href="assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
     <link href="assets/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+		<style>
+			.date_element {
+				min-width:55px ;
+				max-width:55px ;
+				overflow : hidden;
+			}
+		</style>
 </head>
 <body>
 
@@ -62,30 +69,29 @@
 					<td>Description du Contrat</td>
 					<td>Source du Financement</td>
 					<td>Type de Procedures</td>
-					<td>Creation du DAO</td>
-					<td>Date ANO sur DAO</td>
-					<td>Date Publication DAO</td>
-					<td>Date Ouverture des Plis</td>
-					<td>Date Rapport Evaluation</td>
-					<td>Date ANO sur Rapport Evaluation</td>
-					<td>Date Notif Provisoire</td>
+					<td class='date_element'>Creation du DAO</td>
+					<td class='date_element'>Date ANO sur DAO</td>
+					<td class='date_element'>Date Publication DAO</td>
+					<td class='date_element'>Date Ouverture des Plis</td>
+					<td class='date_element'>Date Rapport Evaluation</td>
+					<td class='date_element'>Date ANO sur Rapport Evaluation</td>
+					<td class='date_element'>Date Notif Provisoire</td>
 					
-					<td>Date Reception et Negociation Projet Contrat</td>
-					<td>Date ANO Projet Contrat</td>
+					<td class='date_element'>Date Reception et Negociation Projet Contrat</td>
+					<td class='date_element'>Date ANO Projet Contrat</td>
 					<td>Attribuaire</td>
-					<td>Date Signature Attributaire</td>
+					<td class='date_element'>Date Signature Attributaire</td>
 					<td>Montant</td>
-					<td>Date Signature AC</td>
-					<td>Date Signature ACGPMP</td>
-					<td>Date Signature MEF</td>
-					<td>Date Enregistrement Impots</td>
-					<td>Date Immatriculation</td>
+					<td class='date_element'>Date Signature AC</td>
+					<td class='date_element'>Date Signature ACGPMP</td>
+					<td class='date_element'>Date Signature MEF</td>
+					<td class='date_element'>Date Enregistrement Impots</td>
+					<td class='date_element'>Date Immatriculation</td>
 					<td>Total Jrs</td>
 
 					<td>Etat</td>
-					<td>Alertes</td>
 					<td>Editer</td>
-
+					<td>Alertes</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -143,8 +149,8 @@
 								<td>".$projet -> getImmatriculation()."</td>
 								<td>".$totalJour."</td>
 								<td class ='$class' title ='$title'>".$msg."</td>
-								<td><a href='alertes.php?projet=$id'> Voir </a></td>
 								<td><a href='projet.php?id=$id'> Editer </a></td>
+								<td><a href='alertes.php?projet=$id'> Voir </a></td>
 							</tr>
 						";
 					}

@@ -49,13 +49,14 @@
         <div class="content">
 		 <div class="container-fluid" style="margin-left:25%;" >
 		<?php 
-			if(isset($_SESSION['isConnected']) && $_SESSION['isConnected'] == true){
+			if(isset($_SESSION['idUser']) && !empty($_SESSION['idUser'])){
 			$user =  $obj_bdd -> selectUserById($_SESSION['idUser']);
 				
 			$prenomUser = ((isset($_POST['prenomUser']) && !empty($_POST['prenomUser'])) ? $_POST['prenomUser'] : ((isset($user) && !empty($user)) ? $user -> getPrenomUser() : '' ));
 			$nomUser = ((isset($_POST['nomUser']) && !empty($_POST['nomUser'])) ? $_POST['nomUser'] : ((isset($user) && !empty($user)) ? $user -> getNomUser() : '' ));
 			$emailUser = ((isset($_POST['emailUser']) && !empty($_POST['emailUser'])) ? $_POST['emailUser'] : ((isset($user) && !empty($user)) ? $user -> getEmailUser() : '' ));
 			$telephoneUser = ((isset($_POST['telephoneUser']) && !empty($_POST['telephoneUser'])) ? $_POST['telephoneUser'] : ((isset($user) && !empty($user)) ? $user -> getTelephoneUser() : '' ));
+			$levelUser = ((isset($_POST['levelUser']) && !empty($_POST['levelUser'])) ? $_POST['levelUser'] : ((isset($user) && !empty($user)) ? $user -> getLevelUser() : '' ));
 			$recevoirEmail = ((isset($_POST['recevoirEmail'])) ? $_POST['recevoirEmail'] : ((isset($user) && !empty($user)) ? $user -> getRecevoirEmail() : '0' ));
 			
 			if(isset($_POST['action']) && $_POST['action'] =='Update'){
@@ -112,6 +113,13 @@
                     <label for="telephoneUser">Telephone</label>
                     <div class="input-group">
                         <input type="text" maxlength = '12' class="form-control" id="telephoneUser" name="telephoneUser" placeholder="Entrer votre telephone"  <?php echo"value='$telephoneUser'" ;?> >
+                        <span class="input-group-addon"></span>
+                    </div>
+                </div>
+				 <div class="form-group">
+                    <label for="levelUser">Niveau d'accès</label>
+                    <div class="input-group">
+                        <input type="text" maxlength = '12' class="form-control" id="levelUser" name="levelUser" placeholder="votre niveau"  <?php echo"value='$levelUser'" ; ?> readonly >
                         <span class="input-group-addon"></span>
                     </div>
                 </div>

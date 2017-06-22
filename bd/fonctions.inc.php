@@ -1,5 +1,7 @@
 <?php
 
+
+
 function getData($method, $url, $data = false) {
     $curl = curl_init();
 
@@ -171,12 +173,15 @@ function processXML ($file_path, $obj_bdd) {
      return $nbr ;
   }
 
-function etatProjet($id_projet,$obj_bdd) {
+function etatProjet($id_projet, $obj_bdd) {
     $projet = $obj_bdd -> selectProjetById($id_projet) ;
-    
-    $format = 'd/m/Y';
+   
+   // utilisé dans totalJour() et etatProjet()
+    $format = 'Y-m-d';
+
+
     $totalJour = 0 ;
-    $today = DateTime::createFromFormat($format, date ('d/m/Y')) ;
+    $today = DateTime::createFromFormat($format, date ($format)) ;
     $etat = array (
         'OK' => true,
         'ALERT' => false,
@@ -197,6 +202,10 @@ function etatProjet($id_projet,$obj_bdd) {
     $approbationAC = DateTime::createFromFormat($format, $projet -> getApprobationAC());
     $approbationACGPMP = DateTime::createFromFormat($format, $projet -> getApprobationACGPMP());
     $approbationMEF = DateTime::createFromFormat($format, $projet -> getApprobationMEF());
+
+    $dateEnregistrementImpot = DateTime::createFromFormat($format, $projet -> getEnregistrementImpots());
+    $dateImmatriculation = DateTime::createFromFormat($format, $projet -> getImmatriculation());
+    
     $typeProcedure = $projet -> getTypeProcedure() ;
 
     if ($typeProcedure == "AOI") {
@@ -256,6 +265,14 @@ function etatProjet($id_projet,$obj_bdd) {
     $acgpmp_mef = array(
         'autorise' => 5,
         'alerte' => 3
+    ) ;
+     $mef_impot = array(
+        'autorise' => 2,
+        'alerte' => 1
+    ) ;
+     $impot_immatriculation = array(
+        'autorise' => 2,
+        'alerte' => 1
     ) ;
     
    if ($dateReceptionDAO != false ) {
@@ -525,9 +542,10 @@ function etatProjet($id_projet,$obj_bdd) {
                                         $etat['MESSAGE'] = "le delai permis pour la date d'approbation ACGPMP du contrat est depassé" ;
                                     }
                                    } else { // approbation ACGPMP est fournie
-                                     //echo "La date d' approbation ACGPMP est fournie <br/>";
+                                           //echo "La date d' approbation ACGPMP est fournie <br/>";
                                      if($approbationMEF == false ) {
-                                                                                 $interval_ac_today = date_diff($approbationAC, $today) -> days ;
+                                        
+                                        $interval_ac_today = date_diff($approbationAC, $today) -> days ;
                                        if($interval_acgpmp_today < $acgpmp_mef['autorise']) {
                                          if($interval_acgpmp_today < $acgpmp_mef['alerte']) {
                                             //pas de blem ici
@@ -547,14 +565,65 @@ function etatProjet($id_projet,$obj_bdd) {
                                         $etat['MESSAGE'] = "le delai permis pour la date d'approbation MEF du contrat est depassé" ;
                                       }
 
-                                   } //approbation MEF est fournie tout est bon
-                                    else {
-                                       // echo "La date d' approbation MEF est fournie <br/>";
-                                    }
+                                   } else {
+                                       // echo "La date d' approbation MEF est  fourni <br/>";
+                                        if($dateEnregistrementImpot == false ) {
+                                            // echo" immatriculation ne pas fournie <br/>";
+                                            // la date d'enregistrement impot ne pas fournie'
+                                            $interval_mef_today = date_diff($approbationMEF, $today) -> days ;
+                                          if($interval_mef_today < $mef_impot['autorise']) {
+                                            if($interval_mef_today < $mef_impot['alerte']) {
+                                                //pas de blem ici
+                                                $etat['OK'] = true ;
+                                            } else {
+                                                //alerte jaune
+                                                $etat['OK'] = false;
+                                                $etat['ALERT'] = true ;
+                                                $etat['DEPASSE'] = false ;
+                                                $etat['MESSAGE'] = "la date d'enregistrement impot de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                                            }
+                                        } else {
+                                            //alerte rouge
+                                            $etat['OK'] = false;
+                                            $etat['ALERT'] = true ;
+                                            $etat['DEPASSE'] = true ;
+                                            $etat['MESSAGE'] = "le delai permis pour la date d'enregistrement impot du contrat est depassé" ;
+                                        }
+
+                                    } else { // la date d'enregistreent impot est fournie
+
+                                     if($dateImmatriculation == false ) {
+                                         // echo" immatriculation ne pas fournie <br/>";
+                                         $interval_enregistement_today = date_diff($dateEnregistrementImpot, $today) -> days ;
+                                          if($interval_enregistement_today < $impot_immatriculation['autorise']) {
+                                            if($interval_enregistement_today < $impot_immatriculation['alerte']) {
+                                                //pas de blem ici
+                                                $etat['OK'] = true ;
+                                            } else {
+                                                //alerte jaune
+                                                $etat['OK'] = false;
+                                                $etat['ALERT'] = true ;
+                                                $etat['DEPASSE'] = false ;
+                                                $etat['MESSAGE'] = "la date d'immatriculation de ce projet n'a pas encore été fournie alors que le delai approche " ;
+                                            }
+                                        } else {
+                                            //alerte rouge
+                                            $etat['OK'] = false;
+                                            $etat['ALERT'] = true ;
+                                            $etat['DEPASSE'] = true ;
+                                            $etat['MESSAGE'] = "le delai permis pour la date d'immatriculation du contrat est depassé" ;
+                                        }
+
+                                    }else {
+                                        // Tout es ok pour ce projet
+                                        // Let's dance !!!!!
+                                      } // immatriculation
+                                    } // Enregistrement
+                                    } // MEF
                                    } // ACGPMP
                                  } //approbation AC
 
-                                 }// Approbation attribuaire
+                               }// Approbation attribuaire
                             } //projet de negociaion
                              // fin if mef
                         } // fin else ACGPMP
@@ -647,8 +716,12 @@ function delaiTraitement() {
 
  function totalJour($id_projet, $obj_bdd){
     $id_projet = (int) $id_projet ;
-    $format = 'd/m/Y';
-    $today = DateTime::createFromFormat($format, date ('d/m/Y')) ;
+    
+    // utilisé dans totalJour() et etatProjet()
+    $format = 'Y-m-d';
+
+    $today = DateTime::createFromFormat($format, date ($format)) ;
+    //var_dump($today);
     $totalJour = 0 ;
     
     $projet = $obj_bdd -> selectProjetById($id_projet) ;
@@ -666,31 +739,43 @@ function delaiTraitement() {
     $approbationAC = DateTime::createFromFormat($format, $projet -> getApprobationAC());
     $approbationACGPMP = DateTime::createFromFormat($format, $projet -> getApprobationACGPMP());
     $approbationMEF = DateTime::createFromFormat($format, $projet -> getApprobationMEF());
+    $enregistrementImpots = DateTime::createFromFormat($format, $projet -> getEnregistrementImpots());
+    $immatriculation = DateTime::createFromFormat($format, $projet -> getImmatriculation());
 
+    // echo "format :  ". $projet -> getDateReceptionDAO() ;
     if($dateReceptionDAO != false) {
-        if($approbationMEF != false) {
+
+       // echo "reception DAO not false ";
+
+        if($immatriculation != false) {
+            $totalJour = date_diff($dateReceptionDAO, $immatriculation) -> days ;
+        }
+        elseif($enregistrementImpots != false) {
+            $totalJour = date_diff($dateReceptionDAO, $enregistrementImpots) -> days ; 
+        }
+        elseif($approbationMEF != false) {
             $totalJour = date_diff($dateReceptionDAO, $approbationMEF) -> days ;
-        } else if ($approbationACGPMP !=false ) {
+        } elseif ($approbationACGPMP !=false ) {
             $totalJour = date_diff($dateReceptionDAO, $approbationACGPMP) -> days ;
-        } else if ($approbationAC !=false ) {
+        } elseif ($approbationAC !=false ) {
             $totalJour = date_diff($dateReceptionDAO, $approbationAC) -> days ;
-        }  else if ($approbationAttribuaire !=false ) {
+        }  elseif ($approbationAttribuaire !=false ) {
             $totalJour = date_diff($dateReceptionDAO, $approbationAttribuaire) -> days ;
-        } else if ($dateAnoProjetContrat !=false ) {
+        } elseif ($dateAnoProjetContrat !=false ) {
             $totalJour = date_diff($dateReceptionDAO, $dateAnoProjetContrat) -> days ;
-        } else if ($projetNegoContrat !=false ) {
+        } elseif ($projetNegoContrat !=false ) {
             $totalJour = date_diff($dateReceptionDAO, $projetNegoContrat) -> days ;
-        } else if ($dateNotifProvisoir !=false ) {
+        } elseif ($dateNotifProvisoir !=false ) {
             $totalJour = date_diff($dateReceptionDAO, $dateNotifProvisoir) -> days ;
-        } else if ($dateAnoSurRapEval !=false ) {
+        } elseif ($dateAnoSurRapEval !=false ) {
             $totalJour = date_diff($dateReceptionDAO, $dateAnoSurRapEval) -> days ;
-        }else if ($dateRapportEvaluation !=false ) {
+        }elseif ($dateRapportEvaluation !=false ) {
             $totalJour = date_diff($dateReceptionDAO,$dateRapportEvaluation) -> days ;
-        } else if ($dateOuverturePlis !=false ) {
+        } elseif ($dateOuverturePlis !=false ) {
             $totalJour = date_diff($dateReceptionDAO,$dateOuverturePlis) -> days ;
-        }else if ($datePublicationDAO !=false ) {
+        }elseif ($datePublicationDAO !=false ) {
             $totalJour = date_diff($dateReceptionDAO,$datePublicationDAO) -> days ;
-        }else if ($dateAnoSurDAO !=false ) {
+        }elseif ($dateAnoSurDAO !=false ) {
             $totalJour = date_diff($dateReceptionDAO, $dateAnoSurDAO) -> days ;
         } else {
             $totalJour = date_diff($dateReceptionDAO, $today) -> days ;

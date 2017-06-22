@@ -53,7 +53,7 @@
         <div class="content">
 		 <div class="container-fluid" style="margin-left:25%;" >
 		<?php 
-			if(isset($_SESSION['isConnected']) && $_SESSION['isConnected'] == true){
+			if(isset($_SESSION['idUser']) && !empty($_SESSION['idUser'])){
 			$user =  $obj_bdd -> selectUserById($_SESSION['idUser']);
 			
 			if(isset($_POST['action']) && $_POST['action'] =='Update'){
